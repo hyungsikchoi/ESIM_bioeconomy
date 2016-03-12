@@ -508,7 +508,7 @@ LOOP(sim_run,
    DIRPAY.FX(cc,comm)$(Dirpay_check(cc,comm) EQ 0.0)  = 0.0;
 
    options iterlim=1000000, reslim=1000000;
-   options limcol=3000, limrow=3000;
+   options limcol=30, limrow=30;
 
    if(sameas(sim_run, 'base'), nointerpol=1; startinterpol=1; else nointerpol=simControl(sim_run,'interpolations'); startinterpol=1);
    for (interpol=startinterpol to nointerpol,

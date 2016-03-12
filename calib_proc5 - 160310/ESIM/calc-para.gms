@@ -500,6 +500,7 @@ Exog_land2(cc) = 0;
 
 *$ontext
 
+$IFTHEN "%bioscenario%"=="yes"
 
 $GDXin '%Bioenergy_shifter%'
 $load  add_demand_BD
@@ -624,7 +625,7 @@ display biofuel_additional, Exog_Woodycrops, exog_biogas_dem;
 
 *$stop
 
-
+$ENDIF
 
 
 

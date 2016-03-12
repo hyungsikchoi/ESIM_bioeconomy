@@ -1,0 +1,569 @@
+* pre-calculate simulation parameters
+* including macro-, policy-, demographic- and other trend parameters
+
+SET
+SIMPARSET names of parameters which change between simulation runs /
+   abs_setas_area
+   area_factor_sug
+   area_int
+   C_sugar_exports
+   cap_ind
+   ch_area
+   chgtrq
+   exp_sub
+   exrate
+   exstab
+   fdem_tr
+   hdem_tr
+   inc_gr
+   int_ind
+   intpr
+   lab_ind
+   member
+   OBLSETAS
+   OVERALL_COUP
+   OVERALL_DECOUP
+   P_UP_2_LO
+   P_UP_2_UP
+   p0
+   pay_biof
+   pctax
+   pdem_tr
+   pop_gr
+   preftrq
+   qual_ad
+   quota
+   sp_d
+   SUBSQUANT
+   sug_imp_exog
+   tar_ad
+   thrpr
+   tp_fr
+   tp_gr
+   TRQ
+   trq_elast
+   trq_int
+   trq_tc
+   exog_biof
+/;
+
+PARAMETER
+simpar(simparset,ccplus,i,sim_base) pre-calculated simulation parameters
+;
+
+LOOP(sim_base,
+   CHK_sim = 2006 + ORD(sim_base);
+   IF(ORD(sim_base) gt 1.0,
+      C_sugar_exports('sugar') = 700 * trq_para(sim_base,'sugar_quot');
+   );
+
+   trq_int  = exp(trq_para1("trq_int",'under_quota')) * trq_para(sim_base,'sugar_quot')
+            - exp(trq_para1("trq_int",'w_o_quota')) * (trq_para(sim_base,'sugar_quot')-1);
+
+   trq_elast  = trq_para1("trq_elast",'under_quota') * trq_para(sim_base,'sugar_quot')
+            - trq_para1("trq_elast",'w_o_quota') * (trq_para(sim_base,'sugar_quot')-1);
+
+   trq_tc   = trq_para(sim_base,"trq_tc")   ;
+   preftrq  = trq_para(sim_base,"preftrq")  ;
+   sug_imp_exog('sugar') = trq_para(sim_base,"sug_exog")  ;
+
+   Loop(it,
+      if(chk_sim eq chg_qual(it,"year"),
+            qual_ad(one,it) = qual_ad(one,it) * (( chg_qual(it,"qualchange")/100) +1);
+      );
+   );
+
+   Loop(it,
+      if(chk_sim eq chg_quant(it,"period"),
+            qualquant(it) = qualquant(it) * (( chg_quant(it,"quant_change")/100) +1);
+      );
+   );
+
+   display qual_ad, yield.l, yield0;
+
+* Setting of shifters
+
+   inc_gr(cc)=inc_gr(cc) * (1+income_growth(cc,sim_base)/100);
+   pop_gr(cc)  = popul_grw(cc,sim_base);
+   cap_ind(cc) = (1.0 + indices("capital",cc)/100)**(ord(sim_base)-1);
+   lab_ind(cc) = (1.0 + indices("labor",cc)/100)**(ord(sim_base)-1);
+   int_ind(cc) = (1.0 + indices("interm",cc)/100)**(ord(sim_base)-1);
+   exrate(cc)  = exrate(cc) * (1+ex_rate(cc,sim_base)/100);
+   exrate('EU')  = exrate('EU') * (1+ex_rate('EU',sim_base)/100);
+
+   ind_exrate(cc) = exrate(cc) / exchrate(cc,"BASE");
+   ind_exrate("EU") = exrate("EU") / exchrate("GE","BASE");
+   display exrate, ind_exrate;
+
+   ch_area(one) = 1.0 * ch_area_rate(one)**(ord(sim_base)-1);
+
+
+   tp_gr(cc,ag) = (1.00 + tech_progr(ag,cc)/100)**(ord(sim_base)-1);
+
+   tp_fr(cc,livest)   =  (1.00 - tech_progr_fr(livest,cc)/100)**(ord(sim_base)-1);
+
+   area_factor_sug(EU27) = (area_factor_sug_0(EU27) * (1.00 + tech_progr('sugar',EU27)/200)**(ord(sim_base)-1))
+            + (sugar_parameters(EU27,'sinter')/price_sug_0(EU27)** area_exponent_sug(EU27) *
+            ((1.00 + tech_progr('sugar',EU27)/200)**(ord(sim_base)-1)-1)
+            *prod0(EU27,"SUGAR")) ;
+
+
+* Biofuel shifter
+   pdem_tr(cc,'biodiesel') = pdem_tr(cc,'biodiesel') *(1 + pdem_shft_bd(sim_base,cc)/100);
+   pdem_tr(cc,'ethanol')   = pdem_tr(cc,'ethanol') *(1+ pdem_shft_eth(sim_base,cc)/100);
+   pdem_tr(cc,oilseed)   = pdem_tr(cc,oilseed) *(1+ pdem_shft_os(sim_base,cc)/100);
+
+   hdem_tr(cc,comm)$(not energ(comm))    =  (1+(hdem_shft(comm,cc)/100))**(ord(sim_base)-1);
+   hdem_tr(cc,'biodiesel') = hdem_tr(cc,'biodiesel') *(1 + hdem_shft_bd(sim_base,cc)/100);
+   hdem_tr(cc,'ethanol')   = hdem_tr(cc,'ethanol') *(1+ hdem_shft_eth(sim_base,cc)/100);
+
+   p0(cc,comm)$cr_oil(comm) =  (p_crude_oil(sim_base,"oilprice") /0.136) / exrate(cc) ;
+
+   deflation_kum(cc)=deflation_kum(cc) * (1-deflation(cc,sim_base)/100);
+
+   pctax(one,'c_oil') = (t_oil/0.00081) * SUM(euro1, exrate(euro1)) / exrate(one) *  deflation_kum(one);
+
+   If (ord(sim_base) gt 1,
+         fdem_tr(cc,feed) = (1 + (fdem_shft(feed,cc)/100))**(ord(sim_base)-1);
+   );
+
+
+*===============================*
+* STRUCTURING POLICY SCENARIOS  *
+*===============================*
+
+*
+* === Accession scenarios ===
+*
+
+   nms(one)      =    YES$(membership(one,sim_base) eq 1 and not eu27(one));
+   member(one)   =    YES$(membership(one,sim_base) eq 1);
+   nomember(one) =    YES$(membership(one,sim_base) ne 1);
+
+* Introduction of CAP instruments in NMS
+* LEVEL OF CAP INTRUMENTS
+
+   exp_sub(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))      =  SUM(euro1, exp_sub(euro1,comm) * exrate(EURO1))/exrate(one);
+   sp_d(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))         =  SUM(euro1, sp_d(euro1,comm) * exrate(EURO1))/exrate(one);
+   tar_ad(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))       = SUM(euro1, tar_ad(euro1,comm));
+   intpr(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))        =  SUM(euro1, intpr(euro1,comm)*exrate(EURO1))/exrate(one);
+   thrpr(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))        = SUM(euro1, thrpr(euro1,comm)*exrate(EURO1))/exrate(one);
+   exstab(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))       = SUM(euro1, exstab(euro1,comm)*exrate(EURO1))/exrate(one);
+   qual_ad(one,it)$(nms(one) and (membership(one,sim_base-1) eq 0.0))       = SUM(euro1, qual_ad(euro1,it)*exrate(EURO1))/exrate(one);
+
+   P_UP_2.UP(one,it)$(nms(one) and nms(one) and (membership(one,sim_base-1) eq 0.0)
+                         and (tar(IT) or thresh(it))
+                         and EXPSUB(one,it)) = +inf;
+
+   P_UP_2.LO(one,it)$(nms(one) and nms(one) and (membership(one,sim_base-1) eq 0.0)
+                         and (tar(IT) or thresh(it))
+                         and EXPSUB(one,it)) = 0.0;
+
+* Revision of set in price formation mechanism (if required)
+   LOOP(switch_comm,
+      IF(ORD(sim_base) gt 1,
+         IF(pol_set_thresh(switch_comm,sim_base) - pol_set_thresh(switch_comm,sim_base-1) ne 0.0,
+
+            FLOOR(switch_comm)  = 0.0;
+            THRESH(switch_comm) = 0.0;
+            TAR(switch_comm)    = 0.0;
+
+            FLOOR(switch_comm)  = YES$(POL_SET(switch_comm,sim_base,"FLOOR"));
+            THRESH(switch_comm) = YES$(POL_SET(switch_comm,sim_base,"THRESH"));
+            TAR(switch_comm)    = YES$(POL_SET(switch_comm,sim_base,"TARIFF"));
+
+
+            sp_d(one,switch_comm)$member(one)     = 0.5*bound_tar_cc(one,switch_comm,'bound') * SUM(euro1, exrate(EURO1))/exrate(one);
+
+            sp_d_0(one,switch_comm)$member(one)    =  sp_d(one,switch_comm);
+
+            intpr(one,switch_comm) = 0.0;
+            thrpr(one,switch_comm) = 0.0;
+
+         );
+      );
+   );
+
+
+* Pre-determined changes of intervention and threshold prices
+   LOOP(IT,
+      IF(chg_int_pre(it,sim_base) ne 0,
+        intpr(one,it)$member(one)  =  intpr0(one,it) * (1+chg_int_pre(it,sim_base)/100);
+        intpr0(one,it)$member(one) =  intpr(one,it)
+      );
+      IF(chg_thresh_pre(it,sim_base) ne 0,
+        thrpr(one,it)$member(one)  =  thrpr0(one,it) * (1+chg_thresh_pre(it,sim_base)/100);
+        thrpr0(one,it)$member(one) =  thrpr(one,it)
+      );
+   );
+*
+
+*
+* Linear or non-linear reduction in intervention- and threshold prices
+   LOOP(IT,
+* Non-linear reduction
+      IF(CHG_INT(it,"chg") gt chg_int_ann(it,sim_base),
+         intpr(one,it)$member(one) =  intpr0(one,it) * (1+chg_int_ann(it,sim_base)/100);
+*
+         LOOP(one,
+            IF(intpr(one,it)$(member(one)) le intpr0(one,it)$(member(one)),
+              intpr0(one,it)$(member(one)) = intpr(one,it);
+            );
+            IF(thrpr(one,it)$(member(one) ) le thrpr0(one,it)$(member(one)),
+              thrpr0(one,it)$(member(one)) = thrpr(one,it);
+            );
+         );
+      );
+
+* Linear reduction
+      IF(chg_int_ann(it,sim_base) gt CHG_INT(it,"chg"),
+         IF(CHK_sim EQ CHG_INT(it,"first"),
+           intpr(one,it) $( member(one)) =  intpr0(one,it)
+                  *  (1+ (CHK_sim - CHG_INT(it,"first")+1)*
+                         [CHG_INT(it,"chg")/100] /
+                         (CHG_INT(it,"final") - CHG_INT(it,"first")+1));
+
+         );
+         IF(CHK_sim GT CHG_INT(it,"first"),
+            IF(CHK_sim LE CHG_INT(it,"final"),
+              intpr(one,it) $( member(one)) =  intpr0(one,it)
+                     *  (1+ (CHK_sim - CHG_INT(it,"first")+1)*
+                            [CHG_INT(it,"chg")/100] /
+                            (CHG_INT(it,"final") - CHG_INT(it,"first")+1));
+
+            );
+         );
+      );
+
+      IF(thresh_n(it,"chg") ne 0,
+         IF(CHK_sim EQ thresh_n(it,"first"),
+            thrpr(one,it) $( member(one)) =  thrpr0(one,it)
+                  *  (1+ (CHK_sim - thresh_n(it,"first")+1)*
+                         [thresh_n(it,"chg")/100] /
+                         (thresh_n(it,"final") - thresh_n(it,"first")+1));
+         );
+         IF(CHK_sim GT thresh_n(it,"first"),
+            IF(CHK_sim LE thresh_n(it,"final"),
+
+              thrpr(one,it) $( member(one)) =  thrpr0(one,it)
+                     *  (1+ (CHK_sim - thresh_n(it,"first")+1)*
+                            [thresh_n(it,"chg")/100] /
+                            (thresh_n(it,"final") - thresh_n(it,"first")+1));
+            );
+         );
+      );
+   );
+
+
+
+* Changes in Ad-valorem Tariffs
+   LOOP(it,
+      IF(CHK_sim EQ CHG_TAR_V(it,"first"),
+        tar_ad(one,it) $ (member(one) and tar_ad(one,it)) = tar_ad_0(one,it)
+               *  (1+ (CHK_sim - CHG_TAR_V(it,"first")+1)*
+                      [CHG_TAR_V(it,"chg")/100] /
+                      (CHG_TAR_V(it,"final") - CHG_TAR_V(it,"first")+1));
+      );
+      IF(CHK_sim GT CHG_TAR_V(it,"first"),
+         IF(CHK_sim LE CHG_TAR_V(it,"final"),
+           tar_ad(one,it) $ ((member(one)) and tar_ad(one,it)) = tar_ad_0(one,it)
+                  *  (1+ (CHK_sim - CHG_TAR_V(it,"first")+1)*
+                         [CHG_TAR_V(it,"chg")/100] /
+                         (CHG_TAR_V(it,"final") - CHG_TAR_V(it,"first")+1));
+         );
+      );
+
+* Changes in Specific Tariffs
+      IF(CHK_sim EQ CHG_TAR_S(it,"first"),
+        sp_d(one,it)$ ((member(one)) and sp_d(one,it)) = sp_d_0(one,it)
+               *  (1+ (CHK_sim - CHG_TAR_S(it,"first")+1)*
+                      [CHG_TAR_S(it,"chg")/100] /
+                      (CHG_TAR_S(it,"final") - CHG_TAR_S(it,"first")+1));
+      );
+      IF(CHK_sim GT CHG_TAR_S(it,"first"),
+         IF(CHK_sim LE CHG_TAR_S(it,"final"),
+           sp_d(one,it)$ ((member(one)) and sp_d(one,it)) = sp_d_0(one,it)
+                  *  (1+ (CHK_sim - CHG_TAR_S(it,"first")+1)*
+                         [CHG_TAR_S(it,"chg")/100] /
+                         (CHG_TAR_S(it,"final") - CHG_TAR_S(it,"first")+1));
+         );
+      );
+   );
+
+* Changes in Export Subisidies
+* Ad-valorem Subsidy: EXP_SUBS
+   LOOP(it,
+      IF(CHK_sim EQ CHG_SUBSIDY(it,"first"),
+        exp_sub(one,it)$ ((member(one)) and exp_sub(one,it)) = exp_sub_0(one,it)
+               *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                      [CHG_SUBSIDY(it,"chg_v")/100] /
+                      (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+      );
+      IF(CHK_sim GT CHG_SUBSIDY(it,"first"),
+         IF(CHK_sim LE CHG_SUBSIDY(it,"final"),
+           exp_sub(one,it)$ ((member(one)) and exp_sub(one,it)) = exp_sub_0(one,it)
+                  *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                         [CHG_SUBSIDY(it,"chg_v")/100] /
+                         (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+         );
+      );
+* Exports Subsidy: EXSTAB
+      IF(CHK_sim EQ CHG_SUBSIDY(it,"first"),
+        exstab(one,it)$ ((member(one)) and exstab(one,it)) = exstab_0(one,it)
+               *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                      [CHG_SUBSIDY(it,"chg_v")/100] /
+                      (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+      );
+      IF(CHK_sim GT CHG_SUBSIDY(it,"first"),
+         IF(CHK_sim LE CHG_SUBSIDY(it,"final"),
+           exstab(one,it)$ ((member(one)) and exstab(one,it)) = exstab_0(one,it)
+                  *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                         [CHG_SUBSIDY(it,"chg_v")/100] /
+                         (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+         );
+      );
+* Quantities
+      IF(CHK_sim EQ CHG_SUBSIDY(it,"first"),
+        SUBSQUANT(it)  = subsquant_0(it)
+               *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                      [CHG_SUBSIDY(it,"chg_q")/100] /
+                      (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+      );
+      IF(CHK_sim GT CHG_SUBSIDY(it,"first"),
+         IF(CHK_sim LE CHG_SUBSIDY(it,"final"),
+           SUBSQUANT(it)  = subsquant_0(it)
+                  *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                         [CHG_SUBSIDY(it,"chg_q")/100] /
+                         (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+         );
+      );
+   );
+
+
+   LOOP(trq_comm,
+* Tariff Rate Quotas
+      IF(CHK_sim EQ CHG_TRQ(trq_comm,"first"),
+        TRQ(trq_comm)  = TRQ0(trq_comm)
+               *  (1+ (CHK_sim - CHG_TRQ(trq_comm,"first")+1)*
+                      [CHG_TRQ(trq_comm,"chg")/100] /
+                      (CHG_TRQ(trq_comm,"final") - CHG_TRQ(trq_comm,"first")+1));
+      );
+      IF(CHK_sim GT CHG_TRQ(trq_comm,"first"),
+         IF(CHK_sim LE CHG_TRQ(trq_comm,"final"),
+           TRQ(trq_comm)  = TRQ0(trq_comm)
+                  *  (1+ (CHK_sim - CHG_TRQ(trq_comm,"first")+1)*
+                         [CHG_TRQ(trq_comm,"chg")/100] /
+                         (CHG_TRQ(trq_comm,"final") - CHG_TRQ(trq_comm,"first")+1));
+         );
+      );
+      chgtrq(trq_comm) = trq(trq_comm) - trq0(trq_comm);
+      chgtrq_row(trq_comm) = -chgtrq(trq_comm);
+   );
+*
+* Introduction of new TRQ for commodities without TRQ in the base period
+*
+   LOOP(pot_trq_comm,
+      IF(CHK_sim EQ intro_trq(pot_trq_comm,"first"),
+        TRQ(pot_trq_comm) =  (CHK_sim - intro_trq(pot_trq_comm,"first")+1)*
+                      [intro_trq(pot_trq_comm,"trq")] /
+                      (intro_trq(pot_trq_comm,"final") - intro_trq(pot_trq_comm,"first")+1);
+      );
+      IF(CHK_sim GT intro_trq(pot_trq_comm,"first"),
+         IF(CHK_sim LE intro_trq(pot_trq_comm,"final"),
+           TRQ(pot_trq_comm) =  (CHK_sim - intro_trq(pot_trq_comm,"first")+1)*
+                         [intro_trq(pot_trq_comm,"trq")] /
+                         (intro_trq(pot_trq_comm,"final") - intro_trq(pot_trq_comm,"first")+1);
+         );
+      );
+      chgtrq(pot_trq_comm) = trq(pot_trq_comm) - trq0(pot_trq_comm);
+      chgtrq_row(pot_trq_comm) = -chgtrq(pot_trq_comm);
+   );
+*
+*
+
+
+* Change in delayed integration into Single European Market
+   IF(ORD(sim_base) gt 1.0,
+      delay(delay_r,delay_c)  = chg_delay(delay_c,sim_base);
+   );
+
+*****************************************************
+* Setaside Requirements in the NMS                  *
+* For EU-10 never implemented                       *
+* For EU-02 never implemented                       *
+* IMPORTANT:                                        *
+* These assumptions MUST be synchronized            *
+* with the entries in the excel file SETAS-AREA.XLS *
+*                                                   *
+*                                                   *
+*                                                   *
+* Abolition of mandatory setaside from 2008 also in *
+* EU15                                              *
+*                                                   *
+*****************************************************
+   loop(eu15,
+      if((abs_setas_area(eu15,sim_base)*1000) eq 0,
+         area_int(eu15,crops)=area_int0(eu15,crops)+area_int_sft(eu15,crops);
+      );
+   );
+
+   display area_int;
+
+*==== QUOTA REGIME ====*
+   IF(CHK_sim eq 2008,
+      quota(cc,ag)$volsaq(cc,ag) = 1.3 * quota(cc,ag) ;
+   );
+   IF(CHK_sim eq 2009,
+      quota(cc,ag)$volsaq(cc,ag) = 1.4 * quota(cc,ag) ;
+   );
+* Trigger to abolish quota regime (Default value 1.0)
+   chg_quota(sim_base,cc,"milk") = chg_quota_sim1(sim_base,cc);
+   chg_quota(sim_base,cc,"sugar") = chg_quota_sim2(sim_base,cc);
+   quota(one,'milk')  = quota(one,'milk') * chg_quota(sim_base,one,'milk') ;
+   quota(one,"sugar") = quota(one,"sugar") * chg_quota(sim_base,one,"sugar");
+
+   Current_year=(ord(sim_base))+2006;
+   display current_year;
+
+*==== DIRECT PAYMENTS ====*
+
+   IF(ORD(sim_base) gt 1,
+      ENV_ART_69(EU27,comm)     =   ENV_ART_69(EU27,comm)    *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+
+      ENV_COUP_EU(EU27,CROPS)   =   ENV_COUP_EU(EU27,CROPS)  *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+      ENV_COUP_EU(EU27,LIVEST)  =   ENV_COUP_EU(EU27,LIVEST) *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+      ENV_DCNDP(EU12)           =   ENV_DCNDP(EU12)          *(1-chg_dp(eu12,sim_base)/100)* (1- defl_pol(eu12,sim_base)/100);
+      ENV_DECOUP_EU(EU27)       =   ENV_DECOUP_EU(EU27)      *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+      ENV_CNDP(EU27,comm)       =   ENV_CNDP(EU27,comm)      *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+      artificial_value(eu27)    =   artificial_value(eu27)   *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+
+* Phasing in of DP in EU12
+
+      ENV_DCNDP(EU12)           =   ENV_DCNDP(EU12)     * (1/Top_up_reduction(sim_base-1,eu12))* Top_up_reduction(sim_base,eu12);
+      ENV_CNDP(EU12,comm)       =   ENV_CNDP(EU12,comm) * (1/Top_up_reduction(sim_base-1,eu12))* Top_up_reduction(sim_base,eu12);
+      ENV_DECOUP_EU(EU12)       =   (ENV_DECOUP_EU(EU12) / phase_in_eu(sim_base-1,eu12)) * phase_in_eu(sim_base,eu12);
+
+* Art. 68 payments
+
+      ENV_ART_69(EU27,comm)     =   ENV_ART_69(EU27,comm) + (Art_change(eu27,comm,sim_base) * artificial_value(eu27));
+      display ENV_ART_69;
+
+      Loop(eu27,
+         loop(comm,
+            ABORT$(ENV_ART_69(EU27,comm) lt 0) "ART 68 payments can't be negative",env_art_69;
+         );
+      );
+
+      ENV_ART_69(EU27,comm)$(ENV_ART_69(EU27,comm) lt 0) = 0;
+
+* Coupling / Decoupling
+
+      Change_env(EU27,comm)  = (1-dp_change(EU27,comm,sim_base)) * ENV_COUP_EU(EU27,comm);
+      ENV_COUP_EU(EU27,comm) =    dp_change(EU27,comm,sim_base)  * ENV_COUP_EU(EU27,comm);
+
+
+* Change of envelope for decoupled payments
+
+      ENV_DECOUP_EU(EU27) = ENV_DECOUP_EU(EU27) + SUM(comm,Change_env(EU27,comm)) - (SUM(comm,Art_change(eu27,comm,sim_base)) * artificial_value(eu27))
+                            + (sugar_compensation(EU27,sim_base) * artificial_value(eu27));
+
+* Combination of different types of DP
+
+      OVERALL_DECOUP(EU27)       =  ((ENV_DCNDP(EU27) + ENV_DECOUP_EU(EU27)) ) * SUM(euro1, exrate(EURO1))/exrate(eu27) ;
+      OVERALL_COUP(EU27,comm)    =  (ENV_ART_69(EU27,comm) + ENV_COUP_EU(EU27,comm) + ENV_CNDP(EU27,comm)) * SUM(euro1, exrate(EURO1))/exrate(eu27) ;
+
+      display OVERALL_DECOUP  , OVERALL_COUP, Change_env , ENV_COUP_EU;
+
+      Loop(eu27,
+         ABORT$(OVERALL_DECOUP(EU27) lt 0) "DP can't be negative";
+      );
+
+      Loop(EU27,
+         loop(comm,
+            ABORT$(OVERALL_COUP(EU27,comm) lt 0) "DP can't be negative";
+         );
+      );
+
+* Closing for the if-statement starting at the beginning of Dirpay-calculation:
+   );
+
+
+*===================================
+*
+*
+*# DEFLATING OF ALL NOMINAL POLICIES *#
+*
+*
+   pay_biof = biofuel_premia(sim_base,'premia')*1000;
+   IF(ORD(sim_base) gt 1,
+      sp_d(one,it)        = sp_d(one,it)   * (1- defl_pol(one,sim_base)/100);
+      exp_sub(one,it)$member(one)     = exp_sub(one,it)* (1- defl_pol(one,sim_base)/100);
+      intpr(one,it)$member(one)       = intpr(one,it)  * (1- defl_pol(one,sim_base)/100);
+      exstab(one,it)$member(one)      = exstab(one,it)  * (1- defl_pol(one,sim_base)/100);
+      qual_ad(one,it)$member(one)     = qual_ad(one,it)  * (1- defl_pol(one,sim_base)/100);
+      thrpr(one,it)$member(one)       = thrpr(one,it)  * (1- defl_pol(one,sim_base)/100);
+
+      sp_d_0(one,it)$member(one)        = sp_d_0(one,it)   * (1- defl_pol(one,sim_base)/100);
+      exp_sub_0(one,it)$member(one)     = exp_sub_0(one,it)* (1- defl_pol(one,sim_base)/100);
+      exstab_0(one,it)$member(one)      = exstab_0(one,it)  * (1- defl_pol(one,sim_base)/100);
+      intpr0(one,it)$member(one)        = intpr0(one,it)  * (1- defl_pol(one,sim_base)/100);
+      thrpr0(one,it)$member(one)        = thrpr0(one,it)  * (1- defl_pol(one,sim_base)/100);
+      bound_tar_cc(one,switch_comm,'bound')   = bound_tar_cc(one,switch_comm,'bound') * (1- defl_pol(one,sim_base)/100);
+      bound_tar_cc(one,switch_comm,'applied')   = bound_tar_cc(one,switch_comm,'applied') * (1- defl_pol(one,sim_base)/100);
+      pay_biof                           =  pay_biof * (1- defl_pol("ge",sim_base)/100);
+
+
+
+   );
+
+*************************************************
+* STORE PARAMETER VALUES FOR CURRENT SIMULATION *
+*************************************************
+   simpar('abs_setas_area',cc,'SETASIDE',sim_base) = abs_setas_area(cc,sim_base);
+   simpar('area_factor_sug',EU27,'sugar',sim_base) = area_factor_sug(EU27);
+   simpar('area_int',EU15,crops,sim_base) = area_int(EU15,crops);
+   simpar('C_sugar_exports','EU_to',it,sim_base) = C_sugar_exports(it);
+   simpar('cap_ind',cc,'OTHER',sim_base) = cap_ind(cc);
+   simpar('ch_area',cc,'LAND',sim_base) = ch_area(cc);
+   simpar('chgtrq','EU_to',i,sim_base) = chgtrq(i);
+   simpar('exp_sub',one,comm,sim_base) = exp_sub(one, comm);
+   simpar('exrate',one,'OTHER',sim_base) = exrate(one);
+   simpar('exstab',one,comm,sim_base) = exstab(one, comm);
+   simpar('fdem_tr',cc,feed,sim_base) = fdem_tr(cc, feed);
+   simpar('hdem_tr',cc,comm,sim_base) = hdem_tr(cc,comm);
+   simpar('inc_gr',cc,'OTHER',sim_base) = inc_gr(cc);
+   simpar('int_ind',cc,'OTHER',sim_base) = int_ind(cc);
+   simpar('intpr',ccplus,comm,sim_base) = intpr(ccplus, comm);
+   simpar('lab_ind',cc,'OTHER',sim_base) = lab_ind(cc);
+   simpar('member',cc,'OTHER',sim_base) = member(cc);
+   simpar('OVERALL_COUP',ccplus,i,sim_base) = OVERALL_COUP(ccplus,i);
+   simpar('OVERALL_DECOUP',ccplus,'OTHER',sim_base) = OVERALL_DECOUP(ccplus);
+   simpar('P_UP_2_LO',cc,it,sim_base) = P_UP_2.LO(cc, it);
+   simpar('P_UP_2_UP',cc,it,sim_base) = P_UP_2.UP(cc, it);
+   P_UP_2.LO(cc, it) = -INF;
+   P_UP_2.UP(cc, it) = +INF;
+   simpar('p0',cc,comm,sim_base) = p0(cc,comm);
+   simpar('pay_biof','EU_to','OTHER',sim_base) = pay_biof;
+   simpar('pctax',cc,comm,sim_base) = pctax(cc,comm);
+   simpar('pdem_tr',cc,comm,sim_base) = pdem_tr(cc,comm);
+   simpar('pop_gr',cc,'OTHER',sim_base) = pop_gr(cc);
+   simpar('preftrq','EU_to','SUGAR',sim_base) = preftrq;
+   simpar('qual_ad',one,it,sim_base) = qual_ad(one, it);
+   simpar('quota',cc,ag,sim_base) = quota(cc, ag);
+   simpar('sp_d',one,it,sim_base) = sp_d(one, it);
+   simpar('SUBSQUANT','EU_to',it,sim_base) = SUBSQUANT(it);
+   simpar('sug_imp_exog','EU_to',it,sim_base) = sug_imp_exog(it);
+   simpar('tar_ad',one,it,sim_base) = tar_ad(one,it);
+   simpar('thrpr',one,it,sim_base) = thrpr(one,it);
+   simpar('tp_fr',cc,livest,sim_base) = tp_fr(cc, livest);
+   simpar('tp_gr',cc,ag,sim_base) = tp_gr(cc,ag);
+   simpar('TRQ','EU_to',comm,sim_base) = TRQ(comm);
+   simpar('trq_elast','EU_to','SUGAR',sim_base) = trq_elast;
+   simpar('trq_int','EU_to','SUGAR',sim_base) = trq_int;
+   simpar('trq_tc','EU_to','SUGAR',sim_base) = trq_tc;
+* end loop sim_base
+);
+
+execute_UNLOAD 'simpar.gdx', simpar, simparset;
+display simpar;
+

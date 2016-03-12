@@ -1,0 +1,2 @@
+convergence_tolerance 0.001
+nms_searchtype arc

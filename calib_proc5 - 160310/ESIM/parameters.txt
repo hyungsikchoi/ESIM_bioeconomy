@@ -1,0 +1,260 @@
+* <%PARAMETERLIST%>
+* <%LISTNAME ESIM parameter categories%>
+
+* <%ITEMNAME 1 Base%>
+* <%INFO%>
+Base parameters can't be edited.
+1 Base policies
+2 Base data
+* <%ENDINFO%>
+
+* <%ITEMNAME 1.1 Base policies%>
+* intpr
+* chg_int_pre
+* thrpr
+* chg_thresh_pre
+* premium
+* subs_ad
+* sp_d
+* exp_sub
+* subsquant
+* fdem_aid
+* hdem_aid
+* trq
+* exstab
+
+
+* <%ITEMNAME 1.2 Base data%>
+* cp
+* mrktpri0
+* hdem_b
+* prod_b
+* sdem_b
+* fdem_b
+* procdem_b
+* netexp_b
+* area_b
+* expenditure
+* exp_share
+* texp_share
+* margin0
+* subs_milk
+* population_b
+* hist_area
+* psh_mlk
+
+* <%ITEMNAME 2 Parameters%>
+* <%INFO%>
+Non-editable
+There are two types of parameters:
+1. Technical parameters
+2. Behavioral parameters
+* <%ENDINFO%>
+
+* <%ITEMNAME 2.1 Technical parameters%>
+* fedrat
+* oilsd_c
+* seed_c
+* frate_0
+* adj_recurs
+* prod_effdp
+* land_data
+* area_scaling
+* cp_eu15
+* cp_old
+* stochastics
+
+* <%ITEMNAME 2.2 Behavioral parameters%>
+* <%INFO%>
+1 Human and feed demand elasticities
+2 Processing demand elasticities
+3 Animal supply elasticities
+4 Crop supply elasticities
+* <%ENDINFO%>
+
+* <%ITEMNAME 2.2.1 Human and feed demand elasticities%>
+* elasthd_c
+* elasthd
+* elastin
+* elastfd
+
+* <%ITEMNAME 2.2.2 Processing demand elasticities%>
+* elastdm
+* elastcr
+* elast__bf_sup
+* elast__os_cru
+
+* <%ITEMNAME 2.2.3 Animal supply elasticities%>
+* elastsp
+* elast_lv_i
+* elast_lv_l
+* elast_lv_c
+* elast_lv_f
+
+
+* <%ITEMNAME 2.2.4 Crop supply elasticities%>
+* elastsp
+* elastyd
+* elast_y_i
+* elast_y_l
+* elast_a_i
+* elast_a_l
+* elast_a_c
+
+
+* <%ITEMNAME 3 Scenario%>
+* <%INFO%>
+1 Scenario policies
+2 Scenario macro assumptions
+3 Scenario biofuel related assumptions
+4 Parameters to control recursive dynamics and stochasticity
+* <%ENDINFO%>
+
+* <%ITEMNAME 3.1 Scenario policies%>
+* <%INFO%>
+1 Trade policies
+2 Domestic policies
+3 Accession policies
+4 Quotas
+* <%ENDINFO%>
+
+* <%ITEMNAME 3.1.1 Trade policies%>
+* pol_set_floor
+* pol_set_thresh
+* pol_set_tariff
+* chg_qual
+* chg_quant
+* intro_trq
+* thresh_n
+* chg_tar_v
+* chg_tar_s
+* chg_trq
+* chg_subsidy
+* endog_sug
+
+* <%ITEMNAME 3.1.2 Domestic policies%>
+* intro_premia
+* chg_dp
+* chg_premia
+* chg_setas_area
+* chg_setas_rate
+* chg_csubs
+* Implement_Art_68
+* dpchg_GE
+* dpchg_AT
+* dpchg_BE
+* dpchg_DK
+* dpchg_FI
+* dpchg_FR
+* dpchg_GR
+* dpchg_IE
+* dpchg_IT
+* dpchg_NL
+* dpchg_PT
+* dpchg_ES
+* dpchg_SW
+* dpchg_UK
+* dpchg_SI
+* artchg_GE
+* artchg_AT
+* artchg_BE
+* artchg_DK
+* artchg_FI
+* artchg_FR
+* artchg_GR
+* artchg_IE
+* artchg_IT
+* artchg_NL
+* artchg_PT
+* artchg_ES
+* artchg_SW
+* artchg_UK
+* artchg_LV
+* artchg_SI
+* artchg_LT
+* artchg_PL
+* artchg_HU
+* artchg_CZ
+* artchg_SK
+* artchg_EE
+* artchg_CY
+* artchg_MT
+* artchg_RO
+* artchg_BG
+* T_oil
+* biofuel_premia
+* saps_ha
+* sfp_ha
+* en_setas
+* DP_pols
+* abs_setas_area
+* sugar_envelop
+* chg_int
+* chg_int_ann
+
+
+* <%ITEMNAME 3.1.3 Accession policies%>
+* scenarios
+* membership
+* phase_in_eu
+* top_up_reduction
+* chg_quota_sim
+
+* <%ITEMNAME 3.1.4 Quotas%>
+* quota_mlk
+* quota_sug
+* nmsquota
+* chg_quota_sim1
+* chg_quota_sim2
+* trq_para
+* trq_para1
+
+
+* <%ITEMNAME 3.2 Scenario macro assumptions%>
+* defl_pol
+* tech_progr
+* tech_progr_fr
+* indices
+* ex_rate
+* deflation
+* income_growth
+* exrate
+* tp_gr
+* dairy_reag
+* adj_subs
+* popul_grw
+* hdem_shft
+
+* <%ITEMNAME 3.3 Scenario biofuel related assumptions%>
+* P_crude_oil
+* reduction
+* crude_oil
+* hdem_shft_bd
+* hdem_shft_eth
+* pdem_shft_bd
+* pdem_shft_eth
+* pdem_shft_os
+
+* <%ITEMNAME 3.4 Parameters to control recursive dynamics and stochasticity%>
+* adj_rec_1
+* adj_rec_2
+* adj_recurs
+
+
+
+* <%ITEMNAME 4 Results%>
+* <%INFO%>
+1 Results
+2 Results development of policies
+* <%ENDINFO%>
+
+* <%ITEMNAME 4.1 Results%>
+* r_cc
+* r_comm
+
+* <%ITEMNAME 4.2 Results development of policies%>
+* rR_THR
+* rR_INT
+* rR_TAR
+* rR_MEMBER
+* <%/PARAMETERLIST%>

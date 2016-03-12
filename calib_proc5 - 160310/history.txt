@@ -1,0 +1,3 @@
+2012-09-24: inject S. Nolte's new feed data from data_prices.gdx & data_quantities.gdx into Quantities.gdx & Prices_Policies.gdx, see ESIM\Nolte_new_feed_data
+
+

@@ -1,0 +1,666 @@
+$ONEMPTY
+
+* switch between calibration procedure and ESIM simulations (CALSIM=no: normal ESIM simulation):
+PARAMETER CALSIM /no/;
+
+* for ESIM simulations:
+* use calibrated parameter values for tp_gr, hdem_tr, pdem_tr, fdem_tr:
+PARAMETER USECALPAR /no/;
+
+* interpolating the years between base and INTERPOL_UPTO:
+PARAMETER INTERPOL2020 /no/;
+$SETGLOBAL INTERPOL_UPTO "'2011'";
+
+* consistent market balances data (output of cal_market_balancing.gms):
+$SETGLOBAL BALANCED_INPUT_FILE "./aglink_input_balanced.gdx"
+* calibration control Excel file:
+$SETGLOBAL CAL_CONTROL_FILE "../cal_control.xlsx";
+
+* check that required files exist:
+PARAMETER isBALINPUTF /0/, isCALCONTROLF /0/;
+$IF exist "%BALANCED_INPUT_FILE%" isBALINPUTF=1;
+$IF exist "%CAL_CONTROL_FILE%"    isCALCONTROLF=1;
+
+if(CALSIM OR USECALPAR,
+   if(NOT isBALINPUTF, ABORT "User error: file %BALANCED_INPUT_FILE% missing!");
+   if(NOT isCALCONTROLF, ABORT "User error: file %CAL_CONTROL_FILE% missing!");
+);
+
+SETS
+  sim_run(sim_base)        /base, 2008*2020/
+  NONEU(cc)                non-EU countries set /WB, US, ROW/
+  NONEUeurope(cc)          european countries not in the EU set /TU, HR/
+  CTRYGRP                  country aggregates /EU15, EU12, OTHER, ROW, EU/
+  EUGRP(CTRYGRP)           EU country aggregates/EU15, EU12, OTHER/
+  EU15EU12(EUGRP)          EU15 and EU12 aggregates /EU15, EU12/
+  EUGRPMEM(EUGRP,cc)       members of aggregates /EU15.set.EU15, EU12.set.EU12, OTHER.set.NONEUeurope/
+  CTRYGRPMEM(CTRYGRP,cc)   members of aggregates /EU15.set.EU15, EU12.set.EU12, OTHER.set.NONEUeurope, ROW.set.NONEU/
+  TGTSET                   /SUPPLY, TUSE, NETEXP, PW, PD/
+  PROD2INPUT(i,i)          /SOYOIL.SOYBEAN, RAPOIL.RAPSEED, SUNOIL.SUNSEED/
+  WORLD                    /WORLD/
+  INTERPOLS                /1*1000/
+  INTERPOLYEARS(SIM_BASE)  years to be interpolated before other years are solved continuously
+  INTERPOLEND(SIM_BASE)    last year of interpolation
+;
+ALIAS (INTERPOLYEARS,INTERPOLYEARS2);
+ALIAS (sim_run,sim_run2);
+
+INTERPOLEND(%INTERPOL_UPTO%) = YES;
+loop((SIM_BASE,INTERPOLEND),
+   INTERPOLYEARS(SIM_BASE)$((SIM_BASE.val<INTERPOLEND.val)$(NOT sameas(SIM_BASE,"base"))) = YES;
+);
+INTERPOLYEARS('base') = YES;
+
+* - number of interpolation steps to introduce between each pair of years:
+PARAMETER NINTERPOL /1/;
+
+* debugging parameters:
+PARAMETER
+ hdempch(EUGRP,comm)
+ demshr(EUGRP,comm,*)
+ CHK_HDEMAGG(EUGRP,comm), CHK_FDEMAGG(EUGRP,comm), CHK_PDEMAGG(EUGRP,comm), CHK_TUSEAGG(EUGRP,comm), CHK_TUSECHGAGG(EUGRP,comm),  ERR_HDEMTUSE(EUGRP,comm)
+ supplygrptest(EUGRP,comm)
+ notvalid(*,cc,comm)
+ tgtselecterr(TGTSET, CTRYGRP, COMM)  yes if target variable selected for calibration but no user input value provided
+ chk2(cc,comm)
+ simrunval(*)
+ hlp(*,cc,comm,sim_run)
+;
+
+PARAMETER
+ tgt(TGTSET, CTRYGRP, COMM, SIM_BASE) final output targets data as changes from ESIM base year (multipliers)
+;
+
+$IFTHEN EXIST "%BALANCED_INPUT_FILE%"
+$  GDXIN "%BALANCED_INPUT_FILE%"
+$  LOAD tgt=target
+$  GDXIN
+*  initialize target for base period to one:
+   tgt(TGTSET, CTRYGRP, COMM, 'base')$sum(sim_base, tgt(TGTSET, CTRYGRP, COMM, sim_base)) = 1;
+$ELSE
+   tgt(TGTSET, CTRYGRP, COMM, SIM_BASE) = 0;
+$ENDIF
+
+SETS
+  PW_CS(comm)               product calibrated to PW target
+  tPW_CS(comm,WORLD)        product calibrated to PW target (transposed)
+  TUSE_CS(EUGRP, comm)      (Calibration Set) products incl in calibration against EU demand & supply by EU country group
+  tTUSE_CS(comm, EUGRP)     products incl in calibration against EU demand & supply (transposed)
+  TUSE_CScc(cc, comm)       products incl in calibration against EU demand & supply by country
+  SUPPLY_CS(CTRYGRP, comm)  (Calibration Set) products incl in calibration against EU demand & supply by EU country group
+  tSUPPLY_CS(comm, CTRYGRP) products incl in calibration against EU demand & supply (transposed)
+  SUPPLY_CScc(cc, comm)     products incl in calibration against EU demand & supply by country
+;
+
+SET
+   SIMRESSET /SUPPLY, TUSE, HDEM, PDEM, SDEM, FDEM, FDEM_MLK, subs_milk_s, PW, PD in local currency, NETEXP, PD_euro in euro/
+   CALPARSET /'tp_gr', 'hdem_tr', 'pdem_tr', 'fdem_tr', 'tp_gr_cal', 'hdem_tr_cal', 'pdem_tr_cal', 'fdem_tr_cal'/
+   CALPARSET_ORG(CALPARSET) /'tp_gr', 'hdem_tr', 'pdem_tr', 'fdem_tr'/
+   CALPARSET_CAL(CALPARSET) /'tp_gr_cal', 'hdem_tr_cal', 'pdem_tr_cal', 'fdem_tr_cal'/
+   SHIFTTHRESHSET /small, large/
+;
+
+PARAMETER
+  solvestat(*,sim_base)                       solver and model status for each run
+  simres(SIMRESSET, ccplus, i, sim_base)      simulation results
+  simrespch(SIMRESSET, ccplus, i, sim_base)   simulation results as percentage change from base
+  simresagg(SIMRESSET, EUGRP, i, sim_base)    simulation results as percentage change from base
+  simresaggpch(SIMRESSET, EUGRP, i, sim_base) simulation results as percentage change from base
+  atLowerBound(*, ccplus, i, sim_base)        variable hits lower bound although it was positive before => might hint to a data problem
+  calpar(CALPARSET, ccplus, i, sim_base)      calibrated shifter parameters (result of calibration)
+  calparinterpol(CALPARSET, ccplus, i, sim_base, *) calibrated shifter parameters (result of calibration)
+  calparagg(CALPARSET, CTRYGRP, i, sim_base)  calibrated shifter parameters (result of calibration)
+  devtgt(SIMRESSET,*,i,sim_base)              percentage point deviations from target values (=result% - target%)
+  interpol                                    iteration of between-year interpolation
+  nointerpol                                  actual number of interpolations between-years
+  startinterpol                               iteration to start the interpol loop (0 for all other than 'base')
+  rest_quota(cc,comm,sim_base)                quota minus supply
+  rest_quota_agg(EUGRP,comm,sim_base)         quota minus supply
+  quota_agg(EUGRP,comm,sim_base)              aggregate country group quota
+  atQuota(cc,comm,sim_base)                   1 for commodities at quota
+  quota_toggle(cc,comm,sim_base)              1 for quota active otherwise 0
+  shifterAlert(CALPARSET, CTRYGRP, COMM, SIM_BASE)    displays "small" and "large" shifters respectively
+  shifterThreshold(CALPARSET,SHIFTTHRESHSET)  thresholds for defining "small" and "large" shifters
+  simControl(sim_base,*)                      control simulation runs: select years to simulte. interpolations per year.
+;
+* init parameters:
+simres(SIMRESSET, ccplus, i, sim_base) = 0;
+calpar(CALPARSET, ccplus, i, sim_base) = 0;
+calparinterpol(CALPARSET, ccplus, i, sim_base, INTERPOLS) = 0;
+calparagg(CALPARSET, CTRYGRP, i, sim_base) = 0;
+
+$IFTHEN EXIST "%CAL_CONTROL_FILE%"
+$  CALL GDXXRW.EXE "%CAL_CONTROL_FILE%" par=simControl rng="Simulation control"!A2 dim=2 rdim=1   par=shifterThreshold rng="Shifter alerting"! dim=2 rdim=1   set=tTUSE_CS rng=TUSE_CS! dim=2 rdim=1   set=tSUPPLY_CS rng=SUPPLY_CS! dim=2 rdim=1   set=tPW_CS rng=PW_CS! dim=2 rdim=1 output="./cal_control.gdx"
+$  GDXIN "./cal_control.gdx"
+$  LOAD simControl shifterThreshold tTUSE_CS tSUPPLY_CS tPW_CS
+$  GDXIN
+$ELSE
+   tPW_CS(comm,WORLD) = 0;
+   tTUSE_CS(comm,EUGRP) = 0;
+   tSUPPLY_CS(comm,CTRYGRP) = 0;
+   simControl(sim_base,'interpolations') = 1;
+   shifterThreshold(CALPARSET,SHIFTTHRESHSET) = 0;
+$ENDIF
+
+PW_CS(comm) = tPW_CS(comm,'WORLD');
+TUSE_CS(EUGRP,comm) = tTUSE_CS(comm,EUGRP);
+TUSE_CScc(cc,comm) = SUM(EUGRPMEM(EUGRP,cc), TUSE_CS(EUGRP,comm));
+SUPPLY_CS(EUGRP,comm) = tSUPPLY_CS(comm,EUGRP);
+SUPPLY_CScc(cc,comm) = SUM(EUGRPMEM(EUGRP,cc), SUPPLY_CS(EUGRP,comm));
+
+$IFTHEN EXIST "%BALANCED_INPUT_FILE%"
+*  check user input for missing values:
+*  error if target is selected for calibration but no target value is provided:
+   tgtselecterr('PW', 'ROW', COMM) = sum(SIM_RUN$(NOT sameas(SIM_RUN,'base')), PW_CS(COMM) AND NOT (tgt('PW','ROW',COMM,sim_run){ OR IT(COMM)}))=CARD(SIM_RUN)-1;
+   tgtselecterr('SUPPLY', EUGRP, COMM) = sum(SIM_RUN$(NOT sameas(SIM_RUN,'base')), SUPPLY_CS(EUGRP,COMM) AND NOT tgt('SUPPLY',EUGRP,COMM,sim_run))=CARD(SIM_RUN)-1;
+   tgtselecterr('TUSE', EUGRP, COMM) = sum(SIM_RUN$(NOT sameas(SIM_RUN,'base')), TUSE_CS(EUGRP,COMM) AND NOT tgt('TUSE',EUGRP,COMM,sim_run))=CARD(SIM_RUN)-1;
+   if (sum((TGTSET, CTRYGRP, COMM), tgtselecterr(TGTSET, CTRYGRP, COMM)),
+      ABORT "USER INPUT ERROR: A target variable & commodity & region has been selected for calibration without providing at least one target value<>0!", tgtselecterr;
+   );
+$ENDIF
+
+
+SUPPLY.up("nl","milk")=   +INF;
+SUPPLY.up("be","milk")=   +INF;
+SUPPLY.up("dk","milk")=   +INF;
+
+* modified ESIM model for baseline parameter calibration:
+$include "cal_model.gms"
+
+if (CALSIM,
+* init calibration variables:
+   TP_GR_NONEU.l(it) = 1;
+   TP_GR_NONEU.FX(it)$(NOT PW_CS(it)) = 1;
+   TP_GR_NONEU.FX(it)$(ENERG(it) OR OSPRO(it) OR ETH_PRO(it) OR MLKPROC(it)) = 0;
+
+   PDEM_TR_NONEU_BF.L(it)$(ENERG(it) AND PW_CS(it)) = 1;
+   PDEM_TR_NONEU_BF.FX(it)$(NOT PDEM_TR_NONEU_BF.L(it)) = 0;
+
+   PDEM_TR_NONEU_OIL.L(it) = 0;
+   PDEM_TR_NONEU_OIL.L(it)$(sum((it1,NONEU(cc)), PROD2INPUT(it1,it) AND PROC_OIL(cc,it) AND PW_CS(it1))) = 1;
+   PDEM_TR_NONEU_OIL.FX(it)$(NOT PDEM_TR_NONEU_OIL.L(it)) = 0;
+
+   HDEM_TR_EU.L(cc,comm) = 1;
+   HDEM_TR_EU.FX(cc,comm)$((NOT TUSE_CScc(cc,comm)) OR NONEU(cc)  ) = 0;
+
+   HDEM_TR_EUGRP.L(EUGRP,comm)$(TUSE_CS(EUGRP, comm)  ) = 1;
+   HDEM_TR_EUGRP.FX(EUGRP,comm)$(NOT TUSE_CS(EUGRP,comm)  ) = 0;
+
+   FDEM_TR_EU.L(cc,comm) = 1;
+   FDEM_TR_EU.FX(cc,comm)$((NOT TUSE_CScc(cc,comm)) OR (NOT FEED(comm))) = 0;
+
+   FDEM_TR_EUGRP.L(EUGRP,comm) = 1;
+   FDEM_TR_EUGRP.FX(EUGRP,comm)$((NOT TUSE_CS(EUGRP,comm)) OR (NOT FEED(comm))) = 0;
+
+   TP_GR_EU.L(cc,comm) = 1;
+   TP_GR_EU.FX(cc,comm)$( NOT SUPPLY_CScc(cc,comm)
+                 OR ENERG(comm) OR OIL(comm) OR MLKPROC(comm)) = 0;
+
+   TP_GR_EUGRP.L(EUGRP,comm) = 1;
+   TP_GR_EUGRP.FX(EUGRP,comm)$( NOT SUPPLY_CS(EUGRP,comm)
+                 OR ENERG(comm) OR OIL(comm)  OR MLKPROC(comm) ) = 0;
+
+   PDEM_TR_CAL.L(cc,comm)$( (PROC_OIL(cc,comm) AND sum(PROD2INPUT(comm1,comm),SUPPLY_CScc(cc,comm1)))
+                            OR (SUPPLY_CScc(cc,comm) AND ENERG(comm))
+                            OR (SUPPLY_CScc(cc,comm) AND MLKPROC(comm))
+                            OR (PW_CS(comm) AND NONEU(cc) AND MLKPROC(comm))   ) = 1;
+   PDEM_TR_CAL.FX(cc,comm)$(NOT PDEM_TR_CAL.L(cc,comm)) = 0;
+
+   PDEM_TR_CALGRP.L(CTRYGRP,comm) = 1;
+   PDEM_TR_CALGRP.FX(CTRYGRP,comm)$(sum(CTRYGRPMEM(CTRYGRP,cc), PDEM_TR_CAL.L(cc,comm)=1)=0) = 0;
+
+else
+*  read in calibrated efficiency parameter set:
+   execute_load 'calpar.gdx' calpar;
+   execute_load 'calparinterpol.gdx' calparinterpol;
+);
+
+
+SET QUOTA_YEARS(sim_base) years when quota applied /base, 2008*2014/;
+quota_toggle(eu27,'sugar',QUOTA_YEARS) = 1;
+*quota_toggle(eu27,'sugar','base') = 1;
+quota_toggle('TU','sugar',sim_base) = 1;
+quota_toggle(eu27,'milk',QUOTA_YEARS) = 1;
+quota_toggle(eu15,'setaside',sim_base) = 1;
+*quota_toggle(eu27,'milk',sim_base) = 1;
+
+* IPTS provided maximum production capacities of NL, BE, DK. Implemented as quotas:
+simpar('quota','nl','milk',sim_run)= min(simpar('quota','nl','milk',sim_run), 13074);
+simpar('quota','be','milk',sim_run)= min(simpar('quota','be','milk',sim_run), 3498);
+simpar('quota','dk','milk',sim_run)= min(simpar('quota','dk','milk',sim_run), 5535.6);
+quota_toggle('nl','milk',sim_run) = 1;
+quota_toggle('be','milk',sim_run) = 1;
+quota_toggle('dk','milk',sim_run) = 1;
+
+
+BASELINECALIB.optfile = 1;
+ESIMMCP.optfile = 1;
+
+* start of simulation / calibration loop:
+LOOP(sim_run,
+*  read in macro and policy parameters for period sim_run:
+   abs_setas_area(cc,sim_run) = simpar('abs_setas_area',cc,'SETASIDE',sim_run);
+   area_factor_sug(EU27) = simpar('area_factor_sug',EU27,'sugar',sim_run);
+   area_int(EU15,crops) = simpar('area_int',EU15,crops,sim_run);
+   C_sugar_exports(it) = simpar('C_sugar_exports','EU_to',it,sim_run);
+   cap_ind(cc) = simpar('cap_ind',cc,'OTHER',sim_run);
+   ch_area(cc) = simpar('ch_area',cc,'LAND',sim_run);
+   chgtrq(i) = simpar('chgtrq','EU_to',i,sim_run);
+   exp_sub(one, comm) = simpar('exp_sub',one,comm,sim_run);
+   exrate(one) = simpar('exrate',one,'OTHER',sim_run);
+   exstab(one, comm) = simpar('exstab',one,comm,sim_run);
+   fdem_tr(cc, feed) = simpar('fdem_tr',cc,feed,sim_run);
+   hdem_tr(cc,comm) = simpar('hdem_tr',cc,comm,sim_run);
+   inc_gr(cc) = simpar('inc_gr',cc,'OTHER',sim_run);
+   int_ind(cc) = simpar('int_ind',cc,'OTHER',sim_run);
+   intpr(ccplus, comm) = simpar('intpr',ccplus,comm,sim_run);
+   lab_ind(cc) = simpar('lab_ind',cc,'OTHER',sim_run);
+   OVERALL_COUP(ccplus,i) = simpar('OVERALL_COUP',ccplus,i,sim_run);
+   OVERALL_DECOUP(ccplus) = simpar('OVERALL_DECOUP',ccplus,'OTHER',sim_run);
+   P_UP_2.LO(cc, it) = simpar('P_UP_2_LO',cc,it,sim_run);
+   P_UP_2.UP(cc, it) = simpar('P_UP_2_UP',cc,it,sim_run);
+   p0(cc,comm) = simpar('p0',cc,comm,sim_run);
+   pay_biof = simpar('pay_biof','EU_to','OTHER',sim_run);
+   pctax(cc,comm) = simpar('pctax',cc,comm,sim_run);
+   pdem_tr(cc,comm) = simpar('pdem_tr',cc,comm,sim_run);
+   pop_gr(cc) = simpar('pop_gr',cc,'OTHER',sim_run);
+   preftrq = simpar('preftrq','EU_to','SUGAR',sim_run);
+   qual_ad(one, it) = simpar('qual_ad',one,it,sim_run);
+   quota(cc, ag) = simpar('quota',cc,ag,sim_run);
+   sp_d(one, it) = simpar('sp_d',one,it,sim_run);
+   SUBSQUANT(it) = simpar('SUBSQUANT','EU_to',it,sim_run);
+   sug_imp_exog(it) = simpar('sug_imp_exog','EU_to',it,sim_run);
+   tar_ad(one,it) = simpar('tar_ad',one,it,sim_run);
+   thrpr(one,it) = simpar('thrpr',one,it,sim_run);
+   tp_fr(cc, livest) = simpar('tp_fr',cc,livest,sim_run);
+   tp_gr(cc,ag) = simpar('tp_gr',cc,ag,sim_run);
+   TRQ(comm) = simpar('TRQ','EU_to',comm,sim_run);
+   trq_elast = simpar('trq_elast','EU_to','SUGAR',sim_run);
+   trq_int = simpar('trq_int','EU_to','SUGAR',sim_run);
+   trq_tc = simpar('trq_tc','EU_to','SUGAR',sim_run);
+   
+
+
+*+++++++++++++++++++++++++++++++++
+*  derive sets for quota products:
+   NQ(REST,COMM)        = YES$(NOT simpar('quota',REST,COMM,'base')*quota_toggle(REST,COMM,sim_run));
+   NQ(ONE,COMM)         = YES$(NOT simpar('quota',ONE,COMM,'base')*quota_toggle(ONE,COMM,sim_run));
+   QU(ONE,COMM)         = YES$(simpar('quota',ONE,COMM,'base')*quota_toggle(ONE,COMM,sim_run));
+   QU_NOSA(ONE,"SUGAR") = YES$(simpar('quota',ONE,'SUGAR','base')*quota_toggle(ONE,'SUGAR',sim_run));
+   QU_NOSA(ONE,"MILK")  = YES$(simpar('quota',ONE,'MILK','base')*quota_toggle(ONE,'MILK',sim_run));
+   QU_SUGAR(ONE,"SUGAR")= YES$(simpar('quota',ONE,'SUGAR','base')*quota_toggle(ONE,'SUGAR',sim_run));
+   QU_S(ONE)            = YES$(simpar('quota',ONE,'SUGAR','base')*quota_toggle(ONE,'SUGAR',sim_run));
+   NQ_S(CC)             = NOT QU_S(CC);
+   QU_M(ONE)          = YES$(simpar('quota',ONE,'SUGAR','base')*quota_toggle(ONE,'SUGAR',sim_run));
+   NQ_M(CC)           = NOT QU_M(CC);
+*+++++++++++++++++++++++++++++++++
+
+   if (NOT sameas(sim_run,'base'),
+      QUOTARENT.FX(cc,comm)$(NOT QU(cc,comm)) = 0;
+      QUOTARENT.LO(cc,comm)$(QU(cc,comm)) = 0;
+      QUOTARENT.UP(cc,comm)$(QU(cc,comm)) = +INF;
+      SUPPLY.LO(cc,comm)$(QU(cc,comm)) = 0;
+      SUPPLY.UP(cc,comm)$(QU(cc,comm)) = +INF;
+   );
+
+*  derive additional policy variables and sets from policy input data:
+   IF(ORD(sim_run) eq 1.0,
+      pd_t1(cc,ag) = pd.l(cc,ag);
+      pd_t2(cc,ag) = pd.l(cc,ag);
+   );
+
+   IF(ORD(sim_run) gt 1.0,
+      pd_t2(cc,ag)   = pd_t1(cc,ag);
+      pd_t1(cc,ag)   = pd.l(cc,ag);
+   );
+
+   CHK_sim = 2006 + ORD(sim_run);
+
+*  ===============================*
+*  STRUCTURING POLICY SCENARIOS  *
+*  ===============================*
+
+*
+*  === Accession scenarios ===
+*
+
+   nms(one)      =    YES$(membership(one,sim_run) eq 1 and not eu27(one));
+   member(one)   =    YES$(membership(one,sim_run) eq 1);
+   nomember(one) =    YES$(membership(one,sim_run) ne 1);
+
+   tradeshr.fx(one,it)$(nms(one)  and (membership(one,sim_run-1) eq 0.0)) = 0.0;
+
+*  Revision of set in price formation mechanism (if required)
+   LOOP(switch_comm,
+      IF(ORD(sim_run) gt 1,
+         IF(pol_set_thresh(switch_comm,sim_run) - pol_set_thresh(switch_comm,sim_run-1) ne 0.0,
+            FLOOR(switch_comm)  = 0.0;
+            THRESH(switch_comm) = 0.0;
+            TAR(switch_comm)    = 0.0;
+
+            FLOOR(switch_comm)  = YES$(POL_SET(switch_comm,sim_run,"FLOOR"));
+            THRESH(switch_comm) = YES$(POL_SET(switch_comm,sim_run,"THRESH"));
+            TAR(switch_comm)    = YES$(POL_SET(switch_comm,sim_run,"TARIFF"));
+         );
+      );
+   );
+
+   SUBSHR_EU.UP(it) = +inf;
+   SUBSHR_EU.LO(it) = -inf;
+   SUBSHR_EU.FX(it)$(SUBSQUANT(it) EQ 0.0)          = 0.0;
+
+   TRQSHR_EU.UP(trq_comm) = +inf;
+   TRQSHR_EU.LO(trq_comm) = -inf;
+   TRQSHR_EU.FX(trq_comm)$(TRQ(trq_comm) EQ 0.0)          = 0.0;
+   TRQSHR_EU.UP(pot_trq_comm) = +inf;
+   TRQSHR_EU.LO(pot_trq_comm) = -inf;
+   TRQSHR_EU.FX(pot_trq_comm)$(TRQ(pot_trq_comm) EQ 0.0)          = 0.0;
+******************************************************
+*  Setaside Requirements in the NMS                  *
+*  For EU-10 never implemented                       *
+*  For EU-02 never implemented                       *
+*  IMPORTANT:                                        *
+*  These assumptions MUST be synchronized            *
+*  with the entries in the excel file SETAS-AREA.XLS *
+*                                                    *
+*                                                    *
+*                                                    *
+*  Abolition of mandatory setaside from 2008 also in *
+*  EU15                                              *
+*                                                    *
+******************************************************
+
+*  Setaside Requirements
+   OBLSETAS.FX(eu15)$(abs_setas_area(eu15,sim_run) eq 0.0) = 0;
+   OBLSETAS.UP(eu15)$(abs_setas_area(eu15,sim_run) gt 0.0) = +INF;
+   OBLSETAS.LO(eu15)$(abs_setas_area(eu15,sim_run) gt 0.0) = 0;
+   IF((NOT sameas(sim_run, "base")),
+      OBLSETAS.l(eu15) = abs_setas_area(eu15,sim_run)*1000;
+   );
+   Current_year=(ord(sim_run))+2006;
+   display current_year;
+
+   chk2(EU27, CROPS)$SUPPLY.l(EU27,CROPS) = (ALAREA.l(EU27,CROPS)=0);
+   Dirpay_check(EU27,CROPS)$SUPPLY.l(EU27,CROPS) = OVERALL_DECOUP(EU27)/(sum(CROPS1,ALAREA.l(EU27,CROPS1))) + (OVERALL_COUP(EU27,CROPS)/ALAREA.l(EU27,CROPS));
+   Dirpay_check(EU27,LIVEST)= OVERALL_COUP(EU27,LIVEST) / SUPPLY.l(EU27,LIVEST);
+   DIRPAY.UP(cc,comm)          = +inf;
+   DIRPAY.LO(cc,comm)          = -inf;
+   DIRPAY.FX(cc,comm)$(Dirpay_check(cc,comm) EQ 0.0)  = 0.0;
+
+   options iterlim=10000000, reslim=1000000;
+   options limcol=3, limrow=3;
+
+   if(sameas(sim_run, 'base'), nointerpol=1; startinterpol=1; else nointerpol=simControl(sim_run,'interpolations'); startinterpol=1);
+   for (interpol=startinterpol to nointerpol,
+      if (CALSIM,
+*        simulation to calibrate to given world market prices and EU market balances:
+         if(sameas(sim_run, 'base'),
+            TUSEGRP.FX(EUGRP,comm)$TUSE_CS(EUGRP, comm) = sum(EUGRPMEM(EUGRP,cc), TUSE.L(cc,comm) );
+            SUPPLYGRP.FX(EUGRP,comm)$SUPPLY_CS(EUGRP, comm) = sum(EUGRPMEM(EUGRP,cc), SUPPLY.L(cc,comm) );
+            PW.FX(it)$PW_CS(it) = PW.L(it);
+         else
+*           fix country group target variables at desired values:
+            PW.FX(it)$PW_CS(it) = (sum(sim_run2$(ord(sim_run2)=(ord(sim_run)-1)),tgt('PW','ROW',it,sim_run2))
+                            + (tgt('PW','ROW',it,sim_run)-sum(sim_run2$(ord(sim_run2)=(ord(sim_run)-1)),tgt('PW','ROW',it,sim_run2)))
+                               * (interpol/nointerpol) ) * simres('PW','ROW',it,'base');
+            TUSEGRP.FX(EU15EU12,comm)$TUSE_CS(EU15EU12, comm) = (sum(sim_run2$(ord(sim_run2) eq (ord(sim_run)-1)),tgt('TUSE',EU15EU12,comm,sim_run2))
+                            + (tgt('TUSE',EU15EU12,comm,sim_run)-sum(sim_run2$(ord(sim_run2) eq (ord(sim_run)-1)),tgt('TUSE',EU15EU12,comm,sim_run2)))
+                               * (interpol/nointerpol) ) * sum(EUGRPMEM(EU15EU12,cc), simres('TUSE',cc,comm,'base') );
+            SUPPLYGRP.FX(EU15EU12,comm)$SUPPLY_CS(EU15EU12, comm) = (sum(sim_run2$(ord(sim_run2) eq (ord(sim_run)-1)),tgt('SUPPLY',EU15EU12,comm,sim_run2))
+                            + (tgt('SUPPLY',EU15EU12,comm,sim_run)-sum(sim_run2$(ord(sim_run2) eq (ord(sim_run)-1)),tgt('SUPPLY',EU15EU12,comm,sim_run2)))
+                               * (interpol/nointerpol) ) * sum(EUGRPMEM(EU15EU12,cc), simres('SUPPLY',cc,comm,'base') );
+         );
+
+* do some checks on the target input data:
+$INCLUDE cal_inputchk.gms
+
+*        calibrate:
+         SOLVE BASELINECALIB using MCP ;
+         solvestat('Model-status',sim_run) =  BASELINECALIB.MODELSTAT;
+         solvestat('Solver-status',sim_run) = BASELINECALIB.SOLVESTAT;
+         BASELINECALIB.MODELSTAT = 0;
+         BASELINECALIB.SOLVESTAT = 0;
+      else
+*        normal ESIM simulation using the calibrated parameter set
+         if (USECALPAR,
+*           apply calibrated efficiency parameter set:
+            if(sameas(sim_run,'base'),
+               tp_gr(cc,comm)$(calpar('tp_gr_cal', cc, comm, sim_run)) = tp_gr(cc,comm) * calpar('tp_gr_cal', cc, comm, sim_run);
+               hdem_tr(cc,comm)$(calpar('hdem_tr_cal', cc, comm, sim_run)) = hdem_tr(cc,comm) * calpar('hdem_tr_cal', cc, comm, sim_run);
+               pdem_tr(cc,comm)$(calpar('pdem_tr_cal', cc, comm, sim_run)) = pdem_tr(cc,comm) * calpar('pdem_tr_cal', cc, comm, sim_run);
+               fdem_tr(cc,comm)$(calpar('fdem_tr_cal', cc, comm, sim_run)) = fdem_tr(cc,comm) * calpar('fdem_tr_cal', cc, comm, sim_run);
+            else
+               loop(INTERPOLS$(INTERPOLS.val=interpol),
+                  calparinterpol(CALPARSET_CAL, cc, comm, sim_base, INTERPOLS)$(NOT calparinterpol(CALPARSET_CAL, cc, comm, sim_base, INTERPOLS)) = 1;
+                  tp_gr(cc,comm) = calparinterpol('tp_gr', cc, comm, sim_run, INTERPOLS) * calparinterpol('tp_gr_cal', cc, comm, sim_run, INTERPOLS);
+                  hdem_tr(cc,comm) = calparinterpol('hdem_tr', cc, comm, sim_run, INTERPOLS) * calparinterpol('hdem_tr_cal', cc, comm, sim_run, INTERPOLS);
+                  pdem_tr(cc,comm) = calparinterpol('pdem_tr', cc, comm, sim_run, INTERPOLS) * calparinterpol('pdem_tr_cal', cc, comm, sim_run, INTERPOLS);
+                  fdem_tr(cc,comm) = calparinterpol('fdem_tr', cc, comm, sim_run, INTERPOLS) * calparinterpol('fdem_tr_cal', cc, comm, sim_run, INTERPOLS);
+               );
+            );
+         );
+*         display tp_gr, hdem_tr, pdem_tr, fdem_tr;
+*        regular policy simulation with ESIM model:
+         SOLVE ESIMMCP using MCP;
+         solvestat('Model-status',sim_run) =  ESIMMCP.MODELSTAT;
+         solvestat('Solver-status',sim_run) = ESIMMCP.SOLVESTAT;
+         ESIMMCP.MODELSTAT = 0;
+         ESIMMCP.SOLVESTAT = 0;
+      );
+
+*     check if some variables hit their lower bounds which could hint to data problems:
+*     if a variable is shown for 'base', it means that the variable is not zero but at its lower bound in the base data.
+      atLowerBound('SUPPLY', cc, comm, sim_run)$(PROD0(cc, comm) AND (SUPPLY.L(cc, comm) <= max(0, SUPPLY.LO(cc,comm)))) = max(EPS, SUPPLY.LO(cc,comm));
+      atLowerBound('TUSE', cc, comm, sim_run)$(TUSE0(cc, comm) AND (TUSE.L(cc, comm) <= max(0,TUSE.LO(cc,comm)))) = max(EPS, TUSE.LO(cc,comm));
+      atLowerBound('HDEM', cc, comm, sim_run)$(HDEM0(cc, comm) AND (HDEM.L(cc, comm) <= max(0,HDEM.LO(cc,comm)))) = max(EPS, HDEM.LO(cc,comm));
+      atLowerBound('PDEM', cc, comm, sim_run)$(PDEM0(cc, comm) AND (PDEM.L(cc, comm) <= max(0,PDEM.LO(cc,comm)))) = max(EPS, PDEM.LO(cc,comm));
+      atLowerBound('FDEM', cc, comm, sim_run)$(FDEM0(cc, comm) AND (FDEM.L(cc, comm) <= max(0,FDEM.LO(cc,comm)))) = max(EPS, FDEM.LO(cc,comm));
+      atLowerBound('YIELD', cc, comm, sim_run)$(YIELD0(cc, comm) AND (YIELD.L(cc, comm) <= max(0,YIELD.LO(cc,comm)))) = max(EPS, YIELD.LO(cc,comm));
+      atLowerBound('ALAREA', cc, comm, sim_run)$(AREA0(cc, comm)/scaler AND (ALAREA.L(cc, comm) <= max(0,ALAREA.LO(cc,comm)))) = max(EPS, ALAREA.LO(cc,comm));
+
+*      display atLowerBound;
+
+      rest_quota(cc,comm,sim_run)$QU(cc,comm) = quota(cc,comm) - SUPPLY.L(cc,comm) + ( subs_milk_s(cc,comm) + FDEM_MLK.L(cc,comm) )$sameas(comm,'milk');
+      rest_quota(cc,comm,sim_run) = round(rest_quota(cc,comm,sim_run),3);
+      atQuota(cc,comm,sim_run)$(QU(cc,comm) AND (rest_quota(cc,comm,sim_run)<=0.001)) = yes;
+      rest_quota_agg(EUGRP, comm, sim_run) = sum(EUGRPMEM(EUGRP,cc),rest_quota(cc,comm,sim_run));
+*      display rest_quota, rest_quota_agg, atQuota;
+
+      if (solvestat('Model-status',sim_run)<>1,
+         display "Model did not solve! Skipping to next sim_run.";
+         interpol=nointerpol+1;
+      );
+
+      if (CALSIM,
+*        save shifter results for every interpolation step:
+         loop(INTERPOLS$(INTERPOLS.val=interpol),
+            calparinterpol('tp_gr', cc, comm, sim_run, INTERPOLS) = tp_gr(cc,comm);
+            calparinterpol('hdem_tr', cc, comm, sim_run, INTERPOLS) = hdem_tr(cc,comm);
+            calparinterpol('pdem_tr', cc, comm, sim_run, INTERPOLS) = pdem_tr(cc,comm);
+            calparinterpol('fdem_tr', cc, comm, sim_run, INTERPOLS) = fdem_tr(cc,comm);
+
+            calparinterpol('tp_gr_cal', cc, comm, sim_run, INTERPOLS)$SUPPLY_CScc(cc, comm) = TP_GR_EU.L(cc, comm);
+            calparinterpol('tp_gr_cal', cc, comm, sim_run, INTERPOLS)$(PW_CS(comm) AND NONEU(cc)) = TP_GR_NONEU.L(comm);
+            calparinterpol('hdem_tr_cal', cc, comm, sim_run, INTERPOLS)$TUSE_CScc(cc,comm) = HDEM_TR_EU.L(cc, comm);
+            calparinterpol('pdem_tr_cal', cc, comm, sim_run, INTERPOLS) = PDEM_TR_CAL.L(cc, comm);
+            calparinterpol('pdem_tr_cal', cc, it, sim_run, INTERPOLS)$(PW_CS(it) AND NONEU(cc) AND OILSEED(it)) = PDEM_TR_NONEU_OIL.L(it);
+            calparinterpol('pdem_tr_cal', cc, it, sim_run, INTERPOLS)$(PW_CS(it) AND NONEU(cc) AND ENERG(it)) = PDEM_TR_NONEU_BF.L(it);
+            calparinterpol('fdem_tr_cal', cc, comm, sim_run, INTERPOLS)$TUSE_CScc(cc,comm) = FDEM_TR_EU.L(cc, comm);
+         );
+      );
+*  end of LOOP interpol
+   );
+
+*   display TP_GR_EU.L, TP_GR_EUGRP.L, TP_GR_NONEU.L, PDEM_TR_NONEU_BF.L, PDEM_TR_NONEU_OIL.L, HDEM_TR_EU.L, HDEM_TR_EUGRP.L, FDEM_TR_EU.L, FDEM_TR_EUGRP.L, PDEM_TR_CALGRP.L, SUPPLYGRP.L, TUSEGRP.L;
+
+*  write results:
+   simres(SIMRESSET,cc,comm,sim_run) = 0;
+   simres('SUPPLY',cc, comm, sim_run) = SUPPLY.L(cc, comm);
+   simres('TUSE',cc, comm, sim_run) = TUSE.L(cc, comm);
+   simres('HDEM',cc, comm, sim_run) = HDEM.L(cc, comm);
+   simres('PDEM',cc, comm, sim_run) = PDEM.L(cc, comm);
+   simres('SDEM',cc, comm, sim_run) = SDEM.L(cc, comm);
+   simres('FDEM',cc, comm, sim_run) = FDEM.L(cc, comm);
+   simres('FDEM_MLK',cc, comm, sim_run) = FDEM_MLK.L(cc, comm);
+   simres('subs_milk_s',cc, comm, sim_run) = subs_milk_s(cc, comm);
+   simres('PD',cc, comm, sim_run) = PD.L(cc, comm);
+   simres('PW','ROW', it, sim_run) = PW.L(it);
+   simres('NETEXP',cc, comm, sim_run) = NETEXP.L(cc, comm);
+   simres('PD_euro',cc, comm, sim_run) = PD.L(cc, comm)*exrate(cc)/SUM(euro1, exrate(euro1));
+
+   if (INTERPOL2020,
+*     interpolate to 2020 targets:
+      loop(INTERPOLYEARS,
+         simresagg(SIMRESSET, EUGRP, i, sim_run) = sum(EUGRPMEM(EUGRP,cc), simres(SIMRESSET, cc, i, sim_run));
+         tgt('SUPPLY', EU15EU12, COMM, INTERPOLYEARS)$(NOT sameas(INTERPOLYEARS, 'base') AND tgt('SUPPLY', EU15EU12, COMM, %INTERPOL_UPTO%)) =
+                       1+ (INTERPOLYEARS.pos-1)*(tgt('SUPPLY', EU15EU12, COMM, %INTERPOL_UPTO%)-1)/(CARD(INTERPOLYEARS)-1);
+         tgt('TUSE', EU15EU12, COMM, INTERPOLYEARS)$(NOT sameas(INTERPOLYEARS, 'base') AND tgt('TUSE', EU15EU12, COMM, %INTERPOL_UPTO%)) =
+                       1+ (INTERPOLYEARS.pos-1)*(tgt('TUSE', EU15EU12, COMM, %INTERPOL_UPTO%)-1)/(CARD(INTERPOLYEARS)-1);
+         tgt('NETEXP', EU15EU12, COMM, INTERPOLYEARS)$(NOT sameas(INTERPOLYEARS, 'base') AND tgt('NETEXP', EU15EU12, COMM, %INTERPOL_UPTO%)) =
+                       1+ (INTERPOLYEARS.pos-1)*(tgt('NETEXP', EU15EU12, COMM, %INTERPOL_UPTO%)-1)/(CARD(INTERPOLYEARS)-1);
+         tgt('PW', 'ROW', COMM, INTERPOLYEARS)$(NOT sameas(INTERPOLYEARS, 'base') AND tgt('PW', 'ROW', COMM, %INTERPOL_UPTO%)) =
+                       1+ (INTERPOLYEARS.pos-1)*(tgt('PW', 'ROW', COMM, %INTERPOL_UPTO%)-1)/(CARD(INTERPOLYEARS)-1);
+      );
+   );
+*    store target percentage changes::
+   devtgt('PW','ROW',it,sim_run)$PW_CS(it) = (tgt('PW','ROW',it,sim_run)-1)*100;
+   devtgt('SUPPLY',EU15EU12,comm,sim_run)$SUPPLY_CS(EU15EU12, comm) = (tgt('SUPPLY',EU15EU12,comm,sim_run)-1)*100;
+   devtgt('TUSE',EU15EU12,comm,sim_run)$TUSE_CS(EU15EU12, comm) = (tgt('TUSE',EU15EU12,comm,sim_run)-1)*100;
+   devtgt('NETEXP',EU15EU12,comm,sim_run)$(TUSE_CS(EU15EU12, comm) AND SUPPLY_CS(EU15EU12, comm) AND sum(sim_run2, tgt('NETEXP',EU15EU12,comm,sim_run2))) =
+                                            (tgt('NETEXP',EU15EU12,comm,sim_run)-1)*100;
+
+   if (CALSIM,
+*     write calibrated parameter sets:
+      calparagg('tp_gr_cal', EUGRP, comm, sim_run) = TP_GR_EUGRP.L(EUGRP, comm);
+      calparagg('tp_gr_cal', 'ROW', comm, sim_run) = TP_GR_NONEU.L(comm);
+      calparagg('hdem_tr_cal', EUGRP, comm, sim_run) = HDEM_TR_EUGRP.L(EUGRP, comm);
+      calparagg('pdem_tr_cal', CTRYGRP, comm, sim_run) = PDEM_TR_CALGRP.L(CTRYGRP, comm);
+      calparagg('pdem_tr_cal', 'ROW', it, sim_run)$(PW_CS(it) AND OILSEED(it)) = PDEM_TR_NONEU_OIL.L(it);
+      calparagg('pdem_tr_cal', 'ROW', it, sim_run)$(PW_CS(it) AND ENERG(it)) = PDEM_TR_NONEU_BF.L(it);
+      calparagg('fdem_tr_cal', EUGRP, comm, sim_run)$TUSE_CS(EUGRP,comm) = FDEM_TR_EUGRP.L(EUGRP, comm);
+
+      calpar('tp_gr', cc, comm, sim_run) = tp_gr(cc,comm);
+      calpar('hdem_tr', cc, comm, sim_run) = hdem_tr(cc,comm);
+      calpar('pdem_tr', cc, comm, sim_run) = pdem_tr(cc,comm);
+      calpar('fdem_tr', cc, comm, sim_run) = fdem_tr(cc,comm);
+
+      calpar('tp_gr_cal', cc, comm, sim_run)$SUPPLY_CScc(cc, comm) = TP_GR_EU.L(cc, comm);
+      calpar('tp_gr_cal', cc, comm, sim_run)$(PW_CS(comm) AND NONEU(cc)) = TP_GR_NONEU.L(comm);
+      calpar('hdem_tr_cal', cc, comm, sim_run)$TUSE_CScc(cc,comm) = HDEM_TR_EU.L(cc, comm);
+      calpar('pdem_tr_cal', cc, comm, sim_run) = PDEM_TR_CAL.L(cc, comm);
+      calpar('pdem_tr_cal', cc, it, sim_run)$(PW_CS(it) AND NONEU(cc) AND OILSEED(it)) = PDEM_TR_NONEU_OIL.L(it);
+      calpar('pdem_tr_cal', cc, it, sim_run)$(PW_CS(it) AND NONEU(cc) AND ENERG(it)) = PDEM_TR_NONEU_BF.L(it);
+      calpar('fdem_tr_cal', cc, comm, sim_run)$TUSE_CScc(cc,comm) = FDEM_TR_EU.L(cc, comm);
+   );
+
+   IF(ORD(sim_run) eq 1.0,
+      chk_prod(cc,comm)$prod0(cc,comm)   = round((supply.l(cc,comm) / prod0(cc,comm) -1)*100, 3) ;
+      chk_hdem(cc,comm)$hdem0(cc,comm)   = round((hdem.l(cc,comm) / hdem0(cc,comm) -1 ) * 100, 3);
+      chk_fdem(cc,comm)$fdem0(cc,comm)   = round((fdem.l(cc,comm) / fdem0(cc,comm) -1 ) * 100, 3);
+      chk_sdem(cc,comm)$sdem0(cc,comm)   = round((sdem.l(cc,comm) / sdem0(cc,comm) -1 ) * 100, 3);
+      chk_pdem(cc,comm)$pdem0(cc,comm)   = round((pdem.l(cc,comm) / pdem0(cc,comm) -1 ) * 100, 3);
+      chk_pd(cc,comm)$pd_0(cc,comm)      = round((pd.l(cc,comm) / pd_0(cc,comm) -1 ) * 100, 3);
+      chk_area_pr(one)$landprice0(one)    =round((landprice1.l(one)/landprice0(one) -1) *100, 6);
+
+      display chk_prod
+              chk_hdem
+              chk_fdem
+              chk_sdem
+              chk_pdem
+              chk_pd
+              chk_area
+              chk_area_pr;
+
+
+      LOOP(comm,
+         LOOP(cc,
+            ABORT$(abs(chk_area(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: AREA USE" , chk_area;
+            ABORT$(abs(chk_prod(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: PRODUCTION", chk_prod;
+            ABORT$(abs(chk_pd(cc,comm))   gt 0.5) "BENCHMARK INCORRECT: PRICES" , chk_pd;
+            ABORT$(abs(chk_hdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: HDEM" , chk_hdem;
+            ABORT$(abs(chk_sdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: SDEM" , chk_sdem;
+            ABORT$(abs(chk_pdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: PDEM" , chk_pdem;
+            ABORT$(abs(chk_fdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: FDEM" , chk_fdem;
+         )
+      );
+
+      Loop(one,
+         ABORT$(abs(chk_area_pr(one)) gt 0.5) "BENCHMARK INCORRECT: area_pr" , chk_area_pr;
+      );
+   );
+
+$include Create_results.gms
+
+*==========================================================================
+   IF(stochastics eq 2,
+*   Start of stochastic solves for 2020 (last year of baseline run)
+     IF(CHK_sim eq 2020,
+         Loop (strun,
+*           Assign stochastic-run specific error terms for selected yield variables
+            stoch (cc,comm)= stoch_d(cc,comm,strun);
+            option solprint = off
+            SOLVE ESIMMCP using MCP ;
+        );
+     );
+   );
+
+* end of LOOP sim_run
+);
+simrespch(SIMRESSET, ccplus, i, sim_run)$(simres(SIMRESSET, ccplus, i, 'base') AND (NOT sameas(sim_run,"base")))
+   = 100*(simres(SIMRESSET, ccplus, i, sim_run) / simres(SIMRESSET, ccplus, i, 'base')-1);
+simresagg(SIMRESSET, EUGRP, i, sim_run)$(NOT (sameas(SIMRESSET,'PD') OR sameas(SIMRESSET,'PD_euro'))) = sum(EUGRPMEM(EUGRP,cc), simres(SIMRESSET, cc, i, sim_run));
+simresaggpch(SIMRESSET, EUGRP, i, sim_run)$(simresagg(SIMRESSET, EUGRP, i, 'base') AND (NOT sameas(sim_run,"base")))
+   = 100*(simresagg(SIMRESSET, EUGRP, i, sim_run) / simresagg(SIMRESSET, EUGRP, i, 'base')-1);
+* round results:
+simres(SIMRESSET, ccplus, i, sim_run) = round(simres(SIMRESSET, ccplus, i, sim_run),3);
+simrespch(SIMRESSET, ccplus, i, sim_run) = round(simrespch(SIMRESSET, ccplus, i, sim_run),3);
+simresagg(SIMRESSET, EUGRP, i, sim_run) = round(simresagg(SIMRESSET, EUGRP, i, sim_run),3);
+simresaggpch(SIMRESSET, EUGRP, i, sim_run) = round(simresaggpch(SIMRESSET, EUGRP, i, sim_run),3);
+execute_unload 'simres.gdx' simres, simrespch, simresagg, simresaggpch;
+if (CALSIM,
+   execute_unload 'calpar.gdx' calpar;
+   execute_unload 'calparinterpol.gdx' calparinterpol;
+);
+
+*++++++++++++++++
+*+ DIAGNOSTICS  +
+*++++++++++++++++
+
+* calculate deviations from target:
+devtgt('PW','ROW',it,sim_run)$PW_CS(it) = round(simrespch('PW', 'ROW', it, sim_run) - devtgt('PW','ROW',it,sim_run), 2);
+devtgt('SUPPLY',EUGRP,comm,sim_run)$SUPPLY_CS(EUGRP, comm) = round(simresaggpch('SUPPLY', EUGRP, comm, sim_run) - devtgt('SUPPLY',EUGRP,comm,sim_run), 2);
+devtgt('TUSE',EUGRP,comm,sim_run)$TUSE_CS(EUGRP, comm) = round(simresaggpch('TUSE', EUGRP, comm, sim_run) - devtgt('TUSE',EUGRP,comm,sim_run), 2);
+devtgt('NETEXP',EUGRP,comm,sim_run)$(SUPPLY_CS(EUGRP, comm) AND TUSE_CS(EUGRP, comm) AND sum(sim_run2, tgt('NETEXP',EUGRP,comm,sim_run2))) = round(simresaggpch('NETEXP', EUGRP, comm, sim_run) - devtgt('NETEXP',EUGRP,comm,sim_run), 2);
+
+solvestat('Targets not met',sim_run) = sum((SIMRESSET,CTRYGRP,comm)$(NOT sameas(sim_run,'base')), devtgt(SIMRESSET,CTRYGRP,comm,sim_run)) <> 0;
+* status for each simulation run:
+display solvestat;
+
+* check if some variables hit their lower bounds which could hint to data problems:
+* if a variable is shown for 'base', it means that the variable is not zero but at its lower bound in the base data.
+atLowerBound(SIMRESSET, cc, comm, sim_run) = 0;
+atLowerBound('SUPPLY', cc, comm, sim_run)$(simres('SUPPLY', cc, comm, 'base') AND (simres('SUPPLY', cc, comm, sim_run) <= max(0, SUPPLY.LO(cc,comm)+0.001))) = max(EPS, SUPPLY.LO(cc,comm));
+atLowerBound('TUSE', cc, comm, sim_run)$(simres('TUSE', cc, comm, 'base') AND (simres('TUSE', cc, comm, sim_run) <= max(0,TUSE.LO(cc,comm)+0.001))) = max(EPS, TUSE.LO(cc,comm));
+atLowerBound('HDEM', cc, comm, sim_run)$(simres('HDEM', cc, comm, 'base') AND (simres('HDEM', cc, comm, sim_run) <= max(0,HDEM.LO(cc,comm)+0.001))) = max(EPS, HDEM.LO(cc,comm));
+atLowerBound('PDEM', cc, comm, sim_run)$(simres('PDEM', cc, comm, 'base') AND (simres('PDEM', cc, comm, sim_run) <= max(0,PDEM.LO(cc,comm)+0.001))) = max(EPS, PDEM.LO(cc,comm));
+atLowerBound('FDEM', cc, comm, sim_run)$(simres('FDEM', cc, comm, 'base') AND (simres('FDEM', cc, comm, sim_run) <= max(0,FDEM.LO(cc,comm)+0.001))) = max(EPS, FDEM.LO(cc,comm));
+atLowerBound('SDEM', cc, comm, sim_run)$(simres('SDEM', cc, comm, 'base') AND (simres('SDEM', cc, comm, sim_run) <= max(0,SDEM.LO(cc,comm)+0.001))) = max(EPS, SDEM.LO(cc,comm));
+
+* remaining quantity to fill quota:
+rest_quota(cc,comm,sim_run) = 0;
+rest_quota(cc,comm,sim_run)$(simpar('quota',cc,comm,'base')*quota_toggle(cc,comm,sim_run)) = simpar('quota',cc,comm,sim_run) - simres('SUPPLY',cc,comm,sim_run)
+         + (simres('subs_milk_s',cc,comm,sim_run)+simres('FDEM_MLK',cc,comm,sim_run))$sameas(comm,'milk');
+rest_quota(cc,comm,sim_run) = round(rest_quota(cc,comm,sim_run),3);
+rest_quota_agg(EUGRP, comm, sim_run) = sum(EUGRPMEM(EUGRP,cc),rest_quota(cc,comm,sim_run));
+atQuota(cc,comm,sim_run) = 0;
+atQuota(cc,comm,sim_run)$(quota_toggle(cc,comm,sim_run) AND (rest_quota(cc,comm,sim_run)<=0.001)) = yes;
+
+shifterAlert(CALPARSET_CAL, CTRYGRP, COMM, SIM_BASE)$(calparagg(CALPARSET_CAL, CTRYGRP, COMM, SIM_BASE)<shifterThreshold(CALPARSET_CAL,'small') OR calparagg(CALPARSET_CAL, CTRYGRP, COMM, SIM_BASE)>shifterThreshold(CALPARSET_CAL,'large')) = calparagg(CALPARSET_CAL, CTRYGRP, COMM, SIM_BASE);
+
+if(CALSIM OR USECALPAR,
+   display rest_quota, rest_quota_agg, atQuota, atLowerBound, shifterAlert, devtgt;
+);
+
+if((CALSIM OR USECALPAR) AND NOT sum((SIMRESSET,CTRYGRP,comm,sim_run)$(NOT sameas(sim_run,'base')), devtgt(SIMRESSET,CTRYGRP,comm,sim_run)) eq 0, abort "Not all targets, see parameter devtgt!",devtgt);
+*++++++++++++++++
+*++++++++++++++++

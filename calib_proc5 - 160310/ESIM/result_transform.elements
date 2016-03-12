@@ -1,0 +1,216 @@
+cand BG        BULGARIA
+cand HR        CROATIA
+cand RO        ROMANIA
+cand TU        TURKEY
+cc AT        AUSTRIA
+cc BE        BELGIUM_LUXEMBOURG
+cc BG        BULGARIA
+cc CY        CYPRUS
+cc CZ        CZECH REPUBLIC
+cc DK        DENMARK
+cc EE        ESTONIA
+cc ES        Spain
+cc FI        FINLAND
+cc FR        FRANCE
+cc GE        GERMANY
+cc GR        Greece
+cc HR        CROATIA
+cc HU        HUNGARY
+cc IE        Ireland
+cc IT        Italy
+cc LT        LITHUANIA
+cc LV        LATVIA
+cc MT        MALTA
+cc NL        Netherlands
+cc PL        POLAND
+cc PT        Portugal
+cc RO        ROMANIA
+cc ROW       ROW (Residual Rest-of-World)
+cc SI        SLOVENIA
+cc SK        SLOVAK REPUBLIC
+cc SW        Sweden
+cc TU        TURKEY
+cc UK        United Kingdom
+cc US        United States of America
+cc WB        Western Balkan Countries
+ccplus AT Austria
+ccplus BE Belgium_Luxembourg
+ccplus BG BULGARIA
+ccplus CY CYPRUS
+ccplus CZ CZECH REPUBLIC
+ccplus DK Denmark
+ccplus EE ESTONIA
+ccplus ES Spain
+ccplus FI Finland
+ccplus FR France
+ccplus GE Germany
+ccplus GR Greece
+ccplus HR CROATIA
+ccplus HU HUNGARY
+ccplus IE Ireland
+ccplus IT Italy
+ccplus LT LITHUANIA
+ccplus LV LATVIA
+ccplus MT MALTA
+ccplus NL Netherlands
+ccplus PL POLAND
+ccplus PT Portugal
+ccplus RO ROMANIA
+ccplus ROW ROW (Residual Rest-of-World)
+ccplus SI SLOVENIA
+ccplus SK SLOVAK REPUBLIC
+ccplus SW Sweden
+ccplus TU TURKEY
+ccplus UK United Kingdom
+ccplus US United States of America
+ccplus WB Western Balkan Countries
+eu02 BG        BULGARIA
+eu02 RO        ROMANIA
+eu10 CY        CYPRUS
+eu10 CZ        CZECH REPUBLIC
+eu10 EE        ESTONIA
+eu10 HU        HUNGARY
+eu10 LT        LITHUANIA
+eu10 LV        LATVIA
+eu10 MT        MALTA
+eu10 PL        POLAND
+eu10 SI        SLOVENIA
+eu10 SK        SLOVAK REPUBLIC
+eu15 AT        AUSTRIA
+eu15 BE        BELGIUM_LUXEMBOURG
+eu15 DK        DENMARK
+eu15 ES        Spain
+eu15 FI        FINLAND
+eu15 FR        FRANCE
+eu15 GE        GERMANY
+eu15 GR        Greece
+eu15 IE        Ireland
+eu15 IT        Italy
+eu15 NL        Netherlands
+eu15 PT        Portugal
+eu15 SW        Sweden
+eu15 UK        United Kingdom
+eu25 AT        AUSTRIA
+eu25 BE        BELGIUM_LUXEMBOURG
+eu25 CY        CYPRUS
+eu25 CZ        CZECH REPUBLIC
+eu25 DK        DENMARK
+eu25 EE        ESTONIA
+eu25 ES        Spain
+eu25 FI        FINLAND
+eu25 FR        FRANCE
+eu25 GE        GERMANY
+eu25 GR        Greece
+eu25 HU        HUNGARY
+eu25 IE        Ireland
+eu25 IT        Italy
+eu25 LT        LITHUANIA
+eu25 LV        LATVIA
+eu25 MT        MALTA
+eu25 NL        Netherlands
+eu25 PL        POLAND
+eu25 PT        Portugal
+eu25 SI        SLOVENIA
+eu25 SK        SLOVAK REPUBLIC
+eu25 SW        Sweden
+eu25 UK        United Kingdom
+one AT       AUSTRIA
+one BE       BELGIUM_LUXEMBOURG
+one BG       BULGARIA
+one CY        CYPRUS
+one CZ       CZECH REPUBLIC
+one DK       DENMARK
+one EE        ESTONIA
+one ES       Spain
+one FI       Finland
+one FR       FRANCE
+one GE       GERMANY
+one GR       Greece
+one HR        CROATIA
+one HU       HUNGARY
+one IE       Ireland
+one IT       Italy
+one LT       LITHUANIA
+one LV       LATVIA
+one MT        MALTA
+one NL       Netherlands
+one PL       POLAND
+one PT       Portugal
+one RO       ROMANIA
+one SI       SLOVENIA
+one SK       SLOVAK REPUBLIC
+one SW       Sweden
+one TU        TURKEY
+one UK       United Kingdom
+res_agg r_area      Area results
+res_agg r_fdem      Feed demand results
+res_agg r_hdem      Human demand results
+res_agg r_nx        Net export results
+res_agg r_pdem      Processing demand results
+res_agg r_sdem      Seed demand results
+res_agg r_supp      Supply results
+res_agg r_tuse      Total use
+res_agg r_valc     Consumption value (in Mill. currency units)
+res_agg r_valp     Production value  (in Mill. currency units)
+res_agg_cc r_obsa      Obligatory set aside
+res_agg_cc r_totarea   Total effective area
+res_agg_cc val_an      Consumption value of animal products at wholesale prices (-subsidies)
+res_agg_cc val_co      Consumption value at wholesale prices (-subsidies)
+res_agg_cc val_cr      Farm production value of crops
+res_agg_cc val_fa      Farm production value
+res_agg_cc val_li      Farm production value of livestock
+res_agg_cc val_nx      Net export value
+res_agg_cc val_pl      Consumption value of plant products at wholesale prices (-subsidies)
+res_cc r_obsa Obligatory set aside (1000 ha)
+res_cc r_totarea Total effective area (1000 ha)
+res_cc val_an Consumption value of animal products at wholesale prices (-subsidies) (Mill. €)
+res_cc val_co Consumption value at wholesale prices (-subsidies) (Mill. €)
+res_cc val_cr Farm production value of crops (Mill. €)
+res_cc val_fa Farm production value (Mill. €)
+res_cc val_li Farm production value of livestock (Mill. €)
+res_cc val_nx Value of total net exports(Mill. €)
+res_cc val_pl Consumption value of plant products at wholesale prices (-subsidies) (Mill. €)
+res_comm r_area Area results (1000 ha)
+res_comm r_dpay Direct payment (€ per t)
+res_comm r_esqu Export subsidy limit (1000 t)
+res_comm r_fdem Feed demand (1000 t)
+res_comm r_fsub Feed subsidy (€ per t)
+res_comm r_hdem Human demand (1000 t)
+res_comm r_hsub Human demand subsidy (€ per t)
+res_comm r_nx Net export results (1000 t) (including stock changes)
+res_comm r_pdem Processing demand (1000 t)
+res_comm r_pint Intervention price (€ per t)
+res_comm r_plo Lower price bound (€ per t)
+res_comm r_pthr Threshhold price (€ per t)
+res_comm r_pup Upper price bound (€ per t)
+res_comm r_pup2 Middle price bound (€ per t)
+res_comm r_sdem Seed demand (1000 t)
+res_comm r_supp Supply (1000 t)
+res_comm r_trq Tariff rate quota(1000 t)
+res_comm r_trsh Trade share results (%)
+res_comm r_tuse Total use (1000 t)
+res_comm r_valc Consumption value (Bill. €)
+res_comm r_valp Production value  (Bill. €)
+res_def r_dpay      Direct payment (per ton)
+res_def r_esqu      Export subsidy limit
+res_def r_fsub      Feed subsidy (per ton)
+res_def r_hsub      Human demand subsidy (per ton)
+res_def r_pint      Intervention price results
+res_def r_plo       Lower price bound result
+res_def r_pthr      Threshhold price results
+res_def r_pup       Upper price bound result
+res_def r_pup2      Middle price bound result
+res_def r_trq       Tariff rate quota
+res_def r_trsh      Trade share results
+wave_1 CY        CYPRUS
+wave_1 CZ        CZECH REPUBLIC
+wave_1 EE        ESTONIA
+wave_1 HU        HUNGARY
+wave_1 LT        LITHUANIA
+wave_1 LV        LATVIA
+wave_1 MT        MALTA
+wave_1 PL        POLAND
+wave_1 SI        SLOVENIA
+wave_1 SK        SLOVAK REPUBLIC
+wave_2 BG        BULGARIA
+wave_2 RO        ROMANIA

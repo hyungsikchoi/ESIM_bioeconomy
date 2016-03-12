@@ -1,0 +1,1810 @@
+option iterlim = 100000;
+parameter
+polsug(*,sim_base);
+price_sug_0(EU27) = intpr0(eu27,'sugar');
+
+
+parameter
+testxx
+
+;
+
+elasthd(cc,comm,comm1)
+
+
+
+
+*=========================================================
+* File      : model-1.gms
+* Author    : Martin Banse(martin.banse@wur.nl)
+* Version   : 1.0
+* Remarks   :
+* Date      : 28/03/2006 13:07:59
+* Changed   : 23.08.2010 10:59:19
+* Changed by: Demo user
+*=========================================================
+* ============================================
+* FIXING VARIABLES TO 0.0 IF BASE VALUE EQ 0.0
+* ============================================
+
+SUPPLY.up("nl","milk")=   13074;
+SUPPLY.up("be","milk")=   3498;
+SUPPLY.up("dk","milk")=   5535.6;
+
+
+
+PD.LO(cc,comm)       = 0.1;
+PD.LO(cc,comm)       = 0.1;
+PC.LO(cc,comm)       = 0.1;
+PSH.LO(cc,comm)      = 0.1;
+PP.LO(cc,comm)       = 0.1;
+PI.LO(cc,comm)       = 0.1;
+PW.LO(it)            = 0.1;
+FCI.LO(cc,comm)      = 0.1;
+landprice1.LO(one)   = 0.0000001;
+
+BCI.LO(cc,energ)     = 0.1;
+
+TRADESHR_EU.lo(it) = -100;
+TRADESHR_EU.up(it) = +100;
+TRQSHR_EU.lo(it) = -100;
+TRQSHR_EU.up(it) = +100;
+TRADESHR.lo(cc,it) = - 100;
+TRADESHR.up(cc,it) = + 100;
+TUSE.lo(one1,it)$TUSE.l(one1,it) = 0.1;
+NetPD.lo(cc,energ,comm)$NetPD.l(cc,energ,comm) =.1;
+SUPPLY.lo(cc,energ)$(pr(cc,energ) and SUPPLY.l(cc,energ)) = .1;
+*QUANCES.lo(cc,energ,comm)$(QUANCES.l(cc,energ,comm) and biof_e(energ) and pr(cc,energ) and i_ethanol(comm)) = .1;
+SUBSHR_EU.up(it)$(SUM(eu27, NETEXP.l(eu27,it)) and subsquant(it)) = 100;
+QUALSHR_EU.up(it)$(SUM(eu27, TUSE.L(eu27,IT)) and qualquant(it)) = 100;
+SUBSHR_EU.lo(it)$(SUM(eu27, NETEXP.l(eu27,it)) and subsquant(it)) = -100;
+QUALSHR_EU.lo(it)$(SUM(eu27, TUSE.L(eu27,IT)) and qualquant(it)) = -100;
+
+
+YIELD.LO(cc,comm)    = 0.001;
+SUPPLY.LO(cc,comm)$(not sug(comm))   = 0.001;
+
+SUPPLY.FX(cc,comm)$(SUPPLY.l(cc,comm) EQ 0.0)       = 0.0;
+ALAREA.FX(cc,comm)$(ALAREA.l(cc,comm) EQ 0.0)       = 0.0;
+AREA_UN.FX(cc)$(sum(crops, ALAREA.l(cc,crops)) EQ 0.0)  = 0.0;
+DIRPAY.FX(cc,comm)$(DIRPAY.l(cc,comm) EQ 0.0)       = 0.0;
+YIELD.FX(cc,comm)$(YIELD.l(cc,comm) EQ 0.0)         = 0.0;
+
+YIELD.FX(eu27,"setaside")                           = 1.0;
+
+MPDEM.fx(cc,comm1,comm)$(MPDEM.l(cc,comm1,comm) EQ 0.0) = 0.0;
+FDEM.fx(cc,comm)$(FDEM.l(cc,comm) EQ 0.0)           = 0.0;
+FDEM_MLK.fx(cc,comm)$(FDEM_MLK.l(cc,comm) EQ 0.0)   = 0.0;
+FRATE.fx(cc,feed,livest)$(FRATE.l(cc,feed,livest) EQ 0.0) = 0.0;
+FCI.fx(cc,comm)$(FCI.l(cc,comm) EQ 0.0)             = 0.0;
+
+PDEM_BF.fx(cc,energ,comm)$(PDEM_BF.l(cc,energ,comm) EQ 0.0) = 0.0;
+NetPD.fx(cc,energ,comm)$(NetPD.l(cc,energ,comm) EQ 0.0)     = 0.0;
+BCI.fx(cc,energ)$(BCI.l(cc,energ) EQ 0.0)                   = 0.0;
+QUANCES.fx(cc,energ,comm)$(QUANCES.l(cc,energ,comm) EQ 0.0) = 0.0;
+
+HDEM.l(cc,"c_oil")  =    ((exp(subs_shift(cc,"c_oil")*hdem_int(cc,"c_oil") + sum(comm1$PPC(cc,comm1),
+         elasthd(cc,"c_oil",comm1)*log(PC.l(cc,comm1))))*pop_gr(cc)
+         *inc_gr(cc)**elastin(cc,"c_oil")+ subs_milk_d(cc,"c_oil")
+         )*hdem_tr(cc,"c_oil"))$(HD(cc,"c_oil") or P0(cc,"c_oil"))         ;
+HDEM.fx(cc,comm)$(HDEM.l(cc,comm) EQ 0.0)           = 0.0;
+
+
+SDEM.FX(cc,comm)$(sdem.l(cc,comm) EQ 0.0)           = 0.0;
+PDEM.fx(cc,comm)$(PDEM.l(cc,comm) EQ 0.0)           = 0.0;
+* Modification : addition of c oil consumption
+TUSE.L(cc,"c_oil") = Hdem.l(cc,"c_oil") ;
+TUSE.fx(cc,comm)$(TUSE.l(cc,comm) EQ 0.0)           = 0.0;
+
+PD.FX(cc,comm)$((tuse0(cc,comm) eq 0.0) and (supply.l(cc,comm) eq 0.0) )         = 0.0;
+PD.FX(cc,comm)$(PD.l(cc,comm) eq 0.0)               = 0.0;
+PC.FX(cc,comm)$(HDEM.l(cc,comm) eq 0.0 and P0(cc,comm) eq 0.0)  = 0.0;
+PSH.FX(cc,comm)$(PSH.l(cc,comm) EQ 0.0)             = 0.0;
+
+PP.FX(cc,comm)$(PP.l(cc,comm) EQ 0.0)               = 0.0;
+PI.FX(cc,comm)$(PI.l(cc,comm) EQ 0.0)               = 0.0;
+PW.fx(it)$(PW.l(it) EQ 0.0)                         = 0.0;
+OBLSETAS.FX(cc)$(OBLSETAS.l(cc) eq 0.0)             = 0.0;
+EFAREA_GC.FX(one)$(EFAREA_GC.l(one) eq 0.0)             = 0.0;
+
+TRADESHR.FX(rest,comm)                              =  0.0;
+TRADESHR.FX(cc,it)$(netexp.l(cc,it) eq 0.0 and supply.l(cc,it) eq 0.0)  =  0.0;
+TRQSHR.FX(one,comm)$(TRQ(comm) EQ 0.0)          = 0.0;
+SUBSHR.FX(one,comm)$(subsquant(comm) EQ 0.0)    = 0.0;
+QUALSHR.FX(one,comm)$(qualquant(comm) EQ 0.0)    = 0.0;
+TRQSHR.FX(rest,comm)                                = 0.0;
+SUBSHR.FX(rest,comm)                                = 0.0;
+QUALSHR.FX(rest,comm)                                = 0.0;
+
+SUBSHR_EU.FX(comm)$(subsquant(comm) EQ 0.0)    = 0.0;
+TRQSHR_EU.FX(comm)$(TRQ(comm) EQ 0.0)          = 0.0;
+TRQSHR_EU.UP('sugar')          = +inf;
+TRQSHR_EU.LO('sugar')          = -inf;
+SUGIMP_EU.FX(comm)$(not sug(comm))             = 0.0;
+QUALSHR_EU.FX(comm)$(qualquant(comm) EQ 0.0)   = 0.0;
+
+
+
+
+P_UP.FX(rest,it)                                    = 0.0;
+P_LO.FX(rest,it)                                    = 0.0;
+P_UP.FX(one,it)$(P_UP.l(one,it) eq 0.0)           = 0.0;
+P_LO.FX(one,it)$(P_LO.l(one,it) eq 0.0)           = 0.0;
+P_UP_2.FX(rest,it)                                  = 0.0;
+P_UP_2.FX(cc,it)$(P_UP_2.l(cc,it) EQ 0.0)           = 0.0;
+
+EFAREA.LO(eu15,"GRAS")  = area0(eu15,"gras");
+setas_eu12(EU12) = 0.0;
+chg_oblsetas_cum(one) = 0.0;
+
+area0(cc,comm) = alarea.l(cc,comm);
+pd_0(cc,comm) = pd.l(cc,comm);
+
+PS(cc,comm)        = NO;
+PS(cc,comm)        = YES$PD.l(cc,comm);
+
+
+parameter
+chk_milk_Quota(cc,sim_base) Check for phasing out milk quota
+;
+
+
+Parameter
+deflation_kum   "Accumulated infaltion rates - used for the introduction of new payments";
+
+deflation_kum(cc)=1;
+
+
+SUGIMP_EU.l(it) =         [MIN(preftrq,trq_int  * MAX(0,
+                                         MAX(0,(PD.l('UK','SUGAR') *exrate('UK')/SUM(euro1, exrate(euro1))
+                                              - PW.l("SUGAR") /SUM(euro1, exrate(euro1))- trq_tc)
+                                            )** trq_elast
+                                 )
+             )]$(sug(it) and (endog_sug eq 2.0))
++
+         [sug_imp_exog(it)]$(sug(it) and (endog_sug eq 1.0));
+
+
+TRQSHR_EU.l("sugar") = [SUGIMP_EU.l("sugar")  /SUM(cc$member(cc),tuse.l(cc,"sugar"))*100] ;
+
+SUGIMP_EU.l(it) =        preftrq;
+
+
+display trq_elast,trq_int,SUGIMP_EU.l;
+dirpay0(cc,comm)$(prod0(cc,comm) eq 0.0) = 0;
+
+pd_t1(cc,ag)  = pd.l(cc,ag);
+pd_t2(cc,ag)  = pd.l(cc,ag);
+
+
+* ================================
+*
+* DECLARATION OF EQUATIONS
+
+
+EQUATIONS
+
+
+SUPPLYEQ(cc,comm)        Supply equations
+HDEMEQ(cc,comm)          Human demand
+SDEMEQ(cc,comm)          Seed demand
+
+PROCEQ(cc,comm)          Processing activities
+PROCM_EQ(cc,dairy_comp,comm)  Processing demand for fat and protein for different activities in dairy industries
+
+FEEDEQ(cc,feed)          Feed demand
+FEEDMEQ(cc,comm)         Feed demand for milk
+
+FRATEEQ(cc,feed,livest)  Feed rate for livestock products
+
+TUSEEQ(cc,comm)          Total domestic use
+YILDEQ(cc,ag)            Yields crops
+AREAEQ1(one,crops)       Price part of area allocation
+AREAEQ5(one)             Effective setaside area
+EQ_QNEW1(one)            Land supply for crops on non setaside land
+EQ_QNEW2(one)            Land supply for crops on setaside land
+EQ_A1(one)               Land asymptote (for non setaside land)
+EQ_A2(one)               Land asymptote (for setaside land)
+EQ_LANDMRKT1(one)        Market clearing on land markets (for non setaside land)
+EQ_LANDMRKT2(one)        Market clearing on land markets (for setaside land)
+DIRPAYEQ(one,comm)       Level of Direct Payment per ton
+
+*Price equations
+P_LO_EQ(one,it)          Lower price bound in 1st step of LOGIT function
+P_UP_EQ(one,it)          Upper price bound in 1st step of LOGIT function
+P_UP_2_EQ(one,it)        Upper price bound in 2nd step of LOGIT function
+PRICEQ(cc,it)            Price transmission
+PIEQ(cc,comm)            Producer incentive price
+PCEQ(cc,comm)            Consumer price
+NPDBFEQ(cc,energ,comm)   Net-price for inputs in biofuel production
+SPRICEQ(cc,ag)           Shadow price functions for quota products
+FCIEQ(cc,livest)         Feed cost per ton of livestock product
+BCIEQ(cc,energ)          Biofuel cost price index (1 in base situation)
+TRANSEQ(cc,ag)           For products with margins between PD and PP
+*PDEQNMLK(cc,comm)        Price for milk derived from prices of fat and protein
+
+
+*Other Equations
+NETXEQ(cc,it)            Net exports
+XSHREQ(cc,it)            Share of net exports in total use for individual c.
+XSHR_EUEQ(it)            Share of net exports in total use for EU
+*XSHR_DEQ(it)             Share of net exports in total use for delayed integration
+
+CESQUAN(cc,energ,comm)   Unscaled input demand in biofuel production
+CESSHR(cc,energ,comm)    Shares in input demand function for biofuel production
+
+SUBSHR_EUEQ(it)          Adjusted share of net exports in total use for the subsidized exports in individual EU-15 members
+QUALSHREQ(it)            Adjusted share of net exports in total use for high quality exports in EU
+TRQSHR_EUEQ(it)          Adjusted share of net exports in total use for the TRQ into the  EU
+SUGIMP_EUEQ(it)          Preferential sugar imports (either endogenous or exogenously fixed
+
+WNXEQ(comm)              Market clearing condition for tradeable goods
+NTRADEQ(cc,nt)       Regional market clearing condition for nt goods
+*NTRADEQ(cc,nt_mlk)       Regional market clearing condition for nt goods
+;
+
+* Definition of equations
+*# Supply equations
+supplyeq(cc,comm)..   0 =e=
+*## Crops in European countries
+*### 1) Non-energy crops   (checked)
+      [-SUPPLY(cc,comm)  +
+*       EFAREA(cc,comm) * YIELD(cc,comm)]$(one(cc) and pr(cc,comm) and crops(comm) and not sa_crp(comm) and not en_crp(comm))
+       ALAREA(cc,comm) * YIELD(cc,comm)]$(one(cc) and pr(cc,comm) and crops(comm) )
+
+*## 2) Crops in non-European countries (checked)
+     +[-SUPPLY(cc,comm)  +
+       exp(sup_int(cc,comm)+sum(crops1$PS(cc,crops1),
+       elastsp(cc,comm,crops1)*log(PP(cc,crops1))))
+       *tp_gr(cc,comm)*(1+stoch(cc,comm))]$(rest(cc) and pr(cc,comm) and crops(comm))
+
+*## 3) Livestock   (checked)
+     +[-SUPPLY(cc,comm) +
+         exp(sup_int(cc,comm)
+         + sum(livest1$ppp(cc,livest1),elastsp(cc,comm,livest1)
+         *log(PI(cc,livest1) ))
+         +elast_lv_i(cc,comm)*log(int_ind(cc))
+         +elast_lv_l(cc,comm)*log(lab_ind(cc))
+         +elast_lv_c(cc,comm)*log(cap_ind(cc))
+
+         +elast_lv_f(cc,comm)*log(FCI(cc,comm)))
+
+         *tp_gr(cc,comm) + subs_milk_s(cc,comm) + FDEM_MLK(cc,comm)]$(pr(cc,comm) and livest(comm))
+
+*## 4) Oilmeal & Oilcake   (checked)
+     +[-SUPPLY(cc,comm)  +
+         sum(oilseed,oilsd_c(cc,comm,oilseed)*PDEM(cc,oilseed))]$oilsproc(cc,comm)
+
+*## 5) Feed from the processing industry (other energy and other proteine)  [PROBLEM: Numbers are still zero]
+     +[-SUPPLY(cc,comm)  +
+         exp(sup_int(cc,comm)+ 0.2 * log(PD(cc,comm)))
+         *tp_gr(cc,comm)]$fedres(cc,comm)
+
+*## 6) Milk fat and milk protein (checked)
+     +[-SUPPLY(cc,comm)  +
+         PDEM(cc,'milk')*content_milk(cc,comm)]$MILK_CONT(cc,comm)
+
+*## 7) Dairy products  (checked)
+     +[-SUPPLY(cc,comm)*PD(cc,comm)  +
+         addcomp_dairy(cc,comm)*SUM(DAIRY_COMP, PD(cc,DAIRY_COMP)*MPDEM(cc,DAIRY_COMP,comm))
+                      + subs_milk_d(cc,comm) ]$(MILKPROC(cc,comm) and PR(cc,comm))
+
+*## 8) Biofuels  (checked)
+     +[-SUPPLY(cc,comm)  +
+        ( exp(sup_int(cc,comm)
+         + elastsp(cc,comm,comm) *log(PI(cc,comm))
+         + elast_en_inp(cc,comm)*log(BCI(cc,comm))) )*pdem_tr(cc,comm)
+       ]$(pr(cc,comm) and energ(comm))
+
+*## 9) Gluten Feed (checked)
+     +[-SUPPLY(cc,comm)  +
+         SUM((energ,i_ethanol), coef_p_bf(energ,i_ethanol,comm) * PDEM(cc,i_ethanol))
+       ]$(pr(cc,comm) and eth_pro(comm))
+
+;
+
+*# Demand equations
+*## 10) Human demand  (checked)
+HDEMEQ(cc,comm)..     0    =E=
+         [-HDEM(cc,comm)  +
+         (exp(subs_shift(cc,comm)*hdem_int(cc,comm) + sum(comm1$PPC(cc,comm1),
+         elasthd(cc,comm,comm1)*log(PC(cc,comm1))))*pop_gr(cc)
+         *inc_gr(cc)**elastin(cc,comm)+ subs_milk_d(cc,comm)
+         )*hdem_tr(cc,comm)]$(HD(cc,comm) or P0(cc,comm))
+;
+
+*## Seed demand
+SDEMEQ(cc,comm)..    0     =E=
+
+*### 11) In European Countries   (checked)
+        [-SDEM(cc,comm)   +
+        seed_c(cc,comm) * ALAREA(cc,comm)]$(one(cc) and pr(cc,comm) and crops(comm))
+*### 12) In Non-European Countries   (checked)
+      + [-SDEM(cc,comm)   +
+        seed_c(cc,comm) * SUPPLY(cc,comm)]$(rest(cc) and pr(cc,comm) and crops(comm));
+
+*## Processing demand
+PROCEQ(cc,comm)..   0      =E=
+
+*### 13) For oilseeds  (checked)
+         [-PDEM(cc,comm)  +
+         (exp(cr_int(cc,comm)+sum(comm1$PS(cc,comm1),
+         elastcr(cc,comm,comm1)*log(PD(cc,comm1)))))*pdem_tr(cc,comm)]$PROC_OIL(cc,comm)
+
+*### 14) For oils and sugar and cereals in biofuels (checked)
+      +  [-PDEM(cc,comm)  +
+         SUM(energ, PDEM_BF(cc,energ,comm))]$(PROC_CER_S(cc,comm) or PROC_OIL_D(cc,comm))
+
+*### 15) For milk to be processed to fat and protein (checked)
+      +  [-PDEM(cc,comm) * PD(cc,comm)
+          + addcomp_milk(cc,comm) * SUM(dairy_comp, SUPPLY(cc,dairy_comp)*PD(cc,dairy_comp))
+         ]$MILK_(cc,comm)
+
+*### 16) For milk fat and protein  (checked)
+      +  [-PDEM(cc,comm)  + SUM(mlkproc, MPDEM(cc,comm,mlkproc))]$MILK_CONT(cc,comm) ;
+
+PROCM_EQ(cc,dairy_comp,comm) ..  0   =E=
+*### 17) For fat and protein in different dairy products  (checked)
+      +   [-MPDEM(cc,dairy_comp,comm) +
+         exp(proc_int(cc,dairy_comp,comm)
+        +SUM(comm1$PS(cc,comm1),
+         elastdm_n(cc,dairy_comp,comm,comm1)*log(PD(cc,comm1)))
+         )]$PROC_DAIRY(cc,dairy_comp,comm);
+
+*## Feed demand
+
+*### 18) Feeding stuff     (checked)
+FEEDEQ(cc,feed)..   0      =E=
+         [-FDEM(cc,feed)  +  (feed_exog(cc,feed)+
+         sum(livest, FRATE(cc,feed,livest)* SUPPLY(cc,livest)))*fdem_tr(cc,feed) ]$FD(cc,feed);
+
+*### 19) Feed milk    (checked)
+FEEDMEQ(cc,comm)$MLK(comm)..   0          =E=
+        [-FDEM_MLK(cc,comm)  +
+         SUPPLY(cc,comm) * feed_milk(cc)]$FD_MLK(cc);
+
+*### 20)  Feed rates  (checked)
+FRATEEQ(cc,feed,livest)$FR(cc,feed,livest)..   FRATE(cc,feed,livest)     =E=
+         exp(frat_int(cc,feed,livest)+sum(feed1$PPF(cc,feed1),
+         elastfd(cc,feed,feed1,livest)*log(PD(cc,feed1))))*tp_fr(cc,livest);
+
+
+*# 21) Total domestic use (checked)
+TUSEEQ(cc,comm).. TUSE(cc,comm)                       =E=
+         HDEM(cc,comm)+SDEM(cc,comm)+PDEM(cc,comm)+FDEM(cc,comm)+FDEM_MLK(cc,comm)+ subs_milk_s(cc,comm);
+
+*# Agricultural supply components
+*## Yield
+*### 22) Yield for non quota crops  (checked)
+YILDEQ(cc,ag)..      0     =E=
+         [- YIELD(cc,ag)    +
+         exp(yild_int(cc,ag) +
+         elastyd(cc,ag,ag) * log(PP(cc,ag))
+         +elast_y_i(cc,ag)*log(int_ind(cc))
+         +elast_y_l(cc,ag)*log(lab_ind(cc)))
+         * tp_gr(cc,ag) * (1+stoch(cc,ag))]$(one(cc) and pr(cc,ag) and crops(ag) and nq(cc,ag) and not volsa(cc,ag))
+
+*### 23) Yield for quota crops dependent on shadow price  (checked)
+       +
+         [- YIELD(cc,ag)    +
+         exp(yild_int(cc,ag) +
+         elastyd(cc,ag,ag) * log(PP(cc,ag))
+         +elast_y_i(cc,ag)*log(int_ind(cc))
+         +elast_y_l(cc,ag)*log(lab_ind(cc)))
+         * tp_gr(cc,ag)]$(one(cc) and qu_sugar(cc,ag) and crops(ag) and not volsa(cc,ag))
+
+
+;
+*## Area allocation
+*### Unrestricted area
+AREAEQ1(one,crops)$YIELD0(one,crops)..      0  =E=
+
+*#### 24) For crops other than sugar beet (checked)
+         [-ALAREA(one,crops) +
+         exp(area_int(one,crops)+sum(crops1$ppp(one,crops1),
+         elastsp(one,crops,crops1)*log(PI(one,crops1)))
+
+
++elast_landpr(one,crops)   *log(landprice1(one))
+
+         +elast_a_i(one,crops)*log(int_ind(one))
+         +elast_a_l(one,crops)*log(lab_ind(one))
+         +elast_a_c(one,crops)*log(cap_ind(one)))]$(nonsug(crops) )
+         +
+*#### 25) For sugar beet  (checked)
+         [-ALAREA(one,crops) +
+         MAX(
+         0,
+         (area_add_int_sug(one) + exp(log(area_factor_sug(one)) +
+         area_exponent_sug(one) * log(PI(one,crops))))
+         )
+         *
+         exp(area_int2_sug(one)+sum( nonsug$ppp(one,nonsug), elastsp(one,crops,nonsug)
+                         *log(PI(one,nonsug)))
+
+* New version with variable elasticity
+*+(elast_landpr(one,crops)*landprice1(one)/landprice0(one))  *log(landprice1(one))
+                          +elast_landpr(one,crops)*log(landprice1(one))
+
+                          +elast_a_i(one,crops)*log(int_ind(one))
+                          +elast_a_l(one,crops)*log(lab_ind(one))
+                          +elast_a_c(one,crops)*log(cap_ind(one)))
+         /
+         exp(area_int3_sug(one) + elastyd(one,crops,crops)
+                         *log(PP(one,crops)))
+         ]$sug(crops)
+
+;
+*### 26) Determination of obligatory set aside area  (checked)
+AREAEQ5(one)..     0        =E=
+         -OBLSETAS(one)
+         +
+         [setas_eu15(one)]$eu15(one)
+         +
+         [setas_eu12(one)]$eu12(one)
+         ;
+*
+*Determination of agricultural land use
+*
+*### 27)  total available agricultural area for non setaside land  (checked)
+EQ_QNEW1(one)..  0     =E=
+         [-Q_NEW1(one)       +
+         area_max(one) * ch_area(one) - marg_land(one)*OBLSETAS(one)];
+
+
+*### 28)  land supply for non setaside land  (checked)
+EQ_A1(one)..   0  =E=
+         [-LANDSUPPLY1(one)
+          + Q_NEW1(one) - bend_ld1(one)/(shift_ld(one) +  LANDPRICE1(one))];
+
+
+*### 29)  market clearing for land non setaside land  (checked)
+EQ_LANDMRKT1(one)..    0  =E=
+         [-LANDSUPPLY1(one)
+           + SUM(crops, ALAREA(one,crops))];
+
+
+*# Direct payments
+DIRPAYEQ(one,comm)..  0       =E=
+
+*## 30) Direct payments for crops  (checked)
+         [-DIRPAY(one,comm)  +
+             DIRPAY0(one,comm)
+              / YIELD(one,comm) * YIELD0(one,comm)
+         ]$(area0(one,comm) and DIRPAY0(one,comm) and member(one))
+         +
+*## 31) Direct payments for livestock  (checked)
+         [-DIRPAY(one,comm) +
+           DIRPAY0(one,comm)
+         ]$(DIRPAY0(one,comm) and member(one))
+;
+
+*# Price equations
+*## Definition of lower und upper price bounds
+*### Definition of lower bounds
+
+P_LO_EQ(one,it)..  0          =E=
+
+*#### 32) Lower price bound in LOGIT function in NMS prior to accession   (checked)
+         [-P_LO(one,it)     +
+          PW(it)/exrate(one)*(1+subs_ad(one,it))]$(nomember(one) and PS(one,it))
+         +
+*#### 33) Lower price bound in LOGIT function in EU for products with intervention price  (checked)
+         [-P_LO(one,it)     +
+          MAX(PW(it)/exrate(one),intpr(one,it)+exstab(one,it))]$(member(one) and not (delay_r(one) and delay_c(it))
+                                                                                  and (THRESH(it) or FLOOR(it)))
+         +
+*#### 34) Lower price bound in LOGIT function in delayed integration regions for non-intervention products  (checked)
+         [-P_LO(one,it)     +
+          MAX(intpr(one,it), delay(one,it) * (SUM(euro1, (PD("GE",it)+mrktpri0(euro1,it)-PD00("GE",it))
+                    *exrate(euro1)) /exrate(one)))]$(delay_r(one) and delay_c(it) and member(one))
+        +
+
+
+*#### 35) Lower price bound in LOGIT function in EU for products without intervention price  (checked)
+         [-P_LO(one,it)     +
+           PW(it)/exrate(one)]$(member(one) and not (delay_r(one) and delay_c(it))
+                                                                        and TAR(it));
+
+*### Definition of upper bounds
+P_UP_EQ(one,it)..  0          =E=
+
+*#### 36) Upper price bound in LOGIT function in NMS prior to accession  (checked)
+         [-P_UP(one,it)     +
+          (PW(it)/exrate(one)*(1+tar_ad(one,it)) )]$(nomember(one) and PS(one,it))
+         +
+*#### 37) Upper price bound in LOGIT function in EU for products with threshhold prices  (checked)
+         [-P_UP(one,it)     +
+          MAX(PW(it)/exrate(one),thrpr(one,it))]$(member(one) and THRESH(it))
+         +
+*#### 38) Upper price bound in LOGIT function in EU for products with ad-valorem or specific tariffs  (checked)
+         [-P_UP(one,it)     +
+         (PW(it)/exrate(one))*(1+tar_ad(one,it))+sp_d(one,it)]$(member(one) and (FLOOR(it) or TAR(it)));
+
+*### 39) Definition of second upper bounds in the EU for products with export subsidies or quality markups  (checked)
+P_UP_2_EQ(one,it).. 0         =E=
+         [-P_UP_2(one,it)   +
+           MAX(exp_sub(one,it),qual_ad(one,it)) + PW(it)/exrate(one)
+         ]$(member(one) {and not (delay_r(one) and delay_c(it)) }
+                      and (tar(IT) or thresh(it))
+                      and EXPSUB(one,it))
+;
+
+*##  Price transmission
+
+PRICEQ(cc,it)..    0         =E=
+*### 40) Definition of world market price  (checked)
+            [-PD(cc,it)      +
+             PW(it)]$(PS(cc,it) and REST(cc))
+             +
+*### 41) Price transmission on EU markets WITHOUT export subsidies  (checked)
+             [-PD(cc,it)      +
+             (P_UP(cc,it) - P_LO(cc,it))
+                  *( (-1)*logitshift(cc,it)*(exp(logit_scale(cc,it)*(trqshr_eu(it)+tradeshr_eu(it)))  /
+                     (1+logitshift(cc,it)*exp(logit_scale(cc,it)*(trqshr_eu(it)+tradeshr_eu(it)))) ))
+                   + P_UP(cc,it)
+             ]$(PS(cc,it) and NEXPSUB(cc,it) and member(cc) and not (delay_r(cc) and delay_c(it)))
+
+*### 42) Price transmission on EU markets WITH export subsidies  (checked)
+            +
+            [-PD(cc,it)      +
+             MAX[
+                  (P_UP(cc,it) - P_LO(cc,it))
+                  *( (-1)*(exp(trqshr_eu(it) + tradeshr_eu(it))  /
+                     (1+exp(trqshr_eu(it) + tradeshr_eu(it)) ) ))
+                 + P_UP(cc,it) ,
+                  (P_UP_2(cc,it) - P_LO(cc,it))
+                  *( (-1)*logitshift(cc,it)*(exp(logit_scale(cc,it)*(tradeshr_eu(it)
+                              - SUBSHR_eu(it) - QUALSHR_eu(it) + TRQSHR_eu(it) ))  /
+                     (1+logitshift(cc,it)*exp(logit_scale(cc,it)*(tradeshr_eu(it)
+                              - SUBSHR_eu(it) - QUALSHR_eu(it) + TRQSHR_eu(it) )
+                        )) )) + P_UP_2(cc,it)                 ]
+                    ]$(member(cc) and (PS(cc,it)) and (EXPSUB(cc,it)) and not (delay_r(cc) and delay_c(it)))
+            +
+
+*### 43) Price transmission on new member states' markets with delayed integration to Single Market  (checked)
+            [-PD(cc,it)      +
+            (P_UP(cc,it) - P_LO(cc,it))
+             *((-1)*logitshift(cc,it)*(exp(tradeshr_d(it))  /
+             (1+logitshift(cc,it)*exp(tradeshr_d(it))) ))
+             +P_UP(cc,it)]$(member(cc) and PS(cc,it) and delay_r(cc) and delay_c(it))
+            +
+*### 44) Price transmission on candidate countries' markets prior to EU-accession  (checked)
+            [-PD(cc,it)      +
+            (P_UP(cc,it) - P_LO(cc,it))
+             *((-1)*logitshift(cc,it)*(exp(tradeshr(cc,it))  /
+             (1+logitshift(cc,it)*exp(tradeshr(cc,it))) ))
+             +P_UP(cc,it)]$(nomember(cc) and PS(cc,it)) ;
+
+
+*## Determination of shadow prices
+
+SPRICEQ(cc,ag)..  0        =E=
+*### 45) For livestock  (checked)
+            [-PSH(cc,ag) +
+         exp(      (log(quota(cc,ag){-subs_milk(cc,ag)-FDEM_MLK(cc,ag)})
+         - sup_int(cc,ag)
+         -sum(ag1$(ord(ag1) ne ord(ag) and ppp(cc,ag1)),
+         elastsp(cc,ag,ag1)*log(PI(cc,ag1)))
+         -elast_lv_i(cc,ag)*log(int_ind(cc))
+         -elast_lv_l(cc,ag)*log(lab_ind(cc))
+         -elast_lv_c(cc,ag)*log(cap_ind(cc))
+         -elast_lv_f(cc,ag)*log(FCI(cc,ag))
+         -log(tp_gr(cc,ag)))
+         /elastsp(cc,ag,ag))]$(pr(cc,ag) and livest(ag) and quota(cc,ag))
+            +
+*### 46) For crops  (checked)
+            [-PSH(cc,ag)  +
+                 (((quota(cc,ag)*exp(area_int3_sug(cc))
+                   /exp(yild_int(cc,ag)
+                         +elast_y_i(cc,ag)*log(int_ind(cc))
+                         +elast_y_l(cc,ag)*log(lab_ind(cc))
+                         +log(tp_gr(cc,ag)))
+                   /exp(area_int2_sug(cc)+sum( nonsug$ppp(cc,nonsug), elastsp(cc,ag,nonsug)*log(PI(cc,nonsug)))
+                          +elast_landpr(cc,ag)*log(landprice1(cc))
+                          +elast_a_i(cc,ag)*log(int_ind(cc))
+                          +elast_a_l(cc,ag)*log(lab_ind(cc))
+                          +elast_a_c(cc,ag)*log(cap_ind(cc)))
+                        )- area_add_int_sug(cc)
+                         )*(1/area_factor_sug(cc))
+                         )**(1/area_exponent_sug(cc))
+
+                 ]$(one(cc) and pr(cc,ag) and qu_sugar(cc,ag))
+
+            +
+*### 47) For voluntary setaside  (checked)
+            [-PSH(cc,ag)  +
+         exp(        (log(quota(cc,ag))
+         -area_int(cc,ag)
+         -sum(ag1$(ord(ag1) ne ord(ag)and ppp(cc,ag1)),
+         elastsp(cc,ag,ag1)*log(PI(cc,ag1)))
+         -elast_landpr(cc,ag)*log(landprice1(cc))
+         -elast_a_i(cc,ag)*log(int_ind(cc))
+         -elast_a_l(cc,ag)*log(lab_ind(cc))
+         -elast_a_c(cc,ag)*log(cap_ind(cc))
+         )
+         /(elastsp(cc,ag,ag)))]$volsaq(cc,ag);
+
+*## Price transmission wholesale to producer price
+TRANSEQ(cc,ag).. 0    =E=
+
+
+* The following lines are related to the sequential dynamic version of ESIM
+*#### 48) For products with margin
+            [-PP(cc,ag)   +
+            (1-SUM(lag_period, lag_weight(cc,ag,lag_period))) * PD(cc,ag)   / margin0(cc,ag)
+          +                     lag_weight(cc,ag,"t_1"      ) * PD_t1(cc,ag) / margin0(cc,ag)
+          +                     lag_weight(cc,ag,"t_2"      ) * PD_t2(cc,ag) / margin0(cc,ag)
+            ]$(margin0(cc,ag) ne 0.0 and nq(cc,ag)  )
+
+*#### 49) For products without margin
+            +
+            [-PP(cc,ag)   +
+            (1-SUM(lag_period, lag_weight(cc,ag,lag_period))) * PD(cc,ag)
+          +                     lag_weight(cc,ag,"t_1"      ) * PD_t1(cc,ag)
+          +                     lag_weight(cc,ag,"t_2"      ) * PD_t2(cc,ag)
+            ]$(margin0(cc,ag) eq 0.0  )
+
+*#### 50) For quota products
+            +
+            [-PP(cc,ag)   +
+             MIN(
+            (1-SUM(lag_period, lag_weight(cc,ag,lag_period))) * PD(cc,ag)    / margin0(cc,ag)
+          +                     lag_weight(cc,ag,"t_1"      ) * PD_t1(cc,ag) / margin0(cc,ag)
+          +                     lag_weight(cc,ag,"t_2"      ) * PD_t2(cc,ag) / margin0(cc,ag)
+                , PSH(cc,ag))]$(margin0(cc,ag) ne 0.0 and qu(cc,ag)  )
+
+;
+
+
+*## Consumer prices
+*### 51) Agri-food commodities  (checked)
+PCEQ(cc,comm).. 0    =E=
+            [-PC(cc,comm)   +
+             PD(cc,comm) + pctax(cc,comm)]$hd(cc,comm)
+            +
+*### 52) Crude oil  (checked)
+            [-PC(cc,comm)   +
+             p0(cc,comm) + pctax(cc,comm)]$cr_oil(comm)
+;
+
+*## Producer incentive prices
+PIEQ(cc,comm).. 0    =E=
+
+*### 53) Non-quota products  (checked)
+            [-PI(cc,comm)   +
+             PP(cc,comm) + DIRPAY(cc,comm)]$(nq(cc,comm) and ag(comm))
+            +
+
+*### 54) Quota products  (checked)
+            [-PI(cc,comm)   +
+             MIN((PP(cc,comm) + DIRPAY(cc,comm)),PSH(cc,comm))]$(qu(cc,comm) and ag(comm))
+            +
+
+*### 55) Energy crops in the EU on non set-aside  (checked)
+            [-PI(cc,comm)   +
+             PD(cc,comm) + (pay_biof/SUM((energ,c)$member(c), SUPPLY(c,energ))) * SUM(euro1, exrate(EURO1))/exrate(cc)
+             ]$(pr(cc,comm) and energ(comm) and member(cc))
+            +
+
+*### 56) Energy crops in non EU  (checked)
+            [-PI(cc,comm)   +
+             PD(cc,comm) ]$(pr(cc,comm) and energ(comm) and not member(cc))
+
+;
+
+*## Determination of net prices in biofuel production
+*### 57) Biodiesel inputs  (checked)
+NPDBFEQ(cc,energ,comm).. 0            =E=
+             [-NetPD(cc,energ,comm)   +
+               PD(cc,comm)
+               - SUM(comm1, coef_p_bf(energ,comm,comm1) * PD(cc,comm1))
+             ]$(biof_d(energ) and I_DIESEL(COMM))
+
+
+*### 58) Bioethanol inputs non-sugar  (checked)
+            +
+             [-NetPD(cc,energ,comm)   +
+               PD(cc,comm)
+               - SUM(comm1, coef_p_bf(energ,comm,comm1) * PD(cc,comm1))
+             ]$(biof_e(energ) and I_ETHANOL_NS(COMM))
+
+*### 59) Bioethanol inputs sugar non-EU  (checked)
+            +
+             [-NetPD(cc,energ,comm)   +
+               PD(cc,comm)
+               - SUM(comm1, coef_p_bf(energ,comm,comm1) * PD(cc,comm1))
+             ]$(biof_e(energ) and I_ETHANOL_S(COMM) and not member (cc))
+
+*### 60) Bioethanol inputs sugar EU  (checked)
+
+            +
+             [-NetPD(cc,energ,comm)   +
+               PD('row',comm)/exrate(cc)
+               - SUM(comm1, coef_p_bf(energ,comm,comm1) * PD(cc,comm1))
+             ]$(biof_e(energ) and I_ETHANOL_S(COMM) and member (cc));
+
+
+
+*## Determination of cost indices
+*### 61) Feed cost index  (checked)
+FCIEQ(cc,livest).. 0            =E=
+             [-FCI(cc,livest)   +
+               sum(feed,FRATE(cc,feed,livest)
+               * PD(cc,feed))/FC_0(cc,livest)]$(pr(cc,livest) and livest(livest));
+
+
+*### 62) Biofuel cost index  (checked)
+BCIEQ(cc,energ).. 0            =E=
+             [-BCI(cc,energ)   +
+               (sum(comm$I_BIOFUEL(energ,comm), QUANCES0(cc,energ,comm)  * NetPD(cc,energ,comm))
+              /
+               sum(comm$I_BIOFUEL(energ,comm), QUANCES0(cc,energ,comm)) )
+               / BCI0(cc,energ)
+             ]$pr(cc,energ);
+
+
+*# Biofuel technology
+
+*## Determination of unscaled quantities in bio-fuel energy production function
+CESQUAN(cc,energ,comm).. 0            =E=
+
+*### 63) Biodiesel  (checked)
+             [-QUANCES(cc,energ,comm) +
+               1 / biof_CES_int(cc,energ) * biof_CES_shr(cc,energ,comm) / NetPD(cc,energ,comm)**biof_CES_el(CC,energ)
+               *sum[comm1$(i_diesel(comm1) or i_ethanol(comm1)), biof_CES_shr(cc,energ,comm1)*NetPD(cc,energ,comm1)**(1-biof_CES_el(CC,energ))]
+        **(biof_CES_el(CC,energ)/(1-biof_CES_el(CC,energ)))
+             ]$(biof_d(energ) and pr(cc,energ) and i_diesel(comm))
++
+
+*### 64) Bioethanol  (checked)
+             [-QUANCES(cc,energ,comm) +
+               1 / biof_CES_int(cc,energ) * biof_CES_shr(cc,energ,comm) / NetPD(cc,energ,comm)**biof_CES_el(CC,energ)
+               *sum[comm1$(i_diesel(comm1) or i_ethanol(comm1)), biof_CES_shr(cc,energ,comm1)*NetPD(cc,energ,comm1)**(1-biof_CES_el(CC,energ))]
+        **(biof_CES_el(CC,energ)/(1-biof_CES_el(CC,energ)))
+             ]$(biof_e(energ) and pr(cc,energ) and i_ethanol(comm))
+;
+
+*## 65) Scaling of relative input quantities to add up to supply of biofuels
+CESSHR(cc,energ,comm).. 0            =E=
+             [-PDEM_BF(cc,energ,comm)/convbfcc(cc,energ,comm)
+              / SUPPLY(cc,energ)
+               +
+               QUANCES(cc,energ,comm) / MAX(0.0000001,SUM(comm1, QUANCES(cc,energ,comm1)))
+             ]$(pr(cc,energ)  and i_biofuel(energ,comm) );
+
+
+
+*# Other equations
+*## 66) Net trade per region (checked)
+NETXEQ(cc,it)..  NETEXP(cc,it) =E= SUPPLY(cc,it) - TUSE(cc,it) {+ chgtrq(cc,it)};
+
+*## Trade shares
+*### 75) Share of net exports in domestic market volume (EU) (checked)
+XSHR_EUEQ(it).. 0      =E=
+            [-TRADESHR_EU(it)  +
+            (SUM(one1$member(one1), NETEXP(one1,it))-C_sugar_exports(it))
+            /SUM(one1$member(one1),TUSE(one1,it))*100]$(SUM(member, NX(member,it)));
+
+*### 67) Share of net exports in domestic market volume for new members with delayed market integration
+*XSHR_DEQ(it).. 0      =E=
+*            [-TRADESHR_D(it)   +
+*            SUM(delay_r, NETEXP(delay_r,it))
+*            /SUM(delay_r, TUSE(delay_r,it))*100]$DELAY_C(IT);
+
+*### 68) Share of net exports in domestic market volume (individual countries) (checked)
+XSHREQ(cc,it).. 0     =E=
+            [-TRADESHR(cc,it)  +
+             NETEXP(cc,it)/MAX(SUPPLY(cc,it),TUSE(cc,it))*100]$(nomember(cc) and (NX(cc,it) or pr(cc,it)));
+
+*### 69) Share of high quality exports in domestic market volume   (checked)
+QUALSHREQ(it)$(QUALQUANT(it)).. QUALSHR_EU(it)   =E=
+         QUALQUANT(it)/SUM(one$member(one),TUSE(one,it))*100;
+
+*### 70) Share of export subsidy limit in domestic market volume   (checked)
+SUBSHR_EUEQ(it).. SUBSHR_EU(it)       =E=    SUBSQUANT(it)  /SUM(cc$member(cc),tuse(cc,it))*100;
+
+*### 71) Share of TRQ in domestic market volume   (checked)
+TRQSHR_EUEQ(it).. TRQSHR_EU(it)       =E=
+         [TRQ(it)        /SUM(cc$member(cc),tuse(cc,it))*100]$(not(sug(it)))
++
+         [SUGIMP_EU(it)  /SUM(cc$member(cc),tuse(cc,it))*100]$(sug(it))
+         ;
+
+*### 72) Preferential Sugar imports or pre-fixed sugar imports   (checked)
+SUGIMP_EUEQ(it).. SUGIMP_EU(it)       =E=
+         [MIN(preftrq,trq_int  * MAX(0,
+                                         MAX(0.00001,(PD('UK','SUGAR') *exrate('UK')/SUM(euro1, exrate(euro1))
+                                              - PW("SUGAR") /SUM(euro1, exrate(euro1))- trq_tc)
+                                            )** trq_elast
+                                 )
+             )]$(sug(it) and (endog_sug eq 2.0))
++
+         [sug_imp_exog(it)]$(sug(it) and (endog_sug eq 1.0))
+         ;
+
+*## 73) World market clearing condition    (checked)
+WNXEQ(it)..         SUM(cc, NETEXP(cc,it)) =E=  0.0 ;
+
+*## 74) Regional market clearing for non-tradable products
+NTRADEQ(cc,nt)$TUSE0(cc,nt)..  SUPPLY(cc,nt)  =E=  TUSE(cc,nt) ;
+*NTRADEQ(cc,nt_mlk)..  SUPPLY(cc,nt_mlk)  =E=  TUSE(cc,nt_mlk) ;
+
+*## 75) Determination of milk prices derived from fat and protein prices
+*PDEQNMLK(cc,comm)$MILK_(cc,comm)..  PD(cc,comm) =E= [addcomp_milk(cc,comm)
+*    *SUM(dairy_comp, content(cc,dairy_comp) * PD(cc,dairy_comp))];
+
+
+model esimmcp mcp model structure
+/
+SUPPLYEQ.SUPPLY   , {Supply equations}
+HDEMEQ.HDEM       , {Human demand}
+SDEMEQ.SDEM       , {Seed demand}
+PROCEQ.PDEM       , {Processing activities}
+PROCM_EQ.MPDEM    , {Processing demand for fresh milk}
+FEEDEQ.FDEM       , {Feed demand}
+FEEDMEQ.FDEM_MLK  , {feed milk}
+FRATEEQ.FRATE     , {Feed rate for livestock products}
+TUSEEQ.TUSE       , {Total domestic use}
+YILDEQ.YIELD      , {Yields crops}
+AREAEQ1.ALAREA    , {Price part of area allocation}
+
+AREAEQ5.OBLSETAS  , {Effective setaside area}
+EQ_A1.LANDSUPPLY1, {Landsupply}
+
+EQ_LANDMRKT1.LANDPRICE1,        {Market clearing land market}
+
+EQ_QNEW1.Q_NEW1     , {Maximum area without eff. oblig. setaside}
+
+DIRPAYEQ.DIRPAY   , {Total direct payments}
+P_LO_EQ.P_LO      , {Lower price bound in 1st step of LOGIT function}
+P_UP_EQ.P_UP      , {Upper price bound in 1st step of LOGIT function}
+P_UP_2_EQ.P_UP_2  , {Upper price bound in 2nd step of LOGIT function}
+PRICEQ.PD         , {Price transmission}
+PIEQ.PI           , {producer incentive price}
+PCEQ.PC           , {consumer price}
+SPRICEQ.PSH       , {Shadow price functions for quota products}
+FCIEQ.FCI         , {Feed cost per ton of livestock product}
+TRANSEQ.PP        , {For products with margins between PD and PP}
+NETXEQ.NETEXP     , {Net exports}
+XSHREQ.TRADESHR   , {Share of net exports in total use for individual c.}
+XSHR_EUEQ.TRADESHR_EU   , {Share of net exports in total use for individual EU-15 states}
+SUBSHR_EUEQ.SUBSHR_EU   , {Adjusted share of net exports in total use for the subsidized exports in EU}
+QUALSHREQ.QUALSHR_EU , {Adjusted share of net exports in total use for the quality exports in EU}
+TRQSHR_EUEQ.TRQSHR_EU   , {Adjusted share of net exports in total use for the TRQ into the  EU}
+SUGIMP_EUEQ.SUGIMP_EU   , {Imports of sugar under preferential agreements or pre-fixed}
+WNXEQ.PW          , {Market clearing condition for tradeable goods}
+NTRADEQ.PD        , {Regional market clearing condition for nt goods}
+*PDEQNMLK.PD       ,
+CESQUAN.QUANCES   , {Unscaled input demand in biofuel production}
+CESSHR.PDEM_BF    , {Shares in input demand function for biofuel production}
+BCIEQ.BCI         ,
+NPDBFEQ.NetPD
+*XSHR_DEQ.TRADESHR_D
+/
+
+option MCP=PATH;
+
+SOLVE ESIMMCP using MCP ;
+*
+* TEST OF REPRODUCTION OF THE DATA BASE AFTER THE FIRST SOLVE
+* ABORT IF CERTAIN LEVEL IS BROKEN:
+* HERE 3.0% TOLERANCE MARGIN COMPARED TO BASE DATA LEVEL
+*
+
+
+*display oblsetas.l,setas_eu15;
+*$stop
+
+PARAMETER
+
+chk_area      Difference between values of data base and variables AREA USE in per cent
+chk_prod      Difference between values of data base and variables PRODUCTION in per cent
+chk_hdem      Difference between values of data base and variables HUMAN DEMAND in per cent
+chk_fdem      Difference between values of data base and variables FEED DEMAND in per cent
+chk_sdem      Difference between values of data base and variables SEED DEMAND in per cent
+chk_pdem      Difference between values of data base and variables PROC DEMAND in per cent
+chk_pd        Difference between values of data base and variables DOMESTIC PRICES in per cent
+chk_area_pr   Difference between values of data base and variables AREA PRICE in per cent
+ind_exrate
+
+*Technical Parameters for the coupling/decoupling process
+DP_coup_ha_save
+DP_coup_env_save
+Art_69_ha_save
+Art_69_env_save
+DP_coup_ha_2
+DP_coup_env_2
+Art_69_ha_2
+Art_69_env_2
+Difference_coup_ha
+Difference_coup_env
+Difference_art_ha
+Difference_art_env
+Envelop_total
+Envelop_crops_ha
+Chk_coup_base
+Envelop_reduction(eu12)
+reduction_ha(eu12)
+sugar_payment
+cum_modul     "Accummulated changes in direct payments for introduction of sugar payments"
+save_supply
+
+*Control-Parameters for coupling/decoupling
+Dirpay_1        "Current level of DP per t"
+Dirpay_1_ha     "Current level of PD per ha"
+dirpay_2        "Level of DIRPAY0 per t"
+Dirpay_2_ha     "Level of DIRPAY0 per ha"
+Current_year    "Parameter displays the year in the list file"
+;
+
+* Assigning starting values to technical parameters for coupling/decoupling
+DP_coup_ha_2(eu15,crops)=DP_coup_ha(eu15,crops);
+DP_coup_env_2(eu15,livest)=DP_coup_env(eu15,livest);
+dp_coup_env_2('SI',livest)=DP_coup_env('SI',livest);
+Art_69_ha_2(eu15,crops)=Art_69_ha(eu15,crops);
+Art_69_env_2(eu15,livest)=Art_69_env(eu15,livest);
+Art_69_env_2('SI',livest)=Art_69_env('SI',livest);
+Envelop_total_ha(cc)=0;
+cum_modul(eu27) = 1;
+Chk_coup_base(eu27,comm,sim_base)= Art_69_ha(EU27,comm) + Art_69_env(eu27,comm);
+
+loop(eu27,
+loop(comm,
+loop(sim_base,
+
+if(chk_coup_base(eu27,comm,sim_base) ne 0 and implement_art_68(eu27,comm,sim_base) ne 0,
+abort "double entry for Art 69/68 payments";)
+););        );
+
+display implement_art_68;
+
+
+chk_area(cc,comm)$area0(cc,comm)   = round((alarea.l(cc,comm) / area0(cc,comm) -1)*100, 6) ;
+chk_prod(cc,comm)$prod0(cc,comm)   = round((supply.l(cc,comm) / prod0(cc,comm) -1)*100, 6) ;
+chk_hdem(cc,comm)$hdem0(cc,comm)   = round((hdem.l(cc,comm) / hdem0(cc,comm) -1 ) * 100, 6);
+chk_fdem(cc,comm)$fdem0(cc,comm)   = round((fdem.l(cc,comm) / fdem0(cc,comm) -1 ) * 100, 6);
+chk_sdem(cc,comm)$sdem0(cc,comm)   = round((sdem.l(cc,comm) / sdem0(cc,comm) -1 ) * 100, 6);
+chk_pdem(cc,comm)$pdem0(cc,comm)   = round((pdem.l(cc,comm) / pdem0(cc,comm) -1 ) * 100, 6);
+chk_pd(cc,comm)$pd_0(cc,comm)      = round((pd.l(cc,comm) / pd_0(cc,comm) -1 ) * 100, 6);
+chk_area_pr(one)$landprice0(one)    = round((landprice1.l(one)/landprice0(one) -1) *100, 6);
+
+
+display chk_area
+        chk_prod
+        chk_hdem
+        chk_fdem
+        chk_sdem
+        chk_pdem
+        chk_pd
+        chk_area_pr;
+
+LOOP(comm,
+LOOP(cc,
+ABORT$(abs(chk_area(cc,comm)) gt 0.5) "BENCHMARK INCORRECT1: AREA USE" , chk_area;
+ABORT$(abs(chk_prod(cc,comm)) gt 0.5) "BENCHMARK INCORRECT1: PRODUCTION" , chk_prod;
+ABORT$(abs(chk_pd(cc,comm))   gt 0.5) "BENCHMARK INCORRECT1: PRICES" , chk_pd;
+ABORT$(abs(chk_hdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT1: HDEM" , chk_hdem;
+ABORT$(abs(chk_sdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT1: SDEM" , chk_sdem;
+ABORT$(abs(chk_pdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT1: PDEM" , chk_pdem;
+ABORT$(abs(chk_fdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT1: FDEM" , chk_fdem;
+
+);
+);
+
+Loop(one,
+ABORT$(abs(chk_area_pr(one)) gt 0.5) "BENCHMARK INCORRECT: area_pr" , chk_area_pr;
+);
+
+option decimals = 3 ;
+
+*$STOP
+
+exrate_0(cc)        = exrate(cc);
+trq0(it)            = trq(it);
+tar_ad_0(one,tar)   = tar_ad(one,tar);
+subs_ad_0(one,tar)  = subs_ad(one,tar);
+sp_d_0(one,tar)     = sp_d(one,tar);
+pw_0(it)            = PW.l(it);
+pd_0(one,"milk")    = pd.l(one,"milk");
+intpr0(one,floor)   = intpr(one,floor);
+subsquant_0(it) = subsquant(it);
+
+
+*LOOP(sim_base$(ord(sim_base) le 2),
+LOOP(sim_base,
+
+
+IF(ORD(SIM_BASE) eq 1.0,
+pd_t1(cc,ag) = pd.l(cc,ag);
+pd_t2(cc,ag) = pd.l(cc,ag);
+);
+
+IF(ORD(SIM_BASE) gt 1.0,
+pd_t2(cc,ag)   = pd_t1(cc,ag);
+pd_t1(cc,ag)   = pd.l(cc,ag);
+);
+
+
+CHK_sim = 2006 + ORD(sim_base);
+
+IF(ORD(SIM_BASE) gt 1.0,
+C_sugar_exports('sugar') = 700 * trq_para(SIM_BASE,'sugar_quot');
+);
+
+trq_int  = exp(trq_para1("trq_int",'under_quota')) * trq_para(sim_base,'sugar_quot')
+         - exp(trq_para1("trq_int",'w_o_quota')) * (trq_para(sim_base,'sugar_quot')-1);
+
+trq_elast  = trq_para1("trq_elast",'under_quota') * trq_para(sim_base,'sugar_quot')
+         - trq_para1("trq_elast",'w_o_quota') * (trq_para(sim_base,'sugar_quot')-1);
+
+trq_tc   = trq_para(sim_base,"trq_tc")   ;
+preftrq  = trq_para(sim_base,"preftrq")  ;
+sug_imp_exog('sugar') = trq_para(sim_base,"sug_exog")  ;
+
+
+Loop(it,
+if(chk_sim eq chg_qual(it,"year"),
+
+qual_ad(one,it) = qual_ad(one,it) * (( chg_qual(it,"qualchange")/100) +1);
+
+
+);
+);
+
+
+*$ontext
+Loop(it,
+if(chk_sim eq chg_quant(it,"period"),
+
+qualquant(it) = qualquant(it) * (( chg_quant(it,"quant_change")/100) +1);
+
+
+);
+);
+*$offtext
+
+
+
+display qual_ad, yield.l, yield0;
+
+
+* Setting of shifters
+
+inc_gr(cc)=inc_gr(cc) * (1+income_growth(cc,sim_base)/100);
+pop_gr(cc)  = popul_grw(cc,sim_base);
+cap_ind(cc) = (1.0 + indices("capital",cc)/100)**(ord(sim_base)-1);
+lab_ind(cc) = (1.0 + indices("labor",cc)/100)**(ord(sim_base)-1);
+int_ind(cc) = (1.0 + indices("interm",cc)/100)**(ord(sim_base)-1);
+exrate(cc)  = exrate(cc) * (1+ex_rate(cc,sim_base)/100);
+exrate('EU')  = exrate('EU') * (1+ex_rate('EU',sim_base)/100);
+
+ind_exrate(cc) = exrate(cc) / exchrate(cc,"BASE");
+ind_exrate("EU") = exrate("EU") / exchrate("GE","BASE");
+display exrate, ind_exrate;
+
+ch_area(one) = 1.0 * ch_area_rate(one)**(ord(sim_base)-1);
+
+
+tp_gr(cc,ag) = (1.00 + tech_progr(ag,cc)/100)**(ord(sim_base)-1);
+tp_fr(cc,livest)   =  (1.00 - tech_progr_fr(livest,cc)/100)**(ord(sim_base)-1);
+*tp_gr(EU27,'sugar') = (1.00 + tech_progr('sugar',EU27)/100)**(ord(sim_base)-1);
+
+*area_add_int_sug(EU27) = area_add_int_sug(EU27) * (1.00 + tech_progr('sugar',EU27)/200)**(ord(sim_base)-1);
+
+
+
+area_factor_sug(EU27) = (area_factor_sug_0(EU27) * (1.00 + tech_progr('sugar',EU27)/200)**(ord(sim_base)-1))
+         + (sugar_parameters(EU27,'sinter')/price_sug_0(EU27)** area_exponent_sug(EU27) *
+         ((1.00 + tech_progr('sugar',EU27)/200)**(ord(sim_base)-1)-1)
+         *prod0(EU27,"SUGAR")) ;
+
+*area_factor_sug(EU27) = sugar_parameters(EU27,'sfactor') * prod0(EU27,"SUGAR");
+
+
+*area_factor_sug(EU27)  = area_factor_sug(EU27) * (1.00 + tech_progr('sugar',EU27)/200)**(ord(sim_base)-1);
+
+* Biofuel shifter
+*$ontext
+pdem_tr(cc,'biodiesel') = pdem_tr(cc,'biodiesel') *(1 + pdem_shft_bd(sim_base,cc)/100);
+pdem_tr(cc,'ethanol')   = pdem_tr(cc,'ethanol') *(1+ pdem_shft_eth(sim_base,cc)/100);
+pdem_tr(cc,oilseed)   = pdem_tr(cc,oilseed) *(1+ pdem_shft_os(sim_base,cc)/100);
+hdem_tr(cc,comm)$(not energ(comm))    =  (1+(hdem_shft(comm,cc)/100))**(ord(sim_base)-1);
+hdem_tr(cc,'biodiesel') = hdem_tr(cc,'biodiesel') *(1 + hdem_shft_bd(sim_base,cc)/100);
+hdem_tr(cc,'ethanol')   = hdem_tr(cc,'ethanol') *(1+ hdem_shft_eth(sim_base,cc)/100);
+
+*$offtext
+
+p0(cc,comm)$cr_oil(comm) =  (p_crude_oil(sim_base,"oilprice") /0.136) / exrate(cc) ;
+
+deflation_kum(cc)=deflation_kum(cc) * (1-deflation(cc,sim_base)/100);
+
+pctax(one,'c_oil') = (t_oil/0.00081) * SUM(euro1, exrate(euro1)) / exrate(one) *  deflation_kum(one);
+
+If (ord(sim_base) gt 1,
+fdem_tr(cc,feed) = (1 + (fdem_shft(feed,cc)/100))**(ord(sim_base)-1);
+);
+
+
+*===============================*
+* STRUCTURING POLICY SCENARIOS  *
+*===============================*
+
+*$ontext
+*
+* === Accession scenarios ===
+*
+
+nms(one)      =    YES$(membership(one,sim_base) eq 1 and not eu27(one));
+member(one)   =    YES$(membership(one,sim_base) eq 1);
+nomember(one) =    YES$(membership(one,sim_base) ne 1);
+
+* Introduction of CAP instruments in NMS
+* LEVEL OF CAP INTRUMENTS
+
+exp_sub(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))      =  SUM(euro1, exp_sub(euro1,comm) * exrate(EURO1))/exrate(one);
+sp_d(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))         =  SUM(euro1, sp_d(euro1,comm) * exrate(EURO1))/exrate(one);
+tar_ad(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))       = SUM(euro1, tar_ad(euro1,comm));
+intpr(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))        =  SUM(euro1, intpr(euro1,comm)*exrate(EURO1))/exrate(one);
+thrpr(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))        = SUM(euro1, thrpr(euro1,comm)*exrate(EURO1))/exrate(one);
+exstab(one,comm)$(nms(one) and (membership(one,sim_base-1) eq 0.0))       = SUM(euro1, exstab(euro1,comm)*exrate(EURO1))/exrate(one);
+qual_ad(one,it)$(nms(one) and (membership(one,sim_base-1) eq 0.0))       = SUM(euro1, qual_ad(euro1,it)*exrate(EURO1))/exrate(one);
+
+P_UP_2.UP(one,it)$(nms(one) and nms(one) and (membership(one,sim_base-1) eq 0.0)
+                      and (tar(IT) or thresh(it))
+                      and EXPSUB(one,it)) = +inf;
+
+P_UP_2.LO(one,it)$(nms(one) and nms(one) and (membership(one,sim_base-1) eq 0.0)
+                      and (tar(IT) or thresh(it))
+                      and EXPSUB(one,it)) = 0.0;
+
+
+
+tradeshr.fx(one,it)$(nms(one)  and (membership(one,sim_base-1) eq 0.0)) = 0.0;
+
+*$offtext
+
+
+* Revision of set in price formation mechanism (if required)
+LOOP(switch_comm,
+IF(ORD(sim_base) gt 1,
+IF(pol_set_thresh(switch_comm,sim_base) - pol_set_thresh(switch_comm,sim_base-1) ne 0.0,
+
+FLOOR(switch_comm)  = 0.0;
+THRESH(switch_comm) = 0.0;
+TAR(switch_comm)    = 0.0;
+
+FLOOR(switch_comm)  = YES$(POL_SET(switch_comm,sim_base,"FLOOR"));
+THRESH(switch_comm) = YES$(POL_SET(switch_comm,sim_base,"THRESH"));
+TAR(switch_comm)    = YES$(POL_SET(switch_comm,sim_base,"TARIFF"));
+
+
+sp_d(one,switch_comm)$member(one)     = 0.5*bound_tar_cc(one,switch_comm,'bound') * SUM(euro1, exrate(EURO1))/exrate(one);
+
+sp_d_0(one,switch_comm)$member(one)    =  sp_d(one,switch_comm);
+
+intpr(one,switch_comm) = 0.0;
+thrpr(one,switch_comm) = 0.0;
+
+);
+);
+);
+
+
+* Pre-determined changes of intervention and threshold prices
+LOOP(IT,
+IF(chg_int_pre(it,sim_base) ne 0,
+  intpr(one,it)$member(one)  =  intpr0(one,it) * (1+chg_int_pre(it,sim_base)/100);
+  intpr0(one,it)$member(one) =  intpr(one,it)
+);
+IF(chg_thresh_pre(it,sim_base) ne 0,
+  thrpr(one,it)$member(one)  =  thrpr0(one,it) * (1+chg_thresh_pre(it,sim_base)/100);
+  thrpr0(one,it)$member(one) =  thrpr(one,it)
+);
+);
+*
+
+*
+* Linear or non-linear reduction in intervention- and threshold prices
+LOOP(IT,
+* Non-linear reduction
+IF(CHG_INT(it,"chg") gt chg_int_ann(it,sim_base),
+  intpr(one,it)$member(one) =  intpr0(one,it) * (1+chg_int_ann(it,sim_base)/100);
+*
+LOOP(one,
+IF(intpr(one,it)$(member(one)) le intpr0(one,it)$(member(one)),
+  intpr0(one,it)$(member(one)) = intpr(one,it);
+);
+IF(thrpr(one,it)$(member(one) ) le thrpr0(one,it)$(member(one)),
+  thrpr0(one,it)$(member(one)) = thrpr(one,it);
+);
+);
+);
+
+* Linear reduction
+
+
+IF(chg_int_ann(it,sim_base) gt CHG_INT(it,"chg"),
+IF(CHK_sim EQ CHG_INT(it,"first"),
+  intpr(one,it) $( member(one)) =  intpr0(one,it)
+         *  (1+ (CHK_sim - CHG_INT(it,"first")+1)*
+                [CHG_INT(it,"chg")/100] /
+                (CHG_INT(it,"final") - CHG_INT(it,"first")+1));
+
+);
+IF(CHK_sim GT CHG_INT(it,"first"),
+IF(CHK_sim LE CHG_INT(it,"final"),
+  intpr(one,it) $( member(one)) =  intpr0(one,it)
+         *  (1+ (CHK_sim - CHG_INT(it,"first")+1)*
+                [CHG_INT(it,"chg")/100] /
+                (CHG_INT(it,"final") - CHG_INT(it,"first")+1));
+
+);
+);
+);
+
+IF(thresh_n(it,"chg") ne 0,
+IF(CHK_sim EQ thresh_n(it,"first"),
+   thrpr(one,it) $( member(one)) =  thrpr0(one,it)
+         *  (1+ (CHK_sim - thresh_n(it,"first")+1)*
+                [thresh_n(it,"chg")/100] /
+                (thresh_n(it,"final") - thresh_n(it,"first")+1));
+);
+IF(CHK_sim GT thresh_n(it,"first"),
+IF(CHK_sim LE thresh_n(it,"final"),
+
+  thrpr(one,it) $( member(one)) =  thrpr0(one,it)
+         *  (1+ (CHK_sim - thresh_n(it,"first")+1)*
+                [thresh_n(it,"chg")/100] /
+                (thresh_n(it,"final") - thresh_n(it,"first")+1));
+);
+);
+);
+
+
+);
+
+
+
+* Changes in Ad-valorem Tariffs
+LOOP(it,
+IF(CHK_sim EQ CHG_TAR_V(it,"first"),
+  tar_ad(one,it) $ (member(one) and tar_ad(one,it)) = tar_ad_0(one,it)
+         *  (1+ (CHK_sim - CHG_TAR_V(it,"first")+1)*
+                [CHG_TAR_V(it,"chg")/100] /
+                (CHG_TAR_V(it,"final") - CHG_TAR_V(it,"first")+1));
+);
+IF(CHK_sim GT CHG_TAR_V(it,"first"),
+IF(CHK_sim LE CHG_TAR_V(it,"final"),
+  tar_ad(one,it) $ ((member(one)) and tar_ad(one,it)) = tar_ad_0(one,it)
+         *  (1+ (CHK_sim - CHG_TAR_V(it,"first")+1)*
+                [CHG_TAR_V(it,"chg")/100] /
+                (CHG_TAR_V(it,"final") - CHG_TAR_V(it,"first")+1));
+);
+);
+
+* Changes in Specific Tariffs
+IF(CHK_sim EQ CHG_TAR_S(it,"first"),
+  sp_d(one,it)$ ((member(one)) and sp_d(one,it)) = sp_d_0(one,it)
+         *  (1+ (CHK_sim - CHG_TAR_S(it,"first")+1)*
+                [CHG_TAR_S(it,"chg")/100] /
+                (CHG_TAR_S(it,"final") - CHG_TAR_S(it,"first")+1));
+);
+IF(CHK_sim GT CHG_TAR_S(it,"first"),
+IF(CHK_sim LE CHG_TAR_S(it,"final"),
+  sp_d(one,it)$ ((member(one)) and sp_d(one,it)) = sp_d_0(one,it)
+         *  (1+ (CHK_sim - CHG_TAR_S(it,"first")+1)*
+                [CHG_TAR_S(it,"chg")/100] /
+                (CHG_TAR_S(it,"final") - CHG_TAR_S(it,"first")+1));
+);
+);
+);
+
+* Changes in Export Subisidies
+* Ad-valorem Subsidy: EXP_SUBS
+LOOP(it,
+IF(CHK_sim EQ CHG_SUBSIDY(it,"first"),
+  exp_sub(one,it)$ ((member(one)) and exp_sub(one,it)) = exp_sub_0(one,it)
+         *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                [CHG_SUBSIDY(it,"chg_v")/100] /
+                (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+);
+IF(CHK_sim GT CHG_SUBSIDY(it,"first"),
+IF(CHK_sim LE CHG_SUBSIDY(it,"final"),
+  exp_sub(one,it)$ ((member(one)) and exp_sub(one,it)) = exp_sub_0(one,it)
+         *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                [CHG_SUBSIDY(it,"chg_v")/100] /
+                (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+);
+);
+* Exports Subsidy: EXSTAB
+IF(CHK_sim EQ CHG_SUBSIDY(it,"first"),
+  exstab(one,it)$ ((member(one)) and exstab(one,it)) = exstab_0(one,it)
+         *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                [CHG_SUBSIDY(it,"chg_v")/100] /
+                (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+);
+IF(CHK_sim GT CHG_SUBSIDY(it,"first"),
+IF(CHK_sim LE CHG_SUBSIDY(it,"final"),
+  exstab(one,it)$ ((member(one)) and exstab(one,it)) = exstab_0(one,it)
+         *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                [CHG_SUBSIDY(it,"chg_v")/100] /
+                (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+);
+);
+* Quantities
+IF(CHK_sim EQ CHG_SUBSIDY(it,"first"),
+  SUBSQUANT(it)  = subsquant_0(it)
+         *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                [CHG_SUBSIDY(it,"chg_q")/100] /
+                (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+);
+IF(CHK_sim GT CHG_SUBSIDY(it,"first"),
+IF(CHK_sim LE CHG_SUBSIDY(it,"final"),
+  SUBSQUANT(it)  = subsquant_0(it)
+         *  (1+ (CHK_sim - CHG_SUBSIDY(it,"first")+1)*
+                [CHG_SUBSIDY(it,"chg_q")/100] /
+                (CHG_SUBSIDY(it,"final") - CHG_SUBSIDY(it,"first")+1));
+);
+);
+SUBSHR_EU.UP(it) = +inf;
+SUBSHR_EU.LO(it) = -inf;
+SUBSHR_EU.FX(it)$(SUBSQUANT(it) EQ 0.0)          = 0.0;
+
+);
+
+
+LOOP(trq_comm,
+* Tariff Rate Quotas
+IF(CHK_sim EQ CHG_TRQ(trq_comm,"first"),
+  TRQ(trq_comm)  = TRQ0(trq_comm)
+         *  (1+ (CHK_sim - CHG_TRQ(trq_comm,"first")+1)*
+                [CHG_TRQ(trq_comm,"chg")/100] /
+                (CHG_TRQ(trq_comm,"final") - CHG_TRQ(trq_comm,"first")+1));
+);
+IF(CHK_sim GT CHG_TRQ(trq_comm,"first"),
+IF(CHK_sim LE CHG_TRQ(trq_comm,"final"),
+  TRQ(trq_comm)  = TRQ0(trq_comm)
+         *  (1+ (CHK_sim - CHG_TRQ(trq_comm,"first")+1)*
+                [CHG_TRQ(trq_comm,"chg")/100] /
+                (CHG_TRQ(trq_comm,"final") - CHG_TRQ(trq_comm,"first")+1));
+);
+);
+chgtrq(trq_comm) = trq(trq_comm) - trq0(trq_comm);
+chgtrq_row(trq_comm) = -chgtrq(trq_comm);
+TRQSHR_EU.UP(trq_comm) = +inf;
+TRQSHR_EU.LO(trq_comm) = -inf;
+TRQSHR_EU.FX(trq_comm)$(TRQ(trq_comm) EQ 0.0)          = 0.0;
+);
+*
+* Introduction of new TRQ for commodities without TRQ in the base period
+*
+
+LOOP(pot_trq_comm,
+IF(CHK_sim EQ intro_trq(pot_trq_comm,"first"),
+  TRQ(pot_trq_comm) =  (CHK_sim - intro_trq(pot_trq_comm,"first")+1)*
+                [intro_trq(pot_trq_comm,"trq")] /
+                (intro_trq(pot_trq_comm,"final") - intro_trq(pot_trq_comm,"first")+1);
+);
+IF(CHK_sim GT intro_trq(pot_trq_comm,"first"),
+IF(CHK_sim LE intro_trq(pot_trq_comm,"final"),
+  TRQ(pot_trq_comm) =  (CHK_sim - intro_trq(pot_trq_comm,"first")+1)*
+                [intro_trq(pot_trq_comm,"trq")] /
+                (intro_trq(pot_trq_comm,"final") - intro_trq(pot_trq_comm,"first")+1);
+);
+);
+chgtrq(pot_trq_comm) = trq(pot_trq_comm) - trq0(pot_trq_comm);
+chgtrq_row(pot_trq_comm) = -chgtrq(pot_trq_comm);
+TRQSHR_EU.UP(pot_trq_comm) = +inf;
+TRQSHR_EU.LO(pot_trq_comm) = -inf;
+TRQSHR_EU.FX(pot_trq_comm)$(TRQ(pot_trq_comm) EQ 0.0)          = 0.0;
+);
+*
+*
+
+
+* Change in delayed integration into Single European Market
+IF(ORD(sim_base) gt 1.0,
+delay(delay_r,delay_c)  = chg_delay(delay_c,sim_base);
+);
+
+
+$include 'calib setaside in NMS.gms'
+
+loop(eu15,
+
+if((abs_setas_area(eu15,sim_base)*1000) eq 0,
+
+area_int(eu15,crops)=area_int0(eu15,crops)+area_int_sft(eu15,crops);
+));
+
+display area_int;
+
+*==== QUOTA REGIME ====*
+
+
+IF(CHK_sim eq 2008,
+quota(cc,ag)$volsaq(cc,ag) = 1.3 * quota(cc,ag) ;    );
+IF(CHK_sim eq 2009,
+quota(cc,ag)$volsaq(cc,ag) = 1.4 * quota(cc,ag) ;    );
+
+* Trigger to abolish quota regime (Default value 1.0)
+chg_quota(sim_base,cc,"milk") = chg_quota_sim1(sim_base,cc);
+chg_quota(sim_base,cc,"sugar") = chg_quota_sim2(sim_base,cc);
+
+quota(eu27,'milk')  =  quota(eu27,'milk') * chg_quota(sim_base,eu27,'milk') ;
+
+
+quota(eu27,"sugar") = quota(eu27,"sugar") * chg_quota(sim_base,eu27,"sugar");
+
+
+
+
+*$ontext
+
+*==== DIRECT PAYMENTS ====*
+
+IF(ORD(sim_base) gt 1,
+DP_decoup_ha(eu27,'premia') = DP_decoup_ha(eu27,'premia') *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+DP_decoup_ha(eu12,'DCNDP')  = DP_decoup_ha(eu12,'DCNDP')  *(1-chg_dp(eu12,sim_base)/100)* (1- defl_pol(eu12,sim_base)/100);
+
+DP_coup_ha(EU27,CROPS)      = DP_coup_ha(EU27,CROPS)      *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+DP_coup_env(EU27,CROPS)     = DP_coup_env(EU27,CROPS)     *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+DP_coup_env(EU27,LIVEST)     = DP_coup_env(EU27,LIVEST)     *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+
+Art_69_ha(EU27,CROPS)       = Art_69_ha(EU27,CROPS)       *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+Art_69_env(eu27,LIVEST)     = Art_69_env(eu27,LIVEST)     *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+
+CNDP_ha(EU27,CROPS)         = CNDP_ha(EU27,CROPS)         *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+CNDP_env(eu27,LIVEST)       = CNDP_env(eu27,LIVEST)       *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+
+artificial_value(eu27) = artificial_value(eu27) *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+
+cum_modul(eu27) = cum_modul(eu27) *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+sugar_compensation(eu27,sim_base) =  sugar_compensation(eu27,sim_base) * cum_modul(eu27) ;
+
+Envelop_total_ha(EU27) = Envelop_total_ha(EU27) *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+
+DP_coup_ha_2(eu27,crops)     = DP_coup_ha_2(eu27,crops) *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+DP_coup_env_2(eu27,livest)  = DP_coup_env_2(eu27,livest) *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+
+Art_69_ha_2(eu27,crops)     = Art_69_ha_2(eu27,crops) *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+Art_69_env_2(eu27,livest)   = Art_69_env_2(eu27,livest) *(1-chg_dp(eu27,sim_base)/100)* (1- defl_pol(eu27,sim_base)/100);
+);
+
+
+dirpay_1(one,comm)=DIRPAY.l(one,comm);
+dirpay_2(one,comm)=dirpay0(one,comm);
+Dirpay_1_ha(one,comm)=dirpay_1(one,comm)*yield.l(one,comm);
+Dirpay_2_ha(one,comm)=dirpay_2(one,comm)*yield.l(one,comm);
+Current_year=(ord(sim_base))+2006;
+*display dp_coup_ha, dp_decoup_ha, artificial_value;
+
+
+display Current_year, dirpay_1, dirpay_2;
+display dirpay_1_ha, dirpay_2_ha;
+
+* Phasing in of DP in EU12
+** CROPS
+
+display dp_coup, dp_decoup;
+DP_EU_contrib_nms(eu12,comm)$prod0(eu12,comm)  = ((DP_decoup_ha(eu12,'premia')  / phase_in_eu('base',eu12))
+                                                 * phase_in_eu(sim_base,eu12));
+
+DP_Nat_contrib_nms(eu12,comm)$prod0(eu12,comm) = DP_decoup_ha(eu12,'DCNDP') * Top_up_reduction(sim_base,eu12);
+
+* In case of new Art. 68 payments the decoupled payments have to be reduced:
+Envelop_reduction(eu12) = sum(livest,implement_art_68(eu12,livest,sim_base)) * (artificial_value(eu12)/1000);
+reduction_ha(eu12) =  Envelop_reduction(eu12) / (SUM(CROPS,ALAREA.l(eu12,crops)));
+
+* Implement sugar envelops for NMS
+sugar_payment(eu12) = sugar_compensation(eu12,sim_base) / (SUM(CROPS,ALAREA.l(eu12,crops)));
+
+*Possibility of decoupling for animal products in SI
+dp_coup_env_2('SI',LIVEST)       =   dp_change("SI",livest,sim_base) * dp_coup_env('SI',LIVEST);
+Art_69_env_2('SI',livest)        =   Art_change('SI',livest,sim_base)* Art_69_env('SI',livest);
+
+Difference_coup_env('SI',LIVEST) =   dp_coup_env('SI',LIVEST) - dp_coup_env_2('SI',LIVEST);
+Difference_art_env('SI',LIVEST)  =   art_69_env('SI',LIVEST) - art_69_env_2('SI',LIVEST);
+
+ENVELOP_coup_env('SI',LIVEST)    =   Difference_coup_env('SI',livest) * 1000;
+ENVELOP_ART_69_env('SI',LIVEST)  =   Difference_art_env('SI',livest)  * 1000;
+
+
+Envelop_total('SI')              =
+sum(livest, ENVELOP_Art_69_env('SI',LIVEST))+
+sum(livest, ENVELOP_coup_env('SI',LIVEST));
+
+Envelop_crops_ha('SI')           =   Envelop_total('SI')/SUM(CROPS, ALAREA.l('SI',CROPS));
+*End: SI excursion
+
+DP_Nat_Topup_nms(eu12,comm)$prod0(eu12,comm)   = CNDP_ha(eu12,comm) * Top_up_reduction(sim_base,eu12);
+
+*Conversion: dcndp, saps, reduction und sugar
+DP_DECOUP(CROPS,eu12)$prod0(eu12,crops) =  (DP_EU_contrib_nms(eu12,crops) + DP_Nat_contrib_nms(eu12,crops)
+                                          + sugar_payment(eu12) - reduction_ha(eu12)) * SUM(euro1, exrate(EURO1))/exrate(eu12);
+*for SI additionally Envelop_crops_ha
+DP_DECOUP(CROPS,'SI')$prod0('SI',crops) =  (DP_EU_contrib_nms('SI',crops) + DP_Nat_contrib_nms('SI',crops)
+                                      + envelop_crops_ha('SI')
+                                      + sugar_payment('SI') - reduction_ha('SI')) * SUM(euro1, exrate(EURO1))/exrate('SI');
+
+
+*display dp_coup, dp_decoup, envelop_crops_ha,Art_69_env_2, difference_art_env ;
+
+DP_COUP(CROPS,eu12)$prod0(eu12,crops)   =  DP_Nat_Topup_nms(eu12,crops)* SUM(euro1, exrate(EURO1))/exrate(eu12);
+
+dirpay0(eu12,crops)$prod0(eu12,crops) = (DP_COUP(crops,eu12) + DP_DECOUP(crops,eu12)*prod_effdp(crops,"effdp"))/YIELD.l(eu12,crops);
+
+
+
+*
+* LIVESTOCK
+*
+*In the following lines Art 68 payments are implemented. The base for that is an artificial value (1 Mio) that is deflated and takes Modulation into account
+DP_Nat_Topup_nms(eu12,'milk')$prod0(eu12,'milk')   = [CNDP_env(eu12,'milk')  / prod0(eu12,'milk')*1000] * Top_up_reduction(sim_base,eu12)
++ implement_art_68(eu12,"milk",sim_base) * (artificial_value(eu12)/1000)   / prod0(eu12,"milk")
++ (DP_coup_env_2(eu12,'milk') / prod0(eu12,'milk') *1000)
++ (art_69_env_2(eu12,'milk') / prod0(eu12,'milk') *1000)
+;
+
+
+DP_Nat_Topup_nms(eu12,'sheep')$prod0(eu12,'sheep') = [CNDP_env(eu12,'sheep') / prod0(eu12,'sheep')*1000] * Top_up_reduction(sim_base,eu12)
++ implement_art_68(eu12,"sheep",sim_base) * (artificial_value(eu12)/1000)   / prod0(eu12,"sheep")
++ (DP_coup_env_2(eu12,'sheep') / prod0(eu12,'sheep') *1000)
++ (art_69_env_2(eu12,'sheep') / prod0(eu12,'sheep') *1000)
+;
+
+
+DP_Nat_Topup_nms(eu12,'beef')$prod0(eu12,'beef')   = [CNDP_env(eu12,'beef')  / prod0(eu12,'beef')*1000] * Top_up_reduction(sim_base,eu12)
++ implement_art_68(eu12,"beef",sim_base) * (artificial_value(eu12)/1000)   / prod0(eu12,"beef")
++ (DP_coup_env_2(eu12,'beef') / prod0(eu12,'beef') *1000)
++ (art_69_env_2(eu12,'beef') / prod0(eu12,'beef') *1000)
+;
+
+
+
+DP_COUP('milk',eu12)   =  DP_Nat_Topup_nms(eu12,'milk') * SUM(euro1, exrate(EURO1))/exrate(eu12);
+DP_COUP('sheep',eu12)  =  DP_Nat_Topup_nms(eu12,'sheep')* SUM(euro1, exrate(EURO1))/exrate(eu12) ;
+DP_COUP('beef',eu12)   =  DP_Nat_Topup_nms(eu12,'beef') * SUM(euro1, exrate(EURO1))/exrate(eu12);
+
+
+
+testxx(eu12) =  [CNDP_env(eu12,'beef')  / prod0(eu12,'beef')*1000] * Top_up_reduction(sim_base,eu12)
+display dp_nat_topup_nms, cndp_env,testxx, implement_art_68, dp_coup_env_2, art_69_env_2, dp_coup;
+dirpay0(eu12,livest) = DP_COUP(livest,eu12)*prod_effdp(livest,"effdp");
+
+
+
+
+*************************
+*NEW: Decoupling/Coupling
+*************************
+*Basic decision: In der jetzigen Version wird die Fläche zugrunde gelegt, die in der jeweiligen Periode aktuell ist. Da man eigentlich aber ja
+*die Änderungen der Envelops in der Realität treffen will, sollte man die Entkopplungen evtl immer auf die Area aus dem Basisjahr beziehen, denn
+*die pro ha Zahlungen sind konstant, egal ob die Fläche sich ändert oder nicht. Sollte man die letztere Möglichkeit bevorzugen, kann man dp_coup_ha_save
+*sowie weiter unten die Gleichung zur Akumulierung abschaffen.
+*Bei Livestock wird der Envelop jedes Jahr auf die neue Produktion verteilt - im Gegensatz zu Crops !
+
+
+*1) Save coupled payments befor new decoupling round
+
+DP_coup_ha_save(eu15,crops)=DP_coup_ha_2(eu15,crops);
+DP_coup_env_save(eu15,livest)=DP_coup_env_2(eu15,livest);
+
+Art_69_ha_save(eu15,crops)=Art_69_ha_2(eu15,crops);
+Art_69_env_save(eu15,livest)=Art_69_env_2(eu15,livest);
+
+*2) Calculation of new COUPLED payments
+DP_coup_ha_2(eu15,crops)= DP_change(eu15,crops,sim_base)*DP_coup_ha(eu15,crops);
+DP_coup_env_2(eu15,livest)= DP_change(eu15,livest,sim_base)*DP_coup_env(eu15,livest);
+
+Art_69_ha_2(eu15,crops)=  Art_change(eu15,crops,sim_base)*Art_69_ha(eu15,crops);
+Art_69_env_2(eu15,livest) = Art_change(eu15,livest,sim_base)*Art_69_env(eu15,livest);
+*Numbers in DP_change and Art_change always refer to the base year.
+
+*Implementation of new coupled payments
+Loop(eu15,
+loop(comm,
+if(
+implement_art_68(eu15,comm,sim_base) ne 0.0,
+
+
+if(alarea.l(eu15,comm) gt 0,
+Art_69_ha_2(eu15,crops)$implement_art_68(eu15,crops,sim_base)=implement_art_68(eu15,crops,sim_base) * artificial_value(eu15)/(ALAREA.l(eu15,crops)*1000);
+);
+
+
+Art_69_env_2(eu15,livest)$implement_art_68(eu15,livest,sim_base)=implement_art_68(eu15,livest,sim_base) * artificial_value(eu15)/1000000;
+)
+;
+);
+);
+
+DP_COUP(CROPS,EU15)   = (DP_coup_ha_2(EU15,CROPS) + Art_69_ha_2(EU15,CROPS))* SUM(euro1, exrate(EURO1))/exrate(eu15);
+
+DP_COUP('MILK',EU15)$prod0(eu15,'milk')    = (Art_69_env_2(eu15,'milk')  + DP_coup_env_2(eu15,'milk'))  / supply.l(eu15,'milk')*1000 * SUM(euro1, exrate(EURO1))/exrate(eu15);
+DP_COUP('BEEF',EU15)$prod0(eu15,'beef')    = (Art_69_env_2(eu15,'beef')  + DP_coup_env_2(eu15,'beef'))  / supply.l(eu15,'beef')*1000 * SUM(euro1, exrate(EURO1))/exrate(eu15);
+DP_COUP('SHEEP',EU15)$prod0(eu15,'sheep')  = (Art_69_env_2(eu15,'sheep') + DP_coup_env_2(eu15,'sheep')) / supply.l(eu15,'sheep')*1000* SUM(euro1, exrate(EURO1))/exrate(eu15);
+
+save_supply(one,livest) =  supply.l(one,livest);
+
+*3) Calculation of difference between old and new coupled payments
+
+Difference_coup_ha(eu15,crops)=DP_coup_ha_save(eu15,crops) - DP_coup_ha_2(eu15,crops);
+Difference_coup_env(eu15,livest)=DP_coup_env_save(eu15,livest) - DP_coup_env_2(eu15,livest);
+
+Difference_art_ha(eu15,crops)=Art_69_ha_save(eu15,crops) - Art_69_ha_2(eu15,crops);
+Difference_art_env(eu15,livest)=Art_69_env_save(eu15,livest) - Art_69_env_2(eu15,livest);
+
+*4) Calculation of Envelope (can be positive or negative!)
+
+ENVELOP_coup_ha(EU15,CROPS)=Difference_coup_ha(eu15,crops) * ALAREA.l(EU15,Crops);
+ENVELOP_coup_env(EU15,LIVEST)=Difference_coup_env(eu15,livest) * 1000;
+
+ENVELOP_Art_69_ha(EU15,CROPS)=Difference_art_ha(eu15,crops) * ALAREA.l(EU15,Crops);
+
+ENVELOP_Art_69_env(eu15,LIVEST)=Difference_art_env(eu15,livest) * 1000 ;
+
+Envelop_total(eu15) = sum(crops, envelop_coup_ha(eu15,crops)) + sum(crops, envelop_art_69_ha(eu15,crops))
+                      + sum(livest, ENVELOP_Art_69_env(eu15,LIVEST))+ sum(livest, ENVELOP_coup_env(eu15,LIVEST));
+
+*5) Distribute Envelop over area
+
+Envelop_crops_ha(EU15) = Envelop_total(eu15)/SUM(CROPS, ALAREA.l(EU15,CROPS));
+
+*accumulation:
+Envelop_total_ha(EU15) = Envelop_total_ha(eu15) + Envelop_crops_ha(eu15);
+
+*6) Calculate new decoupled payments per ha
+
+sugar_payment(eu15) = sugar_compensation(eu15,sim_base) / (SUM(CROPS,ALAREA.l(eu15,crops)));
+
+display art_69_ha_2;
+
+DP_DECOUP(CROPS,eu15)$prod0(eu15,crops) =  DP_decoup_ha(eu15,'premia') * SUM(euro1, exrate(EURO1))/exrate(eu15)
+                                           + sugar_payment(eu15) * SUM(euro1, exrate(EURO1))/exrate(eu15)
+                                           + Envelop_total_ha(EU15)* SUM(euro1, exrate(EURO1))/exrate(eu15);
+
+display dp_decoup;
+
+yield0(cc,crops)=yield.l(cc,crops);
+
+dirpay0(eu15,crops)$prod0(eu15,crops) = (DP_COUP(crops,eu15)+DP_DECOUP(crops,eu15)*prod_effdp(crops,"effdp"))/YIELD.l(eu15,crops);
+dirpay0(eu15,livest) = DP_COUP(livest,eu15)*prod_effdp(livest,"effdp");
+
+
+DIRPAY.UP(cc,comm)          = +inf;
+DIRPAY.LO(cc,comm)          = -inf;
+
+DIRPAY.FX(cc,comm)$(DIRPAY0(cc,comm) EQ 0.0)  = 0.0;
+
+IF(ORD(sim_base) eq 1.0,
+*quota(cc,ag)$volsaq(cc,ag) = 1.5 * quota(cc,ag) ;
+);
+
+
+
+*===================================
+*
+*
+*# DEFLATING OF ALL NOMINAL POLICIES *#
+*
+*
+
+pay_biof = biofuel_premia(sim_base,'premia')*1000;
+
+IF(ORD(sim_base) gt 1,
+sp_d(one,it)        = sp_d(one,it)   * (1- defl_pol(one,sim_base)/100);
+exp_sub(one,it)$member(one)     = exp_sub(one,it)* (1- defl_pol(one,sim_base)/100);
+intpr(one,it)$member(one)       = intpr(one,it)  * (1- defl_pol(one,sim_base)/100);
+exstab(one,it)$member(one)      = exstab(one,it)  * (1- defl_pol(one,sim_base)/100);
+qual_ad(one,it)$member(one)     = qual_ad(one,it)  * (1- defl_pol(one,sim_base)/100);
+thrpr(one,it)$member(one)       = thrpr(one,it)  * (1- defl_pol(one,sim_base)/100);
+
+sp_d_0(one,it)$member(one)        = sp_d_0(one,it)   * (1- defl_pol(one,sim_base)/100);
+exp_sub_0(one,it)$member(one)     = exp_sub_0(one,it)* (1- defl_pol(one,sim_base)/100);
+exstab_0(one,it)$member(one)      = exstab_0(one,it)  * (1- defl_pol(one,sim_base)/100);
+intpr0(one,it)$member(one)        = intpr0(one,it)  * (1- defl_pol(one,sim_base)/100);
+thrpr0(one,it)$member(one)        = thrpr0(one,it)  * (1- defl_pol(one,sim_base)/100);
+bound_tar_cc(one,switch_comm,'bound')   = bound_tar_cc(one,switch_comm,'bound') * (1- defl_pol(one,sim_base)/100);
+bound_tar_cc(one,switch_comm,'applied')   = bound_tar_cc(one,switch_comm,'applied') * (1- defl_pol(one,sim_base)/100);
+pay_biof                           =  pay_biof * (1- defl_pol("ge",sim_base)/100);
+);
+
+display  area_factor_sug_0, intpr0, prod0;
+
+SOLVE ESIMMCP using MCP ;
+
+polsug('area_add_int_sug',sim_base) =  area_add_int_sug('PL');
+polsug('area_factor_sug',sim_base) =  area_factor_sug('PL');
+polsug('area_exponent_sug',sim_base) =  area_exponent_sug('PL');
+polsug('area_int2_sug',sim_base) =  area_int2_sug('PL');
+polsug('area_int3_sug',sim_base) =  area_int3_sug('PL');
+polsug('elast_a_i',sim_base) =  elast_a_i('PL','sugar');
+polsug('elast_a_l',sim_base) =  elast_a_l('PL','sugar');
+polsug('elast_a_c',sim_base) =  elast_a_c('PL','sugar');
+polsug('landprice1',sim_base) =  landprice1.l('PL') *exrate('PL')/SUM
+      (euro1, exrate(euro1));
+polsug('elast_a_c',sim_base) =  elast_a_c('PL','sugar');
+polsug('elast_a_c',sim_base) =  elast_a_c('PL','sugar');
+polsug('elast_a_c',sim_base) =  elast_a_c('PL','sugar');
+polsug('elast_landpr',sim_base) =  elast_landpr('PL','sugar');
+polsug('elastyd',sim_base) =  elastyd('PL','sugar','sugar');
+polsug('area',sim_base) =  ALAREA.l('PL','sugar');
+polsug('supply',sim_base) =  SUPPLY.l('PL','sugar');
+polsug('quota',sim_base) =  quota('PL','sugar');
+polsug('PD',sim_base) =  PD.l('PL','sugar')    *exrate('PL')/SUM
+      (euro1, exrate(euro1));
+polsug('PI',sim_base) =  PI.l('PL','sugar')    *exrate('PL')/SUM
+      (euro1, exrate(euro1));
+polsug('PI_dom',sim_base) =  PI.l('PL','sugar');
+polsug('P_int',sim_base) =   intpr0('PL','sugar');
+polsug('PSH',sim_base) =  PSH.L('PL','sugar')    *exrate('PL')/SUM
+      (euro1, exrate(euro1));
+polsug('area_add_int_sug',sim_base) =  area_add_int_sug('PL');
+
+
+
+IF(ORD(sim_base) eq 1.0,
+chk_prod(cc,comm)$prod0(cc,comm)   = round((supply.l(cc,comm) / prod0(cc,comm) -1)*100, 3) ;
+chk_hdem(cc,comm)$hdem0(cc,comm)   = round((hdem.l(cc,comm) / hdem0(cc,comm) -1 ) * 100, 3);
+chk_fdem(cc,comm)$fdem0(cc,comm)   = round((fdem.l(cc,comm) / fdem0(cc,comm) -1 ) * 100, 3);
+chk_sdem(cc,comm)$sdem0(cc,comm)   = round((sdem.l(cc,comm) / sdem0(cc,comm) -1 ) * 100, 3);
+chk_pdem(cc,comm)$pdem0(cc,comm)   = round((pdem.l(cc,comm) / pdem0(cc,comm) -1 ) * 100, 3);
+chk_pd(cc,comm)$pd_0(cc,comm)      = round((pd.l(cc,comm) / pd_0(cc,comm) -1 ) * 100, 3);
+chk_area_pr(one)$landprice0(one)    =round((landprice1.l(one)/landprice0(one) -1) *100, 6);
+
+display chk_prod
+        chk_hdem
+        chk_fdem
+        chk_sdem
+        chk_pdem
+        chk_pd
+        chk_area
+        chk_area_pr;
+
+
+LOOP(comm,
+LOOP(cc,
+ABORT$(abs(chk_area(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: AREA USE" , chk_area;
+ABORT$(abs(chk_prod(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: PRODUCTION", chk_prod;
+ABORT$(abs(chk_pd(cc,comm))   gt 0.5) "BENCHMARK INCORRECT: PRICES" , chk_pd;
+ABORT$(abs(chk_hdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: HDEM" , chk_hdem;
+ABORT$(abs(chk_sdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: SDEM" , chk_sdem;
+ABORT$(abs(chk_pdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: PDEM" , chk_pdem;
+ABORT$(abs(chk_fdem(cc,comm)) gt 0.5) "BENCHMARK INCORRECT: FDEM" , chk_fdem;
+)
+);
+
+Loop(one,
+ABORT$(abs(chk_area_pr(one)) gt 0.5) "BENCHMARK INCORRECT: area_pr" , chk_area_pr;
+);
+
+);
+
+display landsupply1.l, q_new1.l, bend_ld1, shift_ld;
+
+$include Create_results.gms
+
+
+chk_milk_Quota(eu27,sim_base) =quota(eu27,"milk")-pdem.l(eu27,"milk");
+
+*==========================================================================
+IF(stochastics eq 2,
+*Start of stochastic solves for 2020 (last year of baseline run)
+  IF(CHK_sim eq 2020,
+     Loop (strun,
+
+*Assign stochastic-run specific error terms for selected yield variables
+stoch (cc,comm)= stoch_d(cc,comm,strun);
+
+option
+solprint = off
+SOLVE ESIMMCP using MCP ;
+     );
+  );
+);
+
+
+);
+display chk_milk_Quota;

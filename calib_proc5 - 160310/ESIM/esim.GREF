@@ -1,0 +1,1442 @@
+*!START Set, Parameter, Variable, Equation Declaration
+0,0,1,"ag","comm","Agricultural products produced on-farm"
+1,0,1,"ag1","ag","Aliased with ag"
+2,0,0,"AGENDA","cc",""
+3,0,0,"an","comm","Animal products"
+4,0,0,"b","","Years in data base including average"
+5,0,0,"biof_d","comm","biodiesel"
+6,0,0,"biof_e","comm","ethanol"
+7,0,1,"bound_comm","it",""
+8,0,1,"c","cc","Aliased with cc"
+9,0,1,"cand","cc","Candidate countries modelled in ESIM"
+10,0,0,"cand1","cand","Aliased with cand"
+11,0,1,"cc","ccplus","Countries"
+12,0,0,"cc_budget","res_cc","CAP budgetary positions"
+13,0,1,"cc_ind","res_cc","Indices for product groups"
+14,0,0,"cc_price_ind","cc_ind","Price indices for product groups"
+15,0,0,"cc_quan_ind","cc_ind","Quantity indices for product groups"
+16,0,0,"cc_shifter","res_cc","Results of macro shifters"
+17,0,0,"cc_value_ind","cc_ind","Value indices for product groups"
+18,0,0,"cc_values","res_cc","Production consumption and trade values"
+19,0,1,"ccplus","","Countries and regions in ESIM with aggregated regions"
+20,0,0,"ceec","cc","Candidate countries modelled in ESIM from Central and Eastern Europe"
+21,0,0,"CER_DURUM","one,comm","Durum eligible for direct payments"
+22,0,0,"CER_N_DURUM","one,comm","Cereals but no durum"
+23,0,0,"cer_nd","comm","Cereals eligible for direct payments without durum"
+24,0,0,"CER_OIL","one,comm","Oilseeds eligible for direct payments"
+25,0,0,"chg_qual_st","",""
+26,0,0,"chg_quant_st","",""
+27,0,0,"CHG_ST_","",""
+28,0,0,"CHG_SUBSIDY_ST_","",""
+29,0,0,"chg_trq_st_","",""
+30,0,0,"comcrop","crops","Arable crops eligible for direct payments"
+31,0,1,"comm","i","Agri-food commodities"
+32,0,0,"comm_budget","res_comm","Product specific budget"
+33,0,0,"comm_ind","res_comm","Commodity specific indices"
+34,0,0,"comm_policies","res_comm","Results of policies"
+35,0,0,"comm_stocks","res_comm","Net exports and stock changes"
+36,0,0,"comm_tp","res_comm","Commodity specific technical progress"
+37,0,1,"comm1","comm","Aliased with comm"
+38,0,1,"CP_ST_","",""
+39,0,0,"cr_n_gr_sae","comm","Arable crop products without pasture area and energy crops on setaside"
+40,0,0,"cr_n_su_gr_sae","comm","Arable crop products without sugar and pasture area and energy crops on setaside"
+41,0,0,"cr_oil","comm","set for crude oil only"
+42,0,1,"crops","comm","Arable crop products"
+43,0,0,"crops1","crops","Aliased with crops"
+44,0,1,"dairy_comm","mlkproc","Aliased with mlkproc"
+45,0,1,"dairy_comp","comm",""
+46,0,1,"dairy_inputs","dairy_comp","Aliased with dairy_comp"
+47,0,1,"data_base","",""
+48,0,0,"delay_c","it","commodities for delayed integration to the Single European Market"
+49,0,1,"delay_r","cc","delayed regions for full market integration"
+50,0,1,"devia","","price deviation"
+51,0,1,"dp_star","",""
+52,0,1,"ecc","i","exogenous cost components"
+53,0,0,"effdp_st_","",""
+54,0,0,"en_crp","comm","Crops for energy use"
+55,0,1,"energ","comm","produced energy products"
+56,0,0,"energ1","energ","Aliased with energ"
+57,0,0,"energy","i","relevant energy products (including crude oil)"
+58,0,0,"eth_pro","comm","products from energy crop processing to ethanol"
+59,0,1,"ethanol_inputs","i","Crops used for ethanol production"
+60,0,1,"EU12","cc",""
+61,0,0,"EU12_1","EU12","Aliased with EU12"
+62,0,1,"EU15","cc",""
+63,0,0,"EU15_1","EU15","Aliased with EU15"
+64,0,0,"EU25","cc",""
+65,0,0,"EU27","cc",""
+66,0,0,"EURO_ZONE","cc",""
+67,0,0,"EURO1","ccplus","representative EUR area regions for EUR USD exchange rate"
+68,0,0,"europe","one","European regions and countries in ESIM"
+69,0,0,"EXPSUB","cc,it","Products with export subsidies"
+70,0,0,"FD","cc,comm","feed products"
+71,0,0,"FD_MLK","cc","feed milk"
+72,0,0,"FEDRES","cc,comm","countries producing residual feeding stuff"
+73,0,1,"feed","comm","Feed products"
+74,0,0,"feed1","feed","Aliased with feed"
+75,0,0,"feedres","comm","Residual feed products"
+76,0,0,"FLOOR","it","Products with minimum (intervention) price plus tariff"
+77,0,0,"FR","cc,feed,livest","Feed components included in feed rates"
+78,0,1,"g","livest","Aliased with livest"
+79,0,0,"HD","cc,comm","Products consumed by private households"
+80,0,0,"HD_","cc,comm","Products consumed by private households"
+81,0,0,"HD_CECBF","cc,comm","Beef consumed by private households in CEECs"
+82,0,0,"HD_POTATO","cc,comm","Potatoes consumed by private households in all countries"
+83,0,0,"HD_RAPEU","cc,comm","Rape oil consumed by private households"
+84,0,1,"hist","time","Time period for historical data"
+85,0,1,"i","","Products included in the ESIM model"
+86,0,0,"i_biofuel","energ,comm",""
+87,0,1,"i_diesel","comm","Input in Biodiesel production"
+88,0,0,"i_diesel1","i_diesel","Aliased with i_diesel"
+89,0,1,"i_ethanol","comm","Input in Bioethanol production"
+90,0,0,"i_ethanol_ns","comm","Input in Bioethanol production"
+91,0,0,"i_ethanol_s","comm","Input in Bioethanol production"
+92,0,0,"i_ethanol1","i_ethanol","Aliased with i_ethanol"
+93,0,0,"indices_st_","",""
+94,0,1,"it","comm","Tradable commodities"
+95,0,1,"it1","it","Aliased with it"
+96,0,1,"j","i","Aliased with i"
+97,0,1,"lag_period","",""
+98,0,0,"land_st_","",""
+99,0,1,"livest","comm","Livestock products"
+100,0,1,"livest1","livest","Aliased with livest"
+101,0,0,"meal","comm","Cake Products from oilseed processing"
+102,0,0,"MEMBER","cc","Index of EU member countries"
+103,0,0,"MILK_","cc,comm","milk"
+104,0,0,"MILK_CONT","cc,comm","milk content: fat and protein"
+105,0,0,"MILKPROC","cc,comm","milk processing activities"
+106,0,0,"MILKPROC_exSMP","cc,comm","processed milk products excl SMP"
+107,0,0,"mlk","comm",""
+108,0,1,"mlkproc","comm","Outputs from the dairy industry"
+109,0,0,"MTR","cc",""
+110,0,0,"NEXPSUB","cc,it","Products without export subsidies"
+111,0,0,"nms","cc",""
+112,0,0,"nolag","cc,comm",""
+113,0,0,"NOMEMBER","cc","Index of European countries which are no EU member"
+114,0,0,"nonsug","crops","Arable crops other than sugar"
+115,0,0,"NPAST","cc,comm","arable land but not pasture land"
+116,0,0,"NQ","cc,comm","Non-quota products"
+117,0,0,"NQ_M","cc","Countries without milk quotas"
+118,0,0,"NQ_S","cc","Countries without sugar quotas"
+119,0,1,"nt","comm","Non tradable commodities"
+120,0,0,"nt_mlk","comm","Non tradable commodities without milk"
+121,0,0,"NX","cc,comm","Products which are traded"
+122,0,0,"NX_EU","comm","Products which are traded in one countries of the EU"
+123,0,0,"oil","comm","Oil Products from oilseed processing"
+124,0,0,"oil_st_","","oil price changes"
+125,0,0,"oilseed","comm","Oilseeds"
+126,0,0,"OILSPROC","cc,comm","oilseed processing activites"
+127,0,0,"old_EU15","ccplus",""
+128,0,1,"one","cc","European regions and countries in ESIM"
+129,0,0,"one1","one","Aliased with one"
+130,0,0,"onelag","cc,comm",""
+131,0,0,"ospro","comm","Products from oilseed processing"
+132,0,0,"PAST","cc,comm","pasture land"
+133,0,0,"pl","comm","Plant products"
+134,0,1,"pol","res_pp","different policy instruments in CAP"
+135,0,0,"POLS_ST_","",""
+136,0,0,"pot_trq_comm","comm","Agricultural products with possibly new introduced TRQ"
+137,0,0,"PPC","cc,comm","Products with a consumer price in that particular country"
+138,0,0,"PPF","cc,comm","Products with a feed price in that particular country"
+139,0,0,"PPP","cc,comm","Products with a producer price in that particular country"
+140,0,0,"PR","cc,comm","Products produced in that particular country"
+141,0,0,"PR_EU","comm","Products produced in the EU"
+142,0,0,"pre","","Timespan for validation run"
+143,0,0,"premia_st_","",""
+144,0,0,"PROC","cc,comm","Products which will be processed"
+145,0,0,"PROC_CER_S","cc,comm","processing of corn wheat or sugar to ethanol"
+146,0,0,"PROC_DAIRY","cc,dairy_comp,comm","Fat or protein demanded for milk processing"
+147,0,0,"PROC_MLK","cc,comm","countries which are processing milk"
+148,0,0,"PROC_OIL","cc,comm","countries which are processing oilseeds"
+149,0,0,"PROC_OIL_D","cc,comm","processing of oils to biodiesel"
+150,0,0,"PS","cc,comm","Products with a domestic price in that particular country"
+151,0,0,"QU","cc,comm","Quota products"
+152,0,0,"QU_M","cc","Countries with milk quotas"
+153,0,0,"QU_NOSA","cc,comm",""
+154,0,0,"QU_S","cc","Countries with sugar quotas"
+155,0,0,"QU_SUGAR","cc,comm","Countries with sugar quotas"
+156,0,0,"R_INT","sim1,it","Yes if product is an intervention product in the resp. year"
+157,0,0,"R_MEMBER","cc,sim1","Yes if country is member"
+158,0,0,"r_st_type","","Type of result: deterministic - expected value - variance - standard deviation"
+159,0,0,"R_TAR","sim1,it","Yes if the product is a tariff product in the resp. year"
+160,0,0,"R_THR","sim1,it","Yes if product is a thresh product in the respective year"
+161,0,0,"recurs_st_","",""
+162,0,0,"res_agg","res_comm","Results which are commodity specific and aggregated over country groups"
+163,0,0,"res_agg_cc","res_cc","Non commodity specific results aggregated over countries"
+164,0,0,"res_bal","res_comm","Commodity balances"
+165,0,1,"res_cc","","Non commodity specific results"
+166,0,1,"res_comm","","Commodity specific results"
+167,0,1,"res_core","","Core model results"
+168,0,0,"res_def","res_comm","Results which are commodity specific and defined per country group as identical to EU 15"
+169,0,0,"res_def_cc","res_cc","Non commodity specific results defined as identical to EU 15"
+170,0,1,"res_pp","",""
+171,0,0,"res_price","res_comm","Price results"
+172,0,0,"res_quan","res_comm","Quantity results"
+173,0,0,"rest","cc",""
+174,0,0,"SEED","cc,comm","Arable products with seed demand"
+175,0,0,"SETAS_CRP","cc","Countries with crops produced on setaside land in base situation"
+176,0,0,"SETAS_CRP1","cc,comm","Crops produced on setaside land"
+177,0,0,"SFP__REG","one","Regions applying SFP"
+178,0,0,"shift","cc",""
+179,0,1,"sim","sim1","Aliased with sim1"
+180,0,1,"sim_base","sim1","Time horizon of the model runs in BASELINE"
+181,0,0,"sim_base1","sim_base","Aliased with sim_base"
+182,0,0,"sim_trial","sim1","Time horizon of the model runs in BASELINE"
+183,0,1,"sim1","time","Time horizon of the model runs"
+184,0,0,"SMP","cc,comm","countries with SMP production"
+185,0,1,"strun","","Number of runs for the stochastic simulation in 2015"
+186,0,0,"sug","comm",""
+187,0,0,"sug_q_st_","",""
+188,0,0,"switch_comm","bound_comm","Products which might change the set in price formation mechanism"
+189,0,0,"TAR","it","Products for which EU price formation is dependent on world market price + tariffs or export subsidies"
+190,0,0,"tar_st_","",""
+191,0,0,"THRESH","it","Products with minimum (intervention) price plus threshold price"
+192,0,1,"time","",""
+193,0,0,"trq_comm","comm","Agricultural products with TRQ in the base period"
+194,0,0,"trq_p","","parameter for variable preferential imports of sugar in the EU"
+195,0,0,"trq_pp","","additional parameters for variable preferential imports of sugar in the EU"
+196,0,0,"twolag","cc,comm",""
+197,0,0,"VOLSA","cc,comm","Voluntary setaside"
+198,0,0,"VOLSAQ","cc,comm","Voluntary setaside as quota in Agenda 2000 regions"
+199,1,0,"addcomp_dairy","cc,comm","Intercept in dairy processing"
+200,1,0,"addcomp_milk","cc,comm","Intercept in milk price eqn"
+201,1,0,"area_add_int_sug","cc","additive intercept in area allocation function for sugar (negative)"
+202,1,0,"area_corpar","cc,comm","area correction parameter for individual countries and products"
+203,1,0,"area_exponent_sug","cc","exponent in area allocation function for sugar"
+204,1,0,"area_factor_sug","cc","factor in area allocation function for sugar"
+205,1,0,"area_gc_","","area grande cultures"
+206,1,0,"area_gr","cc","growth rate of area"
+207,1,0,"area_int","","intercept in area allocation function (European countries)"
+208,1,0,"area_int2_sug","cc","intercept in area allocation function for sugar to incorporate cross-price-effects"
+209,1,0,"area_int3_sug","cc","intercept in area allocation function for sugar to correct for yield"
+210,1,0,"area_max","cc","Maximal available agricultural area"
+211,1,0,"area_to","","total agriculture area"
+212,1,1,"area0","ccplus,i","area allocation in base period"
+213,1,0,"Art_69_env","ccplus,i","LVSTK: Art. 69 payments by member state average 06/07, in million €"
+214,1,0,"Art_69_ha","ccplus,i","CROPS: Art. 69 payments by member state average 06/07, in €/ha"
+215,1,0,"art_change","cc,comm,sim1","Change in Art 69 paments per Member State"
+216,1,0,"Artificial_value","cc","Artificial para for the handling of changes in direct payment for Artikel 68"
+217,1,0,"BCI0","cc,comm","biofuel cost index in base situation"
+218,1,0,"bend_ld1","cc","Determ. the bending of the supply curve (non set-aside land)"
+219,1,0,"bend_ld2","cc","Determ. the bending of the supply curve (set-aside land)"
+220,1,0,"biof_CES_el","cc,energ","elasticity parameter of input demand in biofuels"
+221,1,0,"biof_CES_int","cc,energ","intercept of input shares in biofuels"
+222,1,0,"biof_CES_shr","cc,energ,comm","share parameter of biobased inputs in biofuel production"
+223,1,0,"cap_ind","cc","Capital Cost Index"
+224,1,0,"ch_area","cc","Chg in area available for agricultural uses"
+225,1,0,"ch_area_rate","cc","Yearly rate of area available for agricultural uses"
+226,1,0,"chg_oblsetas","ccplus","change in oblig setaside"
+227,1,0,"chg_oblsetas_cum","ccplus","cumulative change in oblig setaside"
+228,1,0,"chg_quota","sim1,cc,ag","Trigger to abloish quota regime"
+229,1,0,"chgtrq","","change in tariff rate quotas"
+230,1,0,"chgtrq_row","","change in tariff rate quotas in Rest of World"
+231,1,0,"chk_sim","","Control parameter of scenario (counting of periods)"
+232,1,0,"CNDP_env","ccplus,i","Nat. top-ups LVSTK payments member state average 06/07, in million €"
+233,1,0,"CNDP_ha","ccplus,i","Nat. top-ups CROPS payments member state average 06/07, in €/ha"
+234,1,1,"consolid_area","i,ccplus","Consolidated area data, avg. 2006 and 2007, in 1000 ha"
+235,1,0,"content_milk","cc,comm","Fat and protein content in processed milk"
+236,1,0,"cost_ind","ecc,cc","cost index for different types of exogenous costs (lab cap int frt eng)"
+237,1,0,"cp","CP_ST_,ccplus",""
+238,1,0,"cr_int","","intercept in crushing demand (oilseed processing)"
+239,1,1,"crops_to_ethanol","ethanol_inputs","Proc. coeff. cropsp to ethanol, (Source: KTBL(2008) Faustzahlen für Landwirtschaft)"
+240,1,0,"dairy_input_coeff","cc,dairy_comp,mlkproc","Techn. coeff. of fat and protein in the dairy products"
+241,1,0,"dairy_pdem","mlkproc,dairy_comp,ccplus","Required fat and protein in the dairy sectors"
+242,1,0,"defl_pol","ccplus,sim_base","Deflation of policies for indiv. countries"
+243,1,0,"delay","cc,comm",""
+244,1,0,"dirpay_0","","Level of direct payment in the base period"
+245,1,1,"dirpay0","ccplus,i","direct payments per ton in base period"
+246,1,0,"dp_change","cc,comm,sim1","Change in DP per Member State"
+247,1,0,"DP_COUP","i,ccplus","Coupled direct payment in € per ha area used or t produced"
+248,1,0,"DP_coup_env","ccplus,i","Coupled direct payments by member state average 06/07, in Mio € for animal products"
+249,1,0,"DP_coup_ha","ccplus,i","Coupled direct payments by member state average 06/07, in €/ha"
+250,1,0,"DP_DECOUP","i,ccplus","Decoupled direct payment in € per ha area used or t produced"
+251,1,0,"DP_decoup_ha","ccplus,dp_star","Decoupled direct payments by member state average 06/07, in €/ha"
+252,1,0,"DP_EU_contrib_nms","ccplus,comm",""
+253,1,0,"DP_Nat_contrib_nms","ccplus,comm",""
+254,1,0,"DP_Nat_Topup_nms","ccplus,comm",""
+255,1,1,"el_area0","cc,i,i","elast. area alloc. w.r. to land prices"
+256,1,1,"elast_a","ecc,cc,i","elast. area alloc. w.r. to different input cost types (labor, capital, intermediates, fertilizer, energy)"
+257,1,0,"elast_en_inp","cc,comm","elasticity of biofuel supply w.r. to composite input price index"
+258,1,0,"elast_l_c","cc,i","elast. lvstk supply w.r. to capital costs"
+259,1,0,"elast_l_f","cc,i","elast. lvstk supply w.r. to the feed cost index"
+260,1,0,"elast_l_i","cc,i","elast. lvstk supply w.r. to intermediate costs"
+261,1,0,"elast_l_l","cc,i","elast. lvstk supply w.r. to labor costs"
+262,1,0,"elast_landpr","cc,i","elast. of land supply"
+263,1,1,"elast_lv_c","cc,i","elast. lvstk supply w.r. to capital costs"
+264,1,1,"elast_lv_f","cc,i","elast. lvstk supply w.r. to the feed cost index"
+265,1,1,"elast_lv_i","cc,i","elast. lvstk supply w.r. to intermediate costs"
+266,1,1,"elast_lv_l","cc,i","elast. lvstk supply w.r. to labor costs"
+267,1,1,"elast_y","ecc,cc,i","elast. yield w.r. to the different exogenous cost components"
+268,1,1,"elast_y_c","cc,i","elast. yield w.r. to capital costs"
+269,1,1,"elast_y_e","cc,i","elast. yield w.r. to energy costs"
+270,1,1,"elast_y_f","cc,i","elast. yield w.r. to fertilizer costs"
+271,1,1,"elast_y_i","cc,i","elast. yield w.r. to intermediate costs"
+272,1,1,"elast_y_l","cc,i","elast. yield w.r. to labor costs"
+273,1,0,"elastcr","cc,i,i","oilseed crushing demand"
+274,1,0,"elastdm","cc,comm,comm","dairy processing"
+275,1,0,"elastdm_n","cc,dairy_comp,comm,comm","dairy processing based on splitting fat and protein"
+276,1,1,"elastfd","cc,i,i,livest","elast. feed demand w.r. to feed prices"
+277,1,1,"elasthd","cc,i,i","elast. human demand w.r. to price"
+278,1,0,"elasthd_c","cc,i,i","Compensated price elasticities of human demand"
+279,1,1,"elastin","cc,i","elast. humand demand w.r. to income"
+280,1,1,"elastsp","cc,i,i","elast. supply w.r. to producer price"
+281,1,1,"elastyd","cc,i,i","elast. yield w.r. to producer price"
+282,1,0,"endog_sug","","Choice of endogenous or fixed preferential sugar imports"
+283,1,0,"eng_ind","cc","Energy Cost Index"
+284,1,1,"ENVELOP_Art_69_env","cc,livest","Envelope for decoupling coupled livestock payments"
+285,1,1,"ENVELOP_Art_69_ha","EU15,crops","Envelope for decoupling coupled area payments, Art. 69 payments"
+286,1,0,"ENVELOP_coup_env","cc,livest",""
+287,1,1,"ENVELOP_coup_ha","EU15,crops","Envelope for decoupling coupled area payments"
+288,1,0,"Envelop_total","",""
+289,1,0,"Envelop_total_ha","",""
+290,1,1,"eu_pols","i,res_pp","data on eu policies in base period"
+291,1,0,"exp_share","cc,comm","Exp. shares of single ESIM products in total exp. in base"
+292,1,0,"exp_sub","","export subsidy"
+293,1,0,"exp_sub_0","","export subsidy in base period"
+294,1,0,"expenditure","cc","Total consumption expenditure"
+295,1,0,"exrate","ccplus","exchange rate of domestic currency to USD"
+296,1,0,"exrate_0","","exchange rate in base period"
+297,1,0,"exstab","","additional support element in EU price policies"
+298,1,0,"exstab_0","","additional support element in EU price policies in initial situation"
+299,1,0,"fc_0","","Feed Cost base period"
+300,1,0,"fdem_tr","",""
+301,1,1,"fdem0","ccplus,i","base volume of feed demand"
+302,1,1,"fedrat","cc,feed,livest","feed rates"
+303,1,1,"feed_exog","ccplus,i","base volume of exogenours (fixed) feed demand"
+304,1,0,"feed_milk","","Fresh milk consumed as feed per ton of produced milk"
+305,1,1,"feed_row","cc,comm",""
+306,1,0,"frat_int","","intercept in individual feed rate function"
+307,1,0,"frate_0","","feed rate in base period"
+308,1,0,"frt_ind","cc","Fertilizer Cost Index"
+309,1,0,"hdem_int","","intercept in human demand function"
+310,1,0,"hdem_tr","cc,comm","trends in private consumption"
+311,1,1,"hdem0","ccplus,i","base volume of human consumption"
+312,1,1,"HIST_AREA","one,crops,hist",""
+313,1,0,"inc_gr","cc","income growth rate"
+314,1,0,"input_biodiesel","ccplus,i","Input shares in biodiesel production in percent"
+315,1,0,"input_ethanol","ccplus,i","Input shares in ethanol production in percent"
+316,1,0,"int_ind","cc","Intermed Cost Index"
+317,1,0,"intpr","ccplus,comm","intervention price level"
+318,1,0,"intpr0","ccplus,i","base value of intervention prices"
+319,1,0,"lab_ind","cc","Labor Cost Index"
+320,1,0,"lag_weight","cc,ag,lag_period","weights in lagged price formation"
+321,1,0,"landprice0","cc",""
+322,1,0,"logit_scale","","scaling factor in LOGIT-function (default = 1.0)"
+323,1,0,"logitshift","","second scaling factor in LOGIT-function (default = 1.0)"
+324,1,0,"map_encr","i,i","mapping of conventional crops to energy crops on setaside"
+325,1,0,"map_encr1","i,i","mapping of conventional crops to energy crops on setaside"
+326,1,0,"marg_land","ccplus","share of marginal land in obligatory setaside"
+327,1,1,"margin0","ccplus,i","price margins between market and producer prices"
+328,1,1,"mrktpri0","ccplus,i","market prices in base period"
+329,1,1,"netexp0","ccplus,i","base volume of net exports"
+330,1,0,"NetPD_0","cc,energ,comm","Net Price in biofuel production in Base period"
+331,1,0,"newmember","cc","parameter indicating new EU member"
+332,1,0,"oil_content","*","Content of oil in oilseeds"
+333,1,1,"oil_to_diesel","","Proc. coeff. veget. oil to diesel, (Source: KTBL(2008) Faustzahlen für Landwirtschaft)"
+334,1,0,"oilsd_c","cc,i,i","technical parameter oilseed processing"
+335,1,0,"oth_ind","cc","Cost Index of other products in hdem"
+336,1,0,"p0","cc,comm","(exogenous) prices for consumer goods not presented in ESIM (crude oil)"
+337,1,0,"pay_biof","","Envelope for biofuel premia"
+338,1,0,"pctax","cc,comm","sales taxes for consumption"
+339,1,0,"pd_0","cc,comm","Domestic price in base period"
+340,1,0,"pd_t_1","cc,ag","market price in period t-1"
+341,1,0,"pd_t_2","cc,ag","market price in period t-2"
+342,1,0,"pd_t1","cc,ag","market price in functions with one period time lag"
+343,1,0,"pd_t2","cc,ag","market price in functions with two periods time lag"
+344,1,0,"pdem_en0","ccplus,i","base volume of processing demand for biofuels"
+345,1,0,"pdem_tr","cc,comm","trends in processing capacities in biofuel production"
+346,1,0,"pdem0","cc,comm","Processing demand in base period"
+347,1,0,"pol_set","","Type of price formation"
+348,1,0,"pop_gr","cc","population growth rate"
+349,1,0,"Population_sim","ccplus,sim1","Population in Mill"
+350,1,0,"pp_0","cc,comm","Farm-gate price in base period"
+351,1,1,"pp_results","i,cc,res_pp",""
+352,1,0,"preftrq","","preferential trq for sugar - suspended after 2009"
+353,1,1,"PRICE_DEV","i","price deviation for delayed market integration"
+354,1,0,"PRICE_DEV0","i,devia","initial price deviation for delayed market integration"
+355,1,0,"proc_int","","intercept in milk processing demand in Non-European countries"
+356,1,1,"procdem0","ccplus,i","base volume of processing demand"
+357,1,1,"prod0","ccplus,i","base volume of total production"
+358,1,0,"psh_0","","shadow price in the data base for quota products"
+359,1,0,"pw_0","","world price level in base situation"
+360,1,0,"qual_ad","","quality markup"
+361,1,0,"qual_ad_0","","quality markup in base period"
+362,1,0,"qualquant","","high quality quantities"
+363,1,0,"QUANCES0","cc,energ,comm","input shares in biofuel production in initial situation"
+364,1,0,"quota","","quota volume"
+365,1,0,"r_cc","ccplus,sim1,res_cc","Parameter for solving all results which are not comm. specific"
+366,1,0,"r_comm","ccplus,sim1,comm,res_comm","Parameter for solving all results which are commodity specific"
+367,1,0,"r_core_res","ccplus,res_core,comm,sim1","Parameter for storing core results"
+368,1,0,"r_er","cc,sim1","Exchange rates"
+369,1,0,"r_pw","sim1,it","World market price"
+370,1,0,"results","cc,*,*,*",""
+371,1,1,"sdem0","ccplus,i","base volume of seed demand"
+372,1,0,"seed_c","cc,comm","seed parameter seed per hectare or per tonne of cereal"
+373,1,0,"setas_eu12","ccplus","setaside area in EU12 after accession"
+374,1,0,"setas_eu15","ccplus","setaside area in EU15 after 2004"
+375,1,0,"shft_bioenergy","cc,comm","shifter in biofuel demand"
+376,1,0,"shift_ld","cc","2nd parameter in land supply function determ. shift of the supply curve"
+377,1,1,"show_data","i,data_base,ccplus","Consolidated data base, in 1000 t"
+378,1,0,"sp_d","","specific duty"
+379,1,0,"sp_d_0","","specific duty in base period"
+380,1,0,"sp_d_n","","nominal specific duty"
+381,1,0,"st_cc","ccplus,strun,res_cc","Parameter for saving stochastic results for all runs which are not comm. specific"
+382,1,0,"st_comm","ccplus,strun,comm,res_comm","Parameter for saving stochastic results for all runs which are commodity specific"
+383,1,0,"stoch","cc,comm","Stochastic term in model equation"
+384,1,0,"stoch_d","cc,comm,strun","Stochastic terms for each run"
+385,1,0,"stochastics","","Switch for stochastic version of ESIM"
+386,1,0,"subs_ad","","ad valorem export subsidy in base period in candidate countries"
+387,1,0,"subs_ad_0","","ad valorem export subsidy in base period in candidate countries"
+388,1,0,"subs_milk","cc,comm","Subsistence milk production in new member states"
+389,1,0,"subs_milk_d","cc,comm","Subsistence milk consumption in new member states"
+390,1,0,"subs_milk_d_1","cc,comm","Subsistence milk consumption in new member states in previous period"
+391,1,0,"subs_milk_d0","cc,comm","Subsistence milk consumption in new member states in base period"
+392,1,0,"subs_milk_s","cc,comm","Subsistence milk production in new member states"
+393,1,0,"subs_milk_s_1","cc,comm","Subsistence milk production in new member states in previous period"
+394,1,0,"subs_milk_s0","cc,comm","Subsistence milk production in new member states in base period"
+395,1,0,"subs_milk0","cc,comm","Subsistence milk production in new member states in base period"
+396,1,0,"subs_shift","cc,comm","Shifter on Demand Side (auxiliary parameter)"
+397,1,0,"subs_shift_s","cc,comm","Shifter on Supply Side (auxiliary parameter)"
+398,1,0,"subs_shr","cc,comm","Share of subsistence milk production in total milk production in NMS"
+399,1,0,"subsquant","","quantity commitments in export subsidies for 2000"
+400,1,0,"subsquant_0","","quantity commitments in export subsidies for 2000"
+401,1,0,"sug_imp_exog","","exogenously pe-fixed sugar imports"
+402,1,0,"sugar_compensation","",""
+403,1,0,"sup_int","","intercept in supply function (US and RoW)"
+404,1,0,"tar_ad","","ad valorem tariff"
+405,1,0,"tar_ad_0","","ad valorem tariff in base period"
+406,1,0,"texp_share","cc","Exp. share of total ESIM products in total exp. in base"
+407,1,0,"thrpr","ccplus,comm","threshold price level"
+408,1,0,"thrpr0","ccplus,comm","threshold price level in base"
+409,1,0,"tp_fr","cc,i","technical progress in feed use"
+410,1,0,"tp_gr","cc,i","technical progress in supply"
+411,1,0,"trq","","tariff rate quotas"
+412,1,0,"trq_elast","","elasticity of supply for variable preferential imports of sugar"
+413,1,0,"trq_int","","intercept for variable preferential imports of sugar"
+414,1,0,"trq_tc","","cost parameter for preferential imports including transport cost differential transaction costs and cost of import-export swapping"
+415,1,0,"trq0","","tariff rate quotas in base period"
+416,1,0,"tuse0","ccplus,i","base volume of total demand"
+417,1,0,"weight","","weiht parameter in (artificial) objetive function"
+418,1,0,"yield_b","","base yield oilseeds EU"
+419,1,1,"yield0","ccplus,i","yield in base period"
+420,1,0,"yild_int","","intercept in yield function (European countries)"
+421,2,0,"ALAREA","cc,comm","Allocation of area in respect to commodity prices irrespective of availability"
+422,2,0,"AREA_UN","cc","Area unconstraint"
+423,2,0,"BCI","cc,comm","Price index in biofuel production"
+424,2,0,"DIRPAY","cc,comm","Direct payments"
+425,2,0,"EFAREA","cc,comm","Area constraint by total area available and set aside"
+426,2,0,"EFAREA_GC","cc","Effective total area grandes cultures"
+427,2,0,"FCI","cc,comm","Feed Cost Index"
+428,2,0,"FDEM","cc,comm","Feed demand"
+429,2,0,"FDEM_MLK","cc,comm","Feed demand MILK"
+430,2,0,"FRATE","cc,feed,livest","Feed Rate for Animals"
+431,2,0,"HDEM","cc,comm","Human demand"
+432,2,0,"LANDPRICE1","cc","Price of land per hectare (for non setaside land)"
+433,2,0,"LANDSUPPLY1","cc","Total amount of UAA (for non setaside land)"
+434,2,0,"MPDEM","cc,comm,comm","Demand for raw milk for processing into dairy products"
+435,2,0,"NETEXP","cc,comm","Net exports as a residual of supply and domestic use"
+436,2,0,"NetPD","cc,energ,comm","Net-prices for input in biofuel production"
+437,2,0,"OBLSETAS","cc","Obligatory set aside"
+438,2,0,"P_LO","cc,it","Lower Price bound in LOGIT-Function"
+439,2,0,"P_UP","cc,it","Upper Price bound in LOGIT-Function"
+440,2,0,"P_UP_2","cc,it","Upper Price bound in LOGIT-Function for subsidized exports quantities"
+441,2,0,"PC","cc,comm","Domestic market prices at consumer level"
+442,2,0,"PD","cc,comm","Domestic market prices"
+443,2,0,"PDEM","cc,comm","Processing demand"
+444,2,0,"PDEM_BF","cc,energ,comm","Demand of inputs in biofuel production"
+445,2,0,"PI","cc,comm","Producer incentive price (farm-gate price plus premium)"
+446,2,0,"PP","cc,comm","Producer prices"
+447,2,0,"PSH","cc,comm","Shadow prices for quota products"
+448,2,0,"PW","it","World market price for tradeable commodities"
+449,2,0,"Q_NEW1","cc","Asymptote in land function (for non setaside land)"
+450,2,0,"QUALSHR","cc,comm","Share of high quality export quantities in total domestic use in EU"
+451,2,0,"QUALSHR_EU","comm",""
+452,2,0,"QUANCES","cc,energ,comm","Input quantities (unscaled) in biofuel production"
+453,2,0,"QUOTARENT","cc,comm","Quota rent for MCP formulation of quotas"
+454,2,0,"SDEM","cc,comm","Seed demand"
+455,2,0,"SUBSHR","cc,comm","Share of subsidized export quantities in total domestic use in EU"
+456,2,0,"SUBSHR_EU","comm",""
+457,2,0,"SUGIMP_EU","comm","Preferential sugar imports (either endogenous or exogenously fixed"
+458,2,0,"SUPPLY","cc,comm","Supply"
+459,2,0,"TRADESHR","cc,comm","Share of net-exports in total use or supply"
+460,2,0,"TRADESHR_D","comm","Trade share for Commodities which are excluded from full integration into Single Market"
+461,2,0,"TRADESHR_EU","comm","Share of net-exports in total use in aggregated EU-15 member states"
+462,2,0,"TRQSHR","cc,comm","Share of TRQ in total domestic use in EU"
+463,2,0,"TRQSHR_EU","comm",""
+464,2,0,"TUSE","cc,comm","Total domestic use"
+465,2,0,"YIELD","cc,comm","Yield in arable crop production"
+*!!END
+*!START Element declaration
+0,"2002","2002"
+1,"2003","2003"
+2,"2004","2004"
+3,"2005","2005"
+4,"AVG","AVG"
+5,"EU","       EU without individual countries included in cc"
+6,"GE","       Germany"
+7,"AT","       Austria"
+8,"BE","       Belgium_Luxembourg"
+9,"DK","       Denmark"
+10,"FI","       Finland"
+11,"FR","       France"
+12,"GR","       Greece"
+13,"IE","       Ireland"
+14,"IT","       Italy"
+15,"NL","       Netherlands"
+16,"PT","       Portugal"
+17,"ES","       Spain"
+18,"SW","       Sweden"
+19,"UK","       United Kingdom"
+20,"LV","       LATVIA"
+21,"RO","       ROMANIA"
+22,"SI","       SLOVENIA"
+23,"LT","       LITHUANIA"
+24,"BG","       BULGARIA"
+25,"PL","       POLAND"
+26,"HU","       HUNGARY"
+27,"CZ","       CZECH REPUBLIC"
+28,"SK","       SLOVAK REPUBLIC"
+29,"EE","       ESTONIA"
+30,"CY","       CYPRUS"
+31,"MT","       MALTA"
+32,"TU","       TURKEY"
+33,"HR","       CROATIA"
+34,"WB","       Western Balkan Countries"
+35,"US","       United States of America"
+36,"ROW","      ROW (Residual Rest-of-World)"
+37,"EU_to","    Total EU"
+38,"EU_15","    EU with 15 old members"
+39,"EU_25","    EU with 25 members"
+40,"NMS10","    10 new member states"
+41,"NMS12","    12 new member states"
+42,"BG_RO","    Bulgaria and Romania"
+43,"ACC","      Total accession candidates"
+44,"Qualchange","Qualchange"
+45,"year","year"
+46,"Quant_change","Quant_change"
+47,"period","period"
+48,"CHG","CHG"
+49,"FIRST","FIRST"
+50,"FINAL","FINAL"
+51,"CHG_V","CHG_V"
+52,"CHG_Q","CHG_Q"
+53,"FIRST","FIRST"
+54,"FINAL","FINAL"
+55,"TRQ","TRQ"
+56,"FIRST","FIRST"
+57,"FINAL","FINAL"
+58,"efsetas_","efsetas_"
+59,"vol_set","vol_set"
+60,"marg_land","marg_land"
+61,"PROD","PROD"
+62,"SDEM","SDEM"
+63,"HDEM","HDEM"
+64,"FDEM","FDEM"
+65,"PDEM","PDEM"
+66,"PRICE_DEV","PRICE_DEV"
+67,"premia","premia"
+68,"DCNDP","DCNDP"
+69,"effdp","effdp"
+70,"CWHEAT","CWHEAT"
+71,"DURUM","DURUM"
+72,"BARLEY","BARLEY"
+73,"CORN","CORN"
+74,"RYE","RYE"
+75,"OTHGRA","OTHGRA"
+76,"RICE","RICE"
+77,"SUGAR","SUGAR"
+78,"POTATO","POTATO"
+79,"SOYBEAN","SOYBEAN"
+80,"RAPSEED","RAPSEED"
+81,"SUNSEED","SUNSEED"
+82,"SOYMEAL","SOYMEAL"
+83,"RAPMEAL","RAPMEAL"
+84,"SUNMEAL","SUNMEAL"
+85,"MANIOC","MANIOC"
+86,"SMAIZE","SMAIZE"
+87,"FODDER","FODDER"
+88,"GRAS","GRAS"
+89,"SETASIDE","SETASIDE"
+90,"GLUTFD","GLUTFD"
+91,"OENERGY","OENERGY"
+92,"OENERGY_CAPRI","OENERGY_CAPRI"
+93,"OPROT","OPROT"
+94,"FAT","FAT"
+95,"PROTEIN","PROTEIN"
+96,"SMP","SMP"
+97,"WMP","WMP"
+98,"CREAM","CREAM"
+99,"CONC_MLK","CONC_MLK"
+100,"ACID_MLK","ACID_MLK"
+101,"WHEY","WHEY"
+102,"MILK","MILK"
+103,"CMILK","CMILK"
+104,"BUTTER","BUTTER"
+105,"CHEESE","CHEESE"
+106,"OTHDAIRY","OTHDAIRY"
+107,"BEEF","BEEF"
+108,"SHEEP","SHEEP"
+109,"PORK","PORK"
+110,"POULTRY","POULTRY"
+111,"EGGS","EGGS"
+112,"SOYOIL","SOYOIL"
+113,"RAPOIL","RAPOIL"
+114,"SUNOIL","SUNOIL"
+115,"PALMOIL","PALMOIL"
+116,"LABOR","LABOR"
+117,"CAPITAL","CAPITAL"
+118,"INTERMED","INTERMED"
+119,"FERTIL","FERTIL"
+120,"ENERGY","ENERGY"
+121,"LAND","LAND"
+122,"FEEDING","FEEDING"
+123,"FEED","FEED"
+124,"OTHER","OTHER"
+125,"OBSETAS","OBSETAS"
+126,"BIODIESEL","BIODIESEL"
+127,"ETHANOL","ETHANOL"
+128,"C_OIL","C_OIL"
+129,"LABOR","LABOR"
+130,"CAPITAL","CAPITAL"
+131,"INTERM","INTERM"
+132,"ENERGY","ENERGY"
+133,"FERTILIZER","FERTILIZER"
+134,"INCOME","INCOME"
+135,"EXCHG_G","EXCHG_G"
+136,"area","area"
+137,"DEFL","DEFL"
+138,"t_1","  one period back"
+139,"t_2","  two periods back"
+140,"elast_landpr","elast_landpr"
+141,"landprice","landprice"
+142,"shift_land","shift_land"
+143,"max_land_use","max_land_use"
+144,"oilprice","oilprice"
+145,"AG2000","AG2000"
+146,"MTR","MTR"
+147,"base","base"
+148,"1999","1999"
+149,"1998","1998"
+150,"1997","1997"
+151,"1996","1996"
+152,"1995","1995"
+153,"premia","premia"
+154,"det","det"
+155,"ev","ev"
+156,"var","var"
+157,"sd","sd"
+158,"t_cur","t_cur"
+159,"t_1","  one period back"
+160,"r_landpr1"," Landprice 1"
+161,"r_landpr2"," landprice 2"
+162,"r_lands1","  landsupply 1"
+163,"r_lands2","  landsupply 2"
+164,"r_landpr_nc","landprice1 in national currency"
+165,"r_obsa","     Obligatory set aside (1000 ha)"
+166,"r_totsa","    Total set aside area (1000 ha)"
+167,"r_totarea","  Total effective area (1000 ha)"
+168,"r_arsc","     Area scaling factor"
+169,"r_subm","     Subsistence milk (1000 t)"
+170,"r_saps","     Area payment per ha under SFP (€ per ha)"
+171,"r_memb","     Parameter which takes the value 1 if the country is a member in the respective simulation"
+172,"r_bfshr","Biofuel shares in the EU27 in % of transportation fuel"
+173,"r_bd_shr","BioDIESEL shares in the EU27 in % of transportation fuel"
+174,"r_eth_shr","Ethanol shares in the EU27 in % of transportation fuel"
+175,"r_spr_roil"," Spread btw. rapoil and rapseed prices"
+176,"r_spr_soil"," Spread btw. sunoil and sunseed prices"
+177,"r_spr_biod"," Spread btw. biodiesel and oils input prices"
+178,"r_spr_eth","  Spread btw. ethanol and crop input prices"
+179,"r_spr_soy","  Spread btw. soyoil and soybean prices"
+180,"r_spr_et_s"," Spread btw. ethanol and sugar prices"
+181,"r_spr_et_w"," Spread btw. ethanol and wheat prices"
+182,"r_spr_et_c"," Spread btw. ethanol and corn prices"
+183,"r_spr_bd_soy","Spread btw. biodiesel and soyoil prices"
+184,"r_spr_bd_sun","Spread btw. biodiesel and sunoil prices"
+185,"r_spr_bd_rap","Spread btw. biodiesel and rapoil prices"
+186,"r_incg","     Income growth compared to base"
+187,"r_popg","     Population growth compared to base"
+188,"r_pinterm","  Price index for intermediates"
+189,"r_pcap","     Price index for capital"
+190,"r_plab","     Price index for labor"
+191,"r_exra","     Exchange rate"
+192,"r_exind","    Exchange rate relative to base"
+193,"val_cr","     Farm production value of crops (Mill. €)"
+194,"val_li","     Farm production value of livestock (Mill. €)"
+195,"val_fa","     Farm production value (Mill. €)"
+196,"val_pl","     Consumption value of plant products at wholesale prices (-subsidies) (Mill. €)"
+197,"val_an","     Consumption value of animal products at wholesale prices (-subsidies) (Mill. €)"
+198,"val_co","     Consumption value at wholesale prices (-subsidies) (Mill. €)"
+199,"val_nx","     Value of total net exports(Mill. €)"
+200,"pi_cr","      Producer price index for crops base quantity weighted"
+201,"pi_lv","      Producer price index for livestock products base quantity weighted"
+202,"pi_fa","      Producer price index for farm products base quantity weighted"
+203,"pi_inc_cr","  Producer incentive price index for crops base quantity weighted"
+204,"pi_inc_lv","  Producer incentive price index for livestock products base quantity weighted"
+205,"pi_inc_fa","  Producer incentive price index for farm products base quantity weighted"
+206,"pi_pl","      Consumer price index for plant products base quantity weighted"
+207,"pi_an","      Consumer price index for animal products base quantity weighted"
+208,"pi_co","      Consumer price index for all commodities base quantity weighted"
+209,"qi_cr","      Crop supply index base price weighted"
+210,"qi_lv","      Livestock supply index base price weighted"
+211,"qi_fa","      Farm supply index base price weighted"
+212,"qi_pl","      Human demand index for plant products base price weighted"
+213,"qi_an","      Human demand index for animal products base price weighted"
+214,"qi_co","      Human demand index for all commodities base price weighted"
+215,"vi_cr","      Crop production value index base price weighted"
+216,"vi_lv","      Livestock production value index base price weighted"
+217,"vi_fa","      Farm production value index base price weighted"
+218,"vi_pl","      Human consumption value index for plant products base price weighted"
+219,"vi_an","      Human consumption value index for animal products base price weighted"
+220,"vi_co","      Human consumption value index for all commodities base price weighted"
+221,"vi_nx","      Net export index for agricultural products at wholesale prices"
+222,"dpa_cc","    Budgetary outlays for direct payments per country (including Art 68 69 and nat. top ups) (Mill. €)"
+223,"dp68_cc","   Budgetary outlays for Art 68 69 payments per country (Mill. €)"
+224,"dpno68_cc"," Budgetary outlays for direct payments per country (without Art. 68 69 payments) (Mill. €)"
+225,"dptop_cc","  Budgetary outlays for national top up payments per country (Mill. €)"
+226,"dpEU_cc","   Budgetary outlays for direct payments (without nat. top ups) per country (Mill. €)"
+227,"sub_cc","    Budgetary outlays for product subsidies per country (Mill. €)"
+228,"tar_cc","    Tariff revenue per country (Mill. €)"
+229,"exs_cc","    Budgetary outlays for export subsidies per country (Mill. €)"
+230,"tot_cc","    Total ESIM budget per country (Mill. €)"
+231,"r_hdem","     Human demand (1000 t)"
+232,"r_hdem_PC","  Human demand in kg per capita"
+233,"r_sdem","     Seed demand (1000 t)"
+234,"r_pdem","     Processing demand (1000 t)"
+235,"r_fdem","     Feed demand (1000 t)"
+236,"r_tuse","     Total use (1000 t)"
+237,"r_supp","     Supply (1000 t)"
+238,"r_quot","     Quotas (1000 t)"
+239,"r_deliv","    Milk delivered for processing (1000 t)"
+240,"r_fill","Fill rate of milk quotas (in %)"
+241,"r_yiel","     Yield (kg per ha)"
+242,"r_area","     Area results (1000 ha)"
+243,"r_area_hist","Historical area use (1000 ha)"
+244,"r_nx","       Net export results (1000 t) (including stock changes)"
+245,"r_trsh","     Trade share results (%)"
+246,"r_prefsug","  Preferential sugar imports (endogenous or exogenously pre-fixed)"
+247,"r_pd","       Wholesale price (€ per t)"
+248,"r_pw","       World market price (USD per t)"
+249,"r_netpd","    Net price (€ per t) in ethanol production"
+250,"r_pp","       Farmgate price (€ per t)"
+251,"r_pc","       Consumer price (€ per t)"
+252,"r_pf","       Feed price (€ per t)"
+253,"r_inc","      Incentive price (€ per t)"
+254,"r_pint","     Intervention price (€ per t)"
+255,"r_pthr","     Threshhold price (€ per t)"
+256,"r_psh","      Shadow price (€ per t)"
+257,"r_fci","      Feed cost index relative to base"
+258,"r_bci","      Cost index in biofuel production relative to base"
+259,"r_pup","      Upper price bound (€ per t)"
+260,"r_pup2","     Middle price bound (€ per t)"
+261,"r_plo","      Lower price bound (€ per t)"
+262,"r_valp","    Production value  (Bill. €)"
+263,"r_valc","    Consumption value (Bill. €)"
+264,"r_tpg","     Technical progress (base = 100)"
+265,"r_tpf","     Technical progress in feed use (base = 100)"
+266,"r_esqu","     Export subsidy limit (1000 t)"
+267,"r_trq","      Tariff rate quota(1000 t)"
+268,"r_qualexp","  Exports of high quality products without export subsidies (1000 t)"
+269,"r_dpay","     Direct payment (€ per ha for crops and per t for livestock) including also Art. 68 69 payments (coupl. and decoup.)"
+270,"r_dp_EU","    aggregate DP (including Art. 68 69 payments) without national Top ups"
+271,"r_dp_68","    Art. 68 69 payments only (€ per ha for crops and per t for livestock)"
+272,"r_dp_top","   National Top up direct payments in NMS (coupled and decoupled)(€ per ha for crops and per t for livestock)"
+273,"r_dp_no68","  Direct payments (€ per ha for crops and per t for livestock) only (without Art. 68 69 payments and top ups)"
+274,"r_fsub","     Feed subsidy (€ per t)"
+275,"r_hsub","     Human demand subsidy (€ per t)"
+276,"r_tarav","  Ad valorem tariff (%:100)"
+277,"r_tarsp","  Specific tariff   (%:100)"
+278,"r_esav","   Ad valorem export subsidy (€ per ton)"
+279,"r_essp","   Specific export subsidy (€ per ton)"
+280,"pi_pd"," Wholesale price relative to base"
+281,"pi_pp"," Farmgate price relative to base"
+282,"pi_inc","Incentive price relative to base"
+283,"pi_pc"," Consumer price relative to base"
+284,"pi_pf"," Feed price relative to base"
+285,"pi_fc"," Feed price index relative to base"
+286,"pd_relative_to_pw","Domestic price relative to world market price"
+287,"qi_supp"," Supply relative to base"
+288,"qi_hdem"," Humand demand relative to base"
+289,"qi_pdem"," Processing demand relative to base"
+290,"qi_fdem"," Feed demand relative to base"
+291,"vi_supp"," Supply value rel. to base"
+292,"vi_hdem"," Humand demand value rel. to base"
+293,"b_dpa","   Product specific outlays for direct payments (including Art 68 and national top ups)(Mill. €)"
+294,"b_dp68","  Product specific outlays for Art.68 69 payments (Mill. €)"
+295,"b_dptop"," Product specific outlays for national top ups (Mill. €)"
+296,"b_dpEU","  Product specific outlays for direct payments without national top ups (Mill. €)"
+297,"b_dpno68","Product specific outlays for direct payments without Art 68 69 payments (Mill. €)"
+298,"b_sub","   Product specific outlays for product subsidies (Mill. €)"
+299,"b_tar","   Product specific tariff revenue (Mill. €)"
+300,"b_exs","   Product specific outlays for export subsidies (Mill. €)"
+301,"b_tot","   Product specific total budget (Mill. €)"
+302,"area","area"
+303,"yield","yield"
+304,"supply","supply"
+305,"human","human"
+306,"process","process"
+307,"FEED","FEED"
+308,"seed","seed"
+309,"tot_use","tot_use"
+310,"nettrad","nettrad"
+311,"fag_pric","fag_pric"
+312,"whs_pric","whs_pric"
+313,"pp","pp"
+314,"pd","pd"
+315,"marg","marg"
+316,"tar_ad","tar_ad"
+317,"sp_d","sp_d"
+318,"exp_sub","exp_sub"
+319,"thrpr","thrpr"
+320,"intpr","intpr"
+321,"TRQ","TRQ"
+322,"es_limit","es_limit"
+323,"qual_comp","qual_comp"
+324,"premium","premium"
+325,"exstab","exstab"
+326,"feed_aid","feed_aid"
+327,"cons_aid","cons_aid"
+328,"aid_quant","aid_quant"
+329,"1","1"
+330,"2","2"
+331,"3","3"
+332,"4","4"
+333,"5","5"
+334,"6","6"
+335,"7","7"
+336,"8","8"
+337,"9","9"
+338,"10","10"
+339,"11","11"
+340,"12","12"
+341,"13","13"
+342,"14","14"
+343,"15","15"
+344,"16","16"
+345,"17","17"
+346,"18","18"
+347,"19","19"
+348,"20","20"
+349,"21","21"
+350,"22","22"
+351,"23","23"
+352,"24","24"
+353,"25","25"
+354,"26","26"
+355,"27","27"
+356,"28","28"
+357,"29","29"
+358,"30","30"
+359,"31","31"
+360,"32","32"
+361,"33","33"
+362,"34","34"
+363,"35","35"
+364,"36","36"
+365,"37","37"
+366,"38","38"
+367,"39","39"
+368,"40","40"
+369,"41","41"
+370,"42","42"
+371,"43","43"
+372,"44","44"
+373,"45","45"
+374,"46","46"
+375,"47","47"
+376,"48","48"
+377,"49","49"
+378,"50","50"
+379,"51","51"
+380,"52","52"
+381,"53","53"
+382,"54","54"
+383,"55","55"
+384,"56","56"
+385,"57","57"
+386,"58","58"
+387,"59","59"
+388,"60","60"
+389,"61","61"
+390,"62","62"
+391,"63","63"
+392,"64","64"
+393,"65","65"
+394,"66","66"
+395,"67","67"
+396,"68","68"
+397,"69","69"
+398,"70","70"
+399,"71","71"
+400,"72","72"
+401,"73","73"
+402,"74","74"
+403,"75","75"
+404,"76","76"
+405,"77","77"
+406,"78","78"
+407,"79","79"
+408,"80","80"
+409,"81","81"
+410,"82","82"
+411,"83","83"
+412,"84","84"
+413,"85","85"
+414,"86","86"
+415,"under_quota","under_quota"
+416,"w_o_quota","w_o_quota"
+417,"BOUND","BOUND"
+418,"APPLIED","APPLIED"
+419,"1990","1990"
+420,"1991","1991"
+421,"1992","1992"
+422,"1993","1993"
+423,"1994","1994"
+424,"1995","1995"
+425,"1996","1996"
+426,"1997","1997"
+427,"1998","1998"
+428,"1999","1999"
+429,"2000","2000"
+430,"2001","2001"
+431,"2002","2002"
+432,"2003","2003"
+433,"2004","2004"
+434,"2005","2005"
+435,"base","base"
+436,"2006","2006"
+437,"2007","2007"
+438,"2008","2008"
+439,"2009","2009"
+440,"2010","2010"
+441,"2011","2011"
+442,"2012","2012"
+443,"2013","2013"
+444,"2014","2014"
+445,"2015","2015"
+446,"2016","2016"
+447,"2017","2017"
+448,"2018","2018"
+449,"2019","2019"
+450,"2020","2020"
+451,"2021","2021"
+452,"2022","2022"
+453,"2023","2023"
+454,"2024","2024"
+455,"2025","2025"
+456,"2026","2026"
+457,"2027","2027"
+458,"2028","2028"
+459,"2029","2029"
+460,"2030","2030"
+461,"trq_tc","trq_tc"
+462,"preftrq","preftrq"
+463,"sug_exog","sug_exog"
+464,"sugar_quot","sugar_quot"
+465,"trq_int","trq_int"
+466,"trq_elast","trq_elast"
+*!!END
+*!START Sets and Elements
+4,431
+4,432
+4,433
+4,434
+4,4
+19,5
+19,6
+19,7
+19,8
+19,9
+19,10
+19,11
+19,12
+19,13
+19,14
+19,15
+19,16
+19,17
+19,18
+19,19
+19,20
+19,21
+19,22
+19,23
+19,24
+19,25
+19,26
+19,27
+19,28
+19,29
+19,30
+19,31
+19,32
+19,33
+19,34
+19,35
+19,36
+19,37
+19,38
+19,39
+19,40
+19,41
+19,42
+19,43
+25,44
+25,45
+26,46
+26,47
+27,48
+27,56
+27,57
+28,51
+28,52
+28,56
+28,57
+29,321
+29,56
+29,57
+38,58
+38,59
+38,60
+47,61
+47,62
+47,63
+47,64
+47,65
+50,66
+51,153
+51,68
+53,69
+85,70
+85,71
+85,72
+85,73
+85,74
+85,75
+85,76
+85,77
+85,78
+85,79
+85,80
+85,81
+85,82
+85,83
+85,84
+85,85
+85,86
+85,87
+85,88
+85,89
+85,90
+85,91
+85,92
+85,93
+85,94
+85,95
+85,96
+85,97
+85,98
+85,99
+85,100
+85,101
+85,102
+85,103
+85,104
+85,105
+85,106
+85,107
+85,108
+85,109
+85,110
+85,111
+85,112
+85,113
+85,114
+85,115
+85,129
+85,130
+85,118
+85,119
+85,132
+85,121
+85,122
+85,307
+85,124
+85,125
+85,126
+85,127
+85,128
+93,129
+93,130
+93,131
+93,132
+93,133
+93,134
+93,135
+93,302
+93,137
+97,159
+97,139
+98,140
+98,141
+98,142
+98,143
+124,144
+135,145
+135,146
+142,435
+142,428
+142,427
+142,426
+142,425
+142,424
+143,153
+158,154
+158,155
+158,156
+158,157
+161,158
+161,159
+165,160
+165,161
+165,162
+165,163
+165,164
+165,165
+165,166
+165,167
+165,168
+165,169
+165,170
+165,171
+165,172
+165,173
+165,174
+165,175
+165,176
+165,177
+165,178
+165,179
+165,180
+165,181
+165,182
+165,183
+165,184
+165,185
+165,186
+165,187
+165,188
+165,189
+165,190
+165,191
+165,192
+165,193
+165,194
+165,195
+165,196
+165,197
+165,198
+165,199
+165,200
+165,201
+165,202
+165,203
+165,204
+165,205
+165,206
+165,207
+165,208
+165,209
+165,210
+165,211
+165,212
+165,213
+165,214
+165,215
+165,216
+165,217
+165,218
+165,219
+165,220
+165,221
+165,222
+165,223
+165,224
+165,225
+165,226
+165,227
+165,228
+165,229
+165,230
+166,231
+166,232
+166,233
+166,234
+166,235
+166,236
+166,237
+166,238
+166,239
+166,240
+166,241
+166,242
+166,243
+166,244
+166,245
+166,246
+166,247
+166,248
+166,249
+166,250
+166,251
+166,252
+166,253
+166,254
+166,255
+166,256
+166,257
+166,258
+166,259
+166,260
+166,261
+166,262
+166,263
+166,264
+166,265
+166,266
+166,267
+166,268
+166,269
+166,270
+166,271
+166,272
+166,273
+166,274
+166,275
+166,276
+166,277
+166,278
+166,279
+166,280
+166,281
+166,282
+166,283
+166,284
+166,285
+166,286
+166,287
+166,288
+166,289
+166,290
+166,291
+166,292
+166,293
+166,294
+166,295
+166,296
+166,297
+166,298
+166,299
+166,300
+166,301
+167,302
+167,303
+167,304
+167,305
+167,306
+167,307
+167,308
+167,309
+167,310
+167,311
+167,312
+170,313
+170,314
+170,315
+170,316
+170,317
+170,318
+170,319
+170,320
+170,321
+170,322
+170,323
+170,324
+170,325
+170,326
+170,327
+170,328
+185,329
+185,330
+185,331
+185,332
+185,333
+185,334
+185,335
+185,336
+185,337
+185,338
+185,339
+185,340
+185,341
+185,342
+185,343
+185,344
+185,345
+185,346
+185,347
+185,348
+185,349
+185,350
+185,351
+185,352
+185,353
+185,354
+185,355
+185,356
+185,357
+185,358
+185,359
+185,360
+185,361
+185,362
+185,363
+185,364
+185,365
+185,366
+185,367
+185,368
+185,369
+185,370
+185,371
+185,372
+185,373
+185,374
+185,375
+185,376
+185,377
+185,378
+185,379
+185,380
+185,381
+185,382
+185,383
+185,384
+185,385
+185,386
+185,387
+185,388
+185,389
+185,390
+185,391
+185,392
+185,393
+185,394
+185,395
+185,396
+185,397
+185,398
+185,399
+185,400
+185,401
+185,402
+185,403
+185,404
+185,405
+185,406
+185,407
+185,408
+185,409
+185,410
+185,411
+185,412
+185,413
+185,414
+187,415
+187,416
+190,417
+190,418
+192,419
+192,420
+192,421
+192,422
+192,423
+192,424
+192,425
+192,426
+192,427
+192,428
+192,429
+192,430
+192,431
+192,432
+192,433
+192,434
+192,435
+192,436
+192,437
+192,438
+192,439
+192,440
+192,441
+192,442
+192,443
+192,444
+192,445
+192,446
+192,447
+192,448
+192,449
+192,450
+192,451
+192,452
+192,453
+192,454
+192,455
+192,456
+192,457
+192,458
+192,459
+192,460
+194,461
+194,462
+194,463
+194,464
+195,465
+195,466
+*!!END
+*!START GDX inputs
+,"SIMCONTROL SHIFTERTHRESHOLD TTUSE_CS TSUPPLY_CS TPW_CS"
+,"TGT=TARGET"
+BASELINEDATA.GDX,"POPUL_GRW,P_CRUDE_OIL,TECH_PROGR,HDEM_SHFT,TECH_PROGR_FR,DEFLATION,INCOME_GROWTH,EX_RATE,INDICES,POL_SET_,BOUND_TAR,PHASE_IN_EU,TOP_UP_REDUCTION,CHG_QUOTA_SIM1,CHG_QUOTA_SIM2,CHG_INT_PRE,CHG_INT,CHG_THRESH_PRE,THRESH_N,CHG_TAR_V,CHG_TAR_S,CHG_SUBSIDY,CHG_TRQ_PRE,CHG_TRQ,INTRO_TRQ,SUGAR_ENVELOP,CHG_DP,DPCHG_GE,DPCHG_AT,DPCHG_BE,DPCHG_DK,DPCHG_FI,DPCHG_FR,DPCHG_GR,DPCHG_IE,DPCHG_IT,DPCHG_NL,DPCHG_PT,DPCHG_ES,DPCHG_SW,DPCHG_UK,DPCHG_SI,ARTCHG_GE,ARTCHG_AT,ARTCHG_BE,ARTCHG_DK,ARTCHG_FI,ARTCHG_FR,ARTCHG_GR,ARTCHG_IE,ARTCHG_IT,ARTCHG_NL,ARTCHG_PT,ARTCHG_ES,ARTCHG_SW,ARTCHG_UK,ARTCHG_PL,ARTCHG_HU,ARTCHG_LV,ARTCHG_RO,ARTCHG_SI,ARTCHG_LT,ARTCHG_BG,ARTCHG_CZ,ARTCHG_SK,ARTCHG_EE,ARTCHG_CY,ARTCHG_MT,PROJ_FUEL,EXOG_LAND"
+'DAIRY_ELASTICITIES.GDX',"DAIRY_EL"
+GDX_DATA\CAPRI_CONSOLID_AREA.GDX,"CONSOLID_AREA=CONSOLID_AREA_CAPRI"
+GDX_DATA\CAPRI_SHOW_DATA.GDX,"SHOW_DATA=SHOW_DATA_CAPRI"
+GDX_DATA\ESIM_PARAMETERS_40%.GDX,"ELASTHD,ELASTSP,ELASTYD,ELASTFD,ELASTIN,ELAST_Y_I,ELAST_Y_L,ELAST_Y_C,ELAST_Y_F,ELAST_Y_E,ELAST_LV_I,ELAST_LV_L,ELAST_LV_C,ELAST_LV_F,EL_AREA0"
+GDX_DATA\FRATES_CALC.GDX,"FEDRAT=FRATE,FEED_ROW=F_DEM"
+GDX_DATA\PRICES_POLICIES.GDX,"PP_RESULTS,DP_DECOUP,DP_COUP,DP_DECOUP_HA,DP_COUP_HA,DP_COUP_ENV,ART_69_ENV,ART_69_HA,CNDP_HA,CNDP_ENV"
+GDX_DATA\QUANTITIES.GDX,"INPUT_BIODIESEL,INPUT_ETHANOL,OIL_TO_DIESEL,CROPS_TO_ETHANOL,DAIRY_PDEM,CONTENT_MILK,OIL_CONTENT"
+*!!END
+*!START Setglobal
+"CALIBRATETOAGLINK","no"
+"USECALIBRATEDSHIFTERS","YES"
+"GSEACTION","  > GSE.TM"
+"INTERPOL_UPTO",""'2011'";"
+"BALANCED_INPUT_FILE",""./aglink_input_balanced.gdx""
+"CAL_CONTROL_FILE",""../cal_control.xls";"
+*!!END
+*!START Dimension
+*!!END
+*!START Recoding
+*!!END
+*!START Bounds
+*!!END
+*!START NonEdit
+*!!END
+*!START Info
+*!!END
+*!START Format
+*!!END
+*!START UserLevel
+*!!END
+*!START GDX datafiles
+*!!END

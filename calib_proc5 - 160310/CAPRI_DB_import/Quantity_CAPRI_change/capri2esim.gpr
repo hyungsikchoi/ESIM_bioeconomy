@@ -1,0 +1,796 @@
+[PROJECT]
+
+[RP:SIM_PARAM_CALC]
+1=
+
+[RP:2_FEED-RATES-CALCULATOR]
+1=
+
+[RP:3_FEED-DEMAND-ELASTICITIES-MODEL]
+1=
+
+[RP:1_CAPRI2ESIM_HS]
+1=
+
+[RP:HUMAN-DEMAND-ELASTICITIES-DECLARATIONS]
+1=
+
+[RP:1_MERGE]
+1=
+
+[GDXDISP: consolid_area Par 2]
+PlaneDim=1
+RowDim=1
+Squeeze=1
+Order=2,1
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: dairy_pdem Par 3]
+PlaneDim=1
+RowDim=2
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=8
+PlaneFilter1=CHEESE
+
+[GDXDISP: show_data_CAPRI Par 3]
+PlaneDim=1
+RowDim=2
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+PlaneFilter1=ETHANOL
+
+[GDXDISP: Levy Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: LevyDist Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_doubleZero Par 4]
+PlaneDim=0
+RowDim=4
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_entryPriceFac Par 4]
+PlaneDim=0
+RowDim=4
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_exchgRateChangeFactor Par 2]
+PlaneDim=1
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=1
+PlaneFilter1=TUR
+
+[GDXDISP: p_globiomTightLink Par 5]
+PlaneDim=0
+RowDim=5
+Squeeze=1
+Order=1,2,3,4,5
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_growthRateMarketModelPos Par 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_impPrice Par 4]
+PlaneDim=0
+RowDim=4
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_stdDevWorldMrkPrices Par 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_tradeFlows Par 4]
+PlaneDim=0
+RowDim=4
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_transpCost Par 4]
+PlaneDim=0
+RowDim=4
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: pv_bevFuncIntAddFac Var 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: pv_bevFuncIntCorrFac Var 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: pv_bevFuncIntMultFac Var 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: pv_bevFuncSubsExpCorrFact Var 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: pv_feedConv Var 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: pv_sigmParSubsExports Var 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: v_entryPrice Var 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: v_entryPriceDriver Var 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: v_flexLevyNotCut Var 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: v_procMarginSubg Var 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: META Set 4]
+PlaneDim=0
+RowDim=4
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: pdem0 Par 2]
+PlaneDim=1
+RowDim=1
+Squeeze=1
+Order=2,1
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: COLS Set 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: ROWS Set 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: show_data Par 3]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,3,2
+Decim=7
+PlaneRownr=-1
+PlaneFilter1=FDEM
+
+[GDXDISP: DATA2 Par 5]
+PlaneDim=1
+RowDim=4
+Squeeze=1
+Order=4,1,2,3,5
+Decim=7
+PlaneRownr=49
+PlaneFilter1=BIOD
+
+[RP:1_YIELD_TEST]
+1=
+
+[GDXDISP: compare_data Par 4]
+PlaneDim=1
+RowDim=3
+Squeeze=1
+Order=2,1,3,4
+Decim=7
+PlaneRownr=22
+PlaneFilter1=OENERGY
+
+[RP:SAVE-RESULTS]
+1=
+
+[RP:FEED-RATES-DECLARATIONS]
+1=
+
+[GDXDISP: oil_to_diesel Par 0]
+PlaneDim=0
+RowDim=0
+Squeeze=1
+Order=
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: crops_to_ethanol Par 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1
+Decim=7
+PlaneRownr=-1
+
+[RP:HUMAN-DEMAND-ELASTICITIES-CALIBRATION]
+1=
+
+[GDXDISP: hdem0 Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: area0 Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: show_diary_CAPRI Par 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+
+[RP:SUPPLY-ELASTICITIES-MODEL]
+1=
+
+[RP:FEED-DEMAND-ELASTICITIES-MODEL]
+1=
+
+[RP:FEED-RATES-DECLARATIONS-HS]
+1=
+
+[RP:INJECT_FEED_DATA]
+1=
+
+[RP:CHECK-CONSIST]
+1=
+
+[RP:CAPRI2ESIM_HS]
+1=pw 120
+2=pw 160
+3=
+
+[RP:FEED-RATES-CALCULATOR_HS]
+1=
+2=pw 160
+
+[RP:ESIM_DATABASE]
+1=
+
+[RP:3_HUMAN-DEMAND-ELASTICITIES-CALIBRATION]
+1=
+
+[RP:CALL_AGMIP_YIELDS]
+1=
+
+[RP:CAPDIS_LOOP]
+1=
+
+[RP:GLOBAL]
+1=
+
+[RP:LOAD_SUPPLY]
+1=
+
+[RP:LOAD_SUPPLYMODEL]
+1=
+
+[RP:SET_SUPPLY_BOUNDS]
+1=
+
+[RP:UNTITLED_1]
+1=
+
+[RP:SUPPLY_MODEL]
+1=
+
+[RP:4_SUPPLY-ELASTICITIES-MODEL]
+1=
+
+[RP:SSA_ELAS_PREP]
+1=
+
+[RP:CAPREG]
+1=
+
+[RP:CAPTRD]
+1=
+
+[RP:FED_CONT]
+1=
+
+[RP:FEED_DECL]
+1=
+
+[RP:POLICY]
+1=
+
+[RP:WATER_MODEL]
+1=
+
+[GDXDISP: p_trqGlobl Par 4]
+PlaneDim=1
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=14
+PlaneFilter1=EU027000
+
+[GDXDISP: PD00 Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: DIRPAY00 Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: PINC00 Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: PP00 Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[RP:CAPRI_ARM_SETS]
+1=
+
+[GDXDISP: v_tarSpec Var 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: v_tarAdval Var 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_trqBilat Par 5]
+PlaneDim=0
+RowDim=5
+Squeeze=1
+Order=1,2,3,4,5
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: p_flexLevy Par 4]
+PlaneDim=0
+RowDim=4
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=-1
+
+[RP:CHANGE69]
+1=
+
+[GDXDISP: Art_69_env Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: pp_results Par 3]
+PlaneDim=1
+RowDim=2
+Squeeze=1
+Order=2,1,3
+Decim=7
+PlaneRownr=-1
+SqTrail0=0
+
+[RP:COCO2_COLLECT]
+1=
+
+[RP:_SPAIN_DATA_REAL_BASELINE_AREA]
+1=
+
+[GDXDISP: fedrat Par 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: elastsp Par 3]
+PlaneDim=1
+RowDim=2
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=5
+PlaneFilter1=GE
+SqTrail0=0
+
+[GDXDISP: Compare_price Par 4]
+PlaneDim=1
+RowDim=3
+Squeeze=1
+Order=2,1,3,4
+Decim=7
+PlaneRownr=-1
+SqTrail0=0
+
+[RP:TOY_MODEL]
+1=-s .\t\a1
+2=
+
+[RP:4_SUPPLY-ELASTICITIES-READING]
+1=
+
+[RP:FERT_SETS]
+1=
+
+[RP:FERTPAR]
+1=
+
+[RP:FEED-RATES-CALCULATOR]
+1=
+
+[RP:2_PRICE_POLICY_EXTRACTION]
+1=pw 200
+2=
+
+[RP:2_FEED-DEMAND-ELASTICITIES-MODEL]
+1=-s .t1
+2=
+
+[RP:5_DAIRY-PROCESSING-ELASTICITIES]
+1=
+
+[RP:2_FEED-RATES-CALCULATOR_HS]
+1=
+
+[RP:MACRO-DATA]
+1=
+
+[RP:PARAMETERS]
+1=
+
+[RP:CAP-POLICIES]
+1=
+
+[RP:3_1_HUMAN-DEMAND-ELASTICITIES-CALIBRATION]
+1=
+
+[RP:SUPPLY-ELASTICITIES-READING]
+1=
+
+[RP:DAIRY-PROCESSING-ELASTICITIES]
+1=
+
+[GDXDISP: content_milk Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: sdem0 Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: input_biodiesel Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: input_ethanol Par 2]
+PlaneDim=0
+RowDim=2
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: oil_content Par 1]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: fdem0 Par 2]
+PlaneDim=1
+RowDim=1
+Squeeze=1
+Order=2,1
+Decim=7
+PlaneRownr=14
+PlaneFilter1=GRAS
+
+[RP:CALIB-BIOFUEL]
+1=
+
+[RP:1_PARAMETERS]
+1=
+
+[GDXDISP: DATA2 Par 4]
+PlaneDim=1
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=3
+PlaneFilter1=DE000000
+SqTrail0=0
+
+[GDXDISP: CapriProcess Par 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+
+[GDXDISP: CapriProcess_export Par 3]
+PlaneDim=0
+RowDim=3
+Squeeze=1
+Order=1,2,3
+Decim=7
+PlaneRownr=-1
+SqTrail0=0
+
+[GDXDISP: prod0 Par 2]
+PlaneDim=0
+RowDim=1
+Squeeze=1
+Order=1,2
+Decim=7
+PlaneRownr=-1
+PlaneFilter1=GRAS
+SqTrail0=0
+
+[GDXDISP: Data_CAL Par 4]
+PlaneDim=1
+RowDim=3
+Squeeze=1
+Order=1,2,3,4
+Decim=7
+PlaneRownr=17
+PlaneFilter1=SI000000
+SqTrail0=0
+
+[RP:DATA_CAL]
+1=
+
+[RP:DATA_PREP]
+1=
+
+[RP:MARKET1]
+1=
+
+[RP:PREPARE_MARKET_DATA]
+1=
+
+[RP:LOAD_BASE_DATA_AND_TRENDS]
+1=
+
+[RP:ARM_SETS]
+1=
+
+[RP:CAL_CNST_TERMS]
+1=
+
+[RP:LOAD_MARKET]
+1=
+
+[RP:MARKET_MODEL]
+1=
+
+[RP:UNLOAD_MARKET]
+1=
+
+[RP:CAPMOD]
+1=
+
+[RP:REPORTS]
+1=
+
+[RP:SOL_SIMY]
+1=
+
+[RP:WELFARE]
+1=
+
+[RP:TOY_MODEL_HG_DIFF]
+1=-save .\t\a1
+2=
+
+[RP:CAPRI_SETS]
+1=
+
+[RP:CAPRI2ESIM_HS_MARKET]
+1=
+2=pw 180
+
+[RP:CALIBRATION-PARA]
+1=
+
+[RP:CALC-PARA]
+1=
+
+[RP:PREP_REQ]
+1=
+
+[RP:MODEL]
+1=
+
+[RP:SETS]
+1=
+
+[RP:ESIM]
+1=
+
+[RP:ASSIGNMENTS]
+1=
+
+[RP:SIMULATION]
+1=restart .\t1 save .\t2
+2=restart .\t1
+3=restart .\t1  gdx=tt
+4=restart .\t1 
+5=restart .\t1 gdx=ttt1 ref=a1
+6=restart .\t1 gdx=ttt1
+7=restart .\t1 gdx=output
+8=
+
+[RP:2_3_DAIRY-PROCESSING-ELASTICITIES]
+1=pw 160
+2=
+
+[RP:GSE-READING-DATA]
+1=
+
+[RP:0_CAPRI2ESIM]
+1=
+
+[MRUFILES]
+1=C:\Users\bwpc\Documents\1_MODEL\ESIM_capri_v3\calib_proc4 - 130218\CAPRI_DB_import\Quantity_Price_CAPRI_change\0_capri2esim.gms
+2=C:\Users\bwpc\Documents\1_MODEL\ESIM_capri_v3\calib_proc4 - 130218\CAPRI_DB_import\Quantity_Price_CAPRI_change\esim_set_data\sets.gms
+3=C:\Users\bwpc\Documents\1_MODEL\ESIM_capri_v3\calib_proc4 - 130218\CAPRI_DB_import\Quantity_Price_CAPRI_change\0_capri2esim.lst
+4=C:\Users\bwpc\Documents\1_MODEL\ESIM_capri_v3\calib_proc4 - 130218\CAPRI_DB_import\Parameter_change\2_3_Dairy-Processing-Elasticities.gms
+5=C:\Users\bwpc\Documents\1_MODEL\ESIM_capri_t2\calib_proc4 - 130218\ESIM\sets.gms
+6=C:\Users\bwpc\Documents\1_MODEL\ESIM_capri_t2\calib_proc4 - 130218\ESIM\model.gms
+7=C:\Users\bwpc\Documents\1_MODEL\ESIM_capri_t2\calib_proc4 - 130218\ESIM\GDX_data\CapriProcess.gdx
+8=C:\Users\bwpc\Documents\1_MODEL\ESIM_capri_t2\calib_proc4 - 130218\CAPRI_DB_import\Quantity_Price_CAPRI_change\esim_set_data\sets.gms
+
+[OPENWINDOW_1]
+FILE0=C:\Users\bwpc\Documents\1_MODEL\ESIM_biomass\calib_proc4 - 130218\CAPRI_DB_import\Quantity_CAPRI_change\0_capri2esim.gms
+FILE1=C:\Users\bwpc\Documents\1_MODEL\ESIM_biomass\calib_proc4 - 130218\CAPRI_DB_import\Quantity_CAPRI_change\0_capri2esim.lst
+FILE2=C:\Users\bwpc\Documents\1_MODEL\ESIM_biomass\calib_proc4 - 130218\CAPRI_DB_import\Quantity_CAPRI_change\0_capri2esim.gms
+MAXIM=0
+TOP=0
+LEFT=0
+HEIGHT=895
+WIDTH=1149

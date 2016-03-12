@@ -1,0 +1,3025 @@
+<%ITEM%>
+abs_setas_area
+Oligatory setaside area (in Mill. ha)
+abs_setas_area(cc,sim1)|
+<%/ITEM%>
+<%ITEM%>
+add_diesel
+
+add_diesel(*)|
+<%/ITEM%>
+<%ITEM%>
+add_ethanol
+
+add_ethanol(*)|
+<%/ITEM%>
+<%ITEM%>
+addcomp_dairy
+Intercept in dairy processing
+addcomp_dairy(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+addcomp_milk
+Intercept in milk price eqn
+addcomp_milk(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+adj_rec_1
+Weighting factors in recursive model stucture for the t-1 period
+adj_rec_1(cc,ag)|
+<%/ITEM%>
+<%ITEM%>
+adj_rec_2
+Weighting factors in recursive model stucture for the t-2 period
+adj_rec_2(cc,ag)|
+<%/ITEM%>
+<%ITEM%>
+adjust_cap
+
+adjust_cap(it)|
+<%/ITEM%>
+<%ITEM%>
+AGENDA
+
+AGENDA|
+<%/ITEM%>
+<%ITEM%>
+ALAREA
+Allocation of area in respect to commodity prices irrespective of availability
+ALAREA(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+area_add_int_sug
+additive intercept in area allocation function for sugar (negative)
+area_add_int_sug(cc)|
+<%/ITEM%>
+<%ITEM%>
+area_exponent_sug
+exponent in area allocation function for sugar
+area_exponent_sug(cc)|
+<%/ITEM%>
+<%ITEM%>
+area_factor_sug
+factor in area allocation function for sugar
+area_factor_sug(cc)|
+<%/ITEM%>
+<%ITEM%>
+area_factor_sug_0
+
+area_factor_sug_0(cc)|
+<%/ITEM%>
+<%ITEM%>
+area_gc_
+area grande cultures
+area_gc_(*)|
+<%/ITEM%>
+<%ITEM%>
+area_gr
+growth rate of area
+area_gr(cc)|
+<%/ITEM%>
+<%ITEM%>
+area_int
+intercept in area allocation function (European countries)
+area_int(*,*)|
+<%/ITEM%>
+<%ITEM%>
+area_int_sft
+
+area_int_sft(*,*)|
+<%/ITEM%>
+<%ITEM%>
+area_int0
+
+area_int0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+area_int2_sug
+intercept in area allocation function for sugar to incorporate cross-price-effects
+area_int2_sug(cc)|
+<%/ITEM%>
+<%ITEM%>
+area_int3_sug
+intercept in area allocation function for sugar to correct for yield
+area_int3_sug(cc)|
+<%/ITEM%>
+<%ITEM%>
+area_max
+Maximal available agricultural area
+area_max(cc)|
+<%/ITEM%>
+<%ITEM%>
+area_shift
+
+area_shift(EU15,crops)|
+<%/ITEM%>
+<%ITEM%>
+area_shift2
+
+area_shift2(EU15,*)|
+<%/ITEM%>
+<%ITEM%>
+area_to
+total agriculture area
+area_to(*)|
+<%/ITEM%>
+<%ITEM%>
+AREA_UN
+Area unconstraint
+AREA_UN(cc)|
+<%/ITEM%>
+<%ITEM%>
+area0
+area allocation in base period
+area0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+Art_69_env
+LVSTK: Art. 69 payments by member state average 06/07, in million €
+Art_69_env(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+Art_69_env_2
+
+Art_69_env_2(*,*)|
+<%/ITEM%>
+<%ITEM%>
+Art_69_env_save
+
+Art_69_env_save(*,*)|
+<%/ITEM%>
+<%ITEM%>
+Art_69_ha
+CROPS: Art. 69 payments by member state average 06/07, in €/ha
+Art_69_ha(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+Art_69_ha_2
+
+Art_69_ha_2(*,*)|
+<%/ITEM%>
+<%ITEM%>
+Art_69_ha_save
+
+Art_69_ha_save(*,*)|
+<%/ITEM%>
+<%ITEM%>
+art_change
+Change in Art 69 paments per Member State
+art_change(cc,comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+artchg_at
+Change in Art. 69 Payments in Austria
+artchg_at(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_be
+Change in Art. 69 Payments in Belgium
+artchg_be(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_bg
+Change in Art. 69 Payments in Bulgaria
+artchg_bg(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_cy
+Change in Art. 69 Payments in Cyprus
+artchg_cy(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_cz
+Change in Art. 69 Payments in the Czech Republic
+artchg_cz(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_dk
+Change in Art. 69 Payments in Denmark
+artchg_dk(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_ee
+Change in Art. 69 Payments in Estonia
+artchg_ee(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_es
+Change in Art. 69 Payments in Spain
+artchg_es(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_fi
+Change in Art. 69 Payments in Finland
+artchg_fi(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_fr
+Change in Art. 69 Payments in France
+artchg_fr(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_ge
+Change in Art. 69 Payments in Germany
+artchg_ge(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_gr
+Change in Art. 69 Payments in Greece
+artchg_gr(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_hu
+Change in Art. 69 Payments in Hungary
+artchg_hu(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_ie
+Change in Art. 69 Payments in Ireland
+artchg_ie(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_it
+Change in Art. 69 Payments in Italy
+artchg_it(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_lt
+Change in Art. 69 Payments in Lithuania
+artchg_lt(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_lv
+Change in Art. 69 Payments in Latvia
+artchg_lv(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_mt
+Change in Art. 69 Payments in Malta
+artchg_mt(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_nl
+Change in Art. 69 Payments in the Netherlands
+artchg_nl(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_pl
+Change in Art. 69 Payments in Poland
+artchg_pl(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_pt
+Change in Art. 69 Payments in Portugal
+artchg_pt(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_ro
+Change in Art. 69 Payments in Romania
+artchg_ro(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_si
+Change in Art. 69 Payments in Slovenia
+artchg_si(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_sk
+Change in Art. 69 Payments in Slovakia
+artchg_sk(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_sw
+Change in Art. 69 Payments in Sweden
+artchg_sw(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+artchg_uk
+Change in Art. 69 Payments in the UK
+artchg_uk(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+Artificial_value
+Artificial para for the handling of changes in direct payment for Artikel 68
+Artificial_value(cc)|
+<%/ITEM%>
+<%ITEM%>
+BCI0
+biofuel cost index in base situation
+BCI0(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+bend_ld1
+Determ. the bending of the supply curve (non set-aside land)
+bend_ld1(cc)|
+<%/ITEM%>
+<%ITEM%>
+bend_ld2
+Determ. the bending of the supply curve (set-aside land)
+bend_ld2(cc)|
+<%/ITEM%>
+<%ITEM%>
+biof_CES_el
+elasticity parameter of input demand in biofuels
+biof_CES_el(cc,energ)|
+<%/ITEM%>
+<%ITEM%>
+biof_CES_int
+intercept of input shares in biofuels
+biof_CES_int(cc,energ)|
+<%/ITEM%>
+<%ITEM%>
+biof_CES_shr
+share parameter of biobased inputs in biofuel production
+biof_CES_shr(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+biof_d
+biodiesel
+biof_d|
+<%/ITEM%>
+<%ITEM%>
+biof_e
+ethanol
+biof_e|
+<%/ITEM%>
+<%ITEM%>
+biofuel_premia
+Total eligible premia for biofuels in Mill EUR
+biofuel_premia(sim1,premia_st_)|
+<%/ITEM%>
+<%ITEM%>
+bound_comm
+
+bound_comm|
+<%/ITEM%>
+<%ITEM%>
+bound_tar
+Bound and applied specific tariffs for cereal products
+bound_tar(bound_comm,tar_st_)|
+<%/ITEM%>
+<%ITEM%>
+bound_tar_cc
+
+bound_tar_cc(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+C_sugar_exports
+
+C_sugar_exports(it)|
+<%/ITEM%>
+<%ITEM%>
+CAL_D
+distrib parameter in CES function
+CAL_D(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+cand
+Candidate countries modelled in ESIM
+cand|
+<%/ITEM%>
+<%ITEM%>
+cand1
+Aliased with cand
+cand1|
+<%/ITEM%>
+<%ITEM%>
+cap_ind
+Capital Cost Index
+cap_ind(cc)|
+<%/ITEM%>
+<%ITEM%>
+cc_budget
+CAP budgetary positions
+cc_budget|
+<%/ITEM%>
+<%ITEM%>
+cc_ind
+Indices for product groups
+cc_ind|
+<%/ITEM%>
+<%ITEM%>
+cc_price_ind
+Price indices for product groups
+cc_price_ind|
+<%/ITEM%>
+<%ITEM%>
+cc_quan_ind
+Quantity indices for product groups
+cc_quan_ind|
+<%/ITEM%>
+<%ITEM%>
+cc_shifter
+Results of macro shifters
+cc_shifter|
+<%/ITEM%>
+<%ITEM%>
+cc_value_ind
+Value indices for product groups
+cc_value_ind|
+<%/ITEM%>
+<%ITEM%>
+cc_values
+Production consumption and trade values
+cc_values|
+<%/ITEM%>
+<%ITEM%>
+ccplus
+Countries and regions in ESIM with aggregated regions
+ccplus|
+<%/ITEM%>
+<%ITEM%>
+ceec
+Candidate countries modelled in ESIM from Central and Eastern Europe
+ceec|
+<%/ITEM%>
+<%ITEM%>
+CER_DURUM
+Durum eligible for direct payments
+CER_DURUM(one,comm)|
+<%/ITEM%>
+<%ITEM%>
+CER_N_DURUM
+Cereals but no durum
+CER_N_DURUM(one,comm)|
+<%/ITEM%>
+<%ITEM%>
+cer_nd
+Cereals eligible for direct payments without durum
+cer_nd|
+<%/ITEM%>
+<%ITEM%>
+CER_OIL
+Oilseeds eligible for direct payments
+CER_OIL(one,comm)|
+<%/ITEM%>
+<%ITEM%>
+ch_area
+Chg in area available for agricultural uses
+ch_area(cc)|
+<%/ITEM%>
+<%ITEM%>
+ch_area_rate
+Yearly rate of area available for agricultural uses
+ch_area_rate(cc)|
+<%/ITEM%>
+<%ITEM%>
+check_cand_subs
+
+check_cand_subs(*,*)|
+<%/ITEM%>
+<%ITEM%>
+check_cand_tar
+
+check_cand_tar(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chg_delay
+Reduction of single market prices due to delayed integration
+chg_delay(delay_c,sim1)|
+<%/ITEM%>
+<%ITEM%>
+chg_dp
+Change in direct payments compared to previous year
+chg_dp(cc,sim1)|
+<%/ITEM%>
+<%ITEM%>
+chg_int
+Linear changes in intervention prices
+chg_int(comm,CHG_ST_)|
+<%/ITEM%>
+<%ITEM%>
+chg_int_ann
+Non linear changes in intervention prices w.r. to previous period
+chg_int_ann(comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+chg_int_pre
+Pre-determined changes in intervention prices w.r. to previous period
+chg_int_pre(comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+chg_oblsetas
+change in oblig setaside
+chg_oblsetas(ccplus)|
+<%/ITEM%>
+<%ITEM%>
+chg_oblsetas_cum
+cumulative change in oblig setaside
+chg_oblsetas_cum(ccplus)|
+<%/ITEM%>
+<%ITEM%>
+chg_qual
+Changes in markup values of exports without export refunds
+chg_qual(it,chg_qual_st)|
+<%/ITEM%>
+<%ITEM%>
+chg_qual_st
+
+chg_qual_st|
+<%/ITEM%>
+<%ITEM%>
+chg_quant
+Changes in quantities of exports with prices different from world market and without export refunds
+chg_quant(it,chg_quant_st)|
+<%/ITEM%>
+<%ITEM%>
+chg_quant_st
+
+chg_quant_st|
+<%/ITEM%>
+<%ITEM%>
+chg_quota
+Trigger to abloish quota regime
+chg_quota(sim1,cc,ag)|
+<%/ITEM%>
+<%ITEM%>
+chg_quota_sim1
+Change in milk quota in percent
+chg_quota_sim1(sim1,cc)|
+<%/ITEM%>
+<%ITEM%>
+chg_quota_sim2
+Change in sugar quota in percent
+chg_quota_sim2(sim1,cc)|
+<%/ITEM%>
+<%ITEM%>
+CHG_ST_
+
+CHG_ST_|
+<%/ITEM%>
+<%ITEM%>
+chg_subsidy
+Changes in export subsidies
+chg_subsidy(comm,CHG_SUBSIDY_ST_)|
+<%/ITEM%>
+<%ITEM%>
+CHG_SUBSIDY_ST_
+
+CHG_SUBSIDY_ST_|
+<%/ITEM%>
+<%ITEM%>
+chg_tar_s
+Changes in specific tariffs
+chg_tar_s(comm,CHG_ST_)|
+<%/ITEM%>
+<%ITEM%>
+chg_tar_v
+Changes in ad-valorem tariffs
+chg_tar_v(it,CHG_ST_)|
+<%/ITEM%>
+<%ITEM%>
+chg_thresh_pre
+Pre-determined changes in threshold prices
+chg_thresh_pre(comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+chg_trq
+Changes in tariff rate quotas
+chg_trq(trq_comm,CHG_ST_)|
+<%/ITEM%>
+<%ITEM%>
+chg_trq_st_
+
+chg_trq_st_|
+<%/ITEM%>
+<%ITEM%>
+chgtrq
+change in tariff rate quotas
+chgtrq(*)|
+<%/ITEM%>
+<%ITEM%>
+chgtrq_row
+change in tariff rate quotas in Rest of World
+chgtrq_row(*)|
+<%/ITEM%>
+<%ITEM%>
+chk_area
+Difference between values of data base and variables AREA USE in per cent
+chk_area(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_area_pr
+Difference between values of data base and variables AREA PRICE in per cent
+chk_area_pr(*)|
+<%/ITEM%>
+<%ITEM%>
+Chk_coup_base
+
+Chk_coup_base(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_fdem
+Final check of the consistency of feed rates
+chk_fdem(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_floor_c
+Calibration results of the LOGIT Function: Candidate Countries
+chk_floor_c(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_floor_d
+Calibration results of the LOGIT Function: Delayed Integration to Single Market
+chk_floor_d(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_floor_eu
+Calibration results of the LOGIT Function: EU-25 Countries
+chk_floor_eu(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_floor_eu1
+Calibration results of the LOGIT Function: EU-25 Countries
+chk_floor_eu1(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_hdem
+Difference between values of data base and variables HUMAN DEMAND in per cent
+chk_hdem(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_milk_Quota
+Check for phasing out milk quota
+chk_milk_Quota(cc,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+chk_nt
+Test for domestic market-clearing of non tradeables
+chk_nt(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_nx
+Adding-up of world's netexports after correction
+chk_nx(*)|
+<%/ITEM%>
+<%ITEM%>
+chk_nx_1
+First test of adding-up the world's netexports
+chk_nx_1(*)|
+<%/ITEM%>
+<%ITEM%>
+chk_pd
+Difference between values of data base and variables DOMESTIC PRICES in per cent
+chk_pd(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_pdem
+Difference between values of data base and variables PROC DEMAND in per cent
+chk_pdem(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_prod
+Difference between values of data base and variables PRODUCTION in per cent
+chk_prod(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_sdem
+Difference between values of data base and variables SEED DEMAND in per cent
+chk_sdem(*,*)|
+<%/ITEM%>
+<%ITEM%>
+chk_sim
+parameter of scenario (counting of periods)
+chk_sim|
+<%/ITEM%>
+<%ITEM%>
+CNDP_env
+Nat. top-ups LVSTK payments member state average 06/07, in million €
+CNDP_env(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+CNDP_ha
+Nat. top-ups CROPS payments member state average 06/07, in €/ha
+CNDP_ha(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+coef_p_bf
+coefficient byproducts in biofuels production
+coef_p_bf(energ,comm,comm)|
+<%/ITEM%>
+<%ITEM%>
+comcrop
+Arable crops eligible for direct payments
+comcrop|
+<%/ITEM%>
+<%ITEM%>
+comm
+Agri-food commodities
+comm|
+<%/ITEM%>
+<%ITEM%>
+comm_budget
+Product specific budget
+comm_budget|
+<%/ITEM%>
+<%ITEM%>
+comm_ind
+Commodity specific indices
+comm_ind|
+<%/ITEM%>
+<%ITEM%>
+comm_policies
+Results of policies
+comm_policies|
+<%/ITEM%>
+<%ITEM%>
+comm_stocks
+Net exports and stock changes
+comm_stocks|
+<%/ITEM%>
+<%ITEM%>
+comm_tp
+Commodity specific technical progress
+comm_tp|
+<%/ITEM%>
+<%ITEM%>
+comm1
+Aliased with comm
+comm1|
+<%/ITEM%>
+<%ITEM%>
+consolid_area
+Consolidated area data, avg. 2006 and 2007, in 1000 ha
+consolid_area(i,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+content_milk
+Fat and protein content in processed milk
+content_milk(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+conv_biofuel
+Conversion factor bioethanol and biodiesel in oil equivalent
+conv_biofuel(energ)|
+<%/ITEM%>
+<%ITEM%>
+CONVBF
+Conversion factors in biofuel production
+CONVBF(energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+convbfcc
+conversion factor in ROW
+convbfcc(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+cp_EU15
+Base yield and set-aside data EU-15
+cp_EU15(CP_ST_,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+cp_old
+Base yield and set-aside data EU aggregate and NMS
+cp_old(CP_ST_,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+CP_ST_
+
+CP_ST_|
+<%/ITEM%>
+<%ITEM%>
+cr_int
+intercept in crushing demand (oilseed processing)
+cr_int(*,*)|
+<%/ITEM%>
+<%ITEM%>
+cr_n_gr_sae
+Arable crop products without pasture area and energy crops on setaside
+cr_n_gr_sae|
+<%/ITEM%>
+<%ITEM%>
+cr_n_su_gr_sae
+Arable crop products without sugar and pasture area and energy crops on setaside
+cr_n_su_gr_sae|
+<%/ITEM%>
+<%ITEM%>
+cr_oil
+set for crude oil only
+cr_oil|
+<%/ITEM%>
+<%ITEM%>
+crops
+Arable crop products
+crops|
+<%/ITEM%>
+<%ITEM%>
+crops_to_ethanol
+Proc. coeff. cropsp to ethanol, (Source: KTBL(2008) Faustzahlen für Landwirtschaft)
+crops_to_ethanol(ethanol_inputs)|
+<%/ITEM%>
+<%ITEM%>
+crops1
+Aliased with crops
+crops1|
+<%/ITEM%>
+<%ITEM%>
+cum_modul
+Accummulated changes in direct payments for introduction of sugar payments
+cum_modul(*)|
+<%/ITEM%>
+<%ITEM%>
+Current_year
+displays the year in the list file
+Current_year|
+<%/ITEM%>
+<%ITEM%>
+dairy_comm
+Aliased with mlkproc
+dairy_comm|
+<%/ITEM%>
+<%ITEM%>
+dairy_comp
+
+dairy_comp|
+<%/ITEM%>
+<%ITEM%>
+dairy_el
+
+dairy_el(cc,i,i,comm)|
+<%/ITEM%>
+<%ITEM%>
+dairy_input_coeff
+Techn. coeff. of fat and protein in the dairy products
+dairy_input_coeff(cc,dairy_comp,mlkproc)|
+<%/ITEM%>
+<%ITEM%>
+dairy_inputs
+Aliased with dairy_comp
+dairy_inputs|
+<%/ITEM%>
+<%ITEM%>
+dairy_pdem
+Required fat and protein in the dairy sectors
+dairy_pdem(mlkproc,dairy_comp,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+data_base
+
+data_base|
+<%/ITEM%>
+<%ITEM%>
+defl_pol
+Deflation of policies for indiv. countries
+defl_pol(ccplus,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+deflation
+Annual rates of deflation (in percent)
+deflation(cc,sim1)|
+<%/ITEM%>
+<%ITEM%>
+deflation_kum
+Accumulated infaltion rates - used for the introduction of new payments
+deflation_kum(*)|
+<%/ITEM%>
+<%ITEM%>
+delay
+
+delay(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+delay_c
+commodities for delayed integration to the Single European Market
+delay_c|
+<%/ITEM%>
+<%ITEM%>
+delay_r
+delayed regions for full market integration
+delay_r|
+<%/ITEM%>
+<%ITEM%>
+devia
+price deviation
+devia|
+<%/ITEM%>
+<%ITEM%>
+Difference_art_env
+
+Difference_art_env(*,*)|
+<%/ITEM%>
+<%ITEM%>
+Difference_art_ha
+
+Difference_art_ha(*,*)|
+<%/ITEM%>
+<%ITEM%>
+Difference_coup_env
+
+Difference_coup_env(*,*)|
+<%/ITEM%>
+<%ITEM%>
+Difference_coup_ha
+
+Difference_coup_ha(*,*)|
+<%/ITEM%>
+<%ITEM%>
+DIRPAY
+Direct payments
+DIRPAY(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+dirpay_0
+of direct payment in the base period
+dirpay_0|
+<%/ITEM%>
+<%ITEM%>
+Dirpay_1
+Current level of DP per t
+Dirpay_1(*,*)|
+<%/ITEM%>
+<%ITEM%>
+Dirpay_1_ha
+Current level of PD per ha
+Dirpay_1_ha(*,*)|
+<%/ITEM%>
+<%ITEM%>
+dirpay_2
+Level of DIRPAY0 per t
+dirpay_2(*,*)|
+<%/ITEM%>
+<%ITEM%>
+Dirpay_2_ha
+Level of DIRPAY0 per ha
+Dirpay_2_ha(*,*)|
+<%/ITEM%>
+<%ITEM%>
+dirpay0
+direct payments per ton in base period
+dirpay0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+DIRPAY00
+Final direct payments in national currency per ton
+DIRPAY00(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+dp_change
+Change in DP per Member State
+dp_change(cc,comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+DP_COUP
+Coupled direct payment in € per ha area used or t produced
+DP_COUP(i,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+DP_coup_env
+Coupled direct payments by member state average 06/07, in Mio € for animal products
+DP_coup_env(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+DP_coup_env_2
+
+DP_coup_env_2(*,*)|
+<%/ITEM%>
+<%ITEM%>
+DP_coup_env_save
+
+DP_coup_env_save(*,*)|
+<%/ITEM%>
+<%ITEM%>
+DP_coup_ha
+Coupled direct payments by member state average 06/07, in €/ha
+DP_coup_ha(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+DP_coup_ha_2
+
+DP_coup_ha_2(*,*)|
+<%/ITEM%>
+<%ITEM%>
+DP_coup_ha_save
+
+DP_coup_ha_save(*,*)|
+<%/ITEM%>
+<%ITEM%>
+DP_DECOUP
+Decoupled direct payment in € per ha area used or t produced
+DP_DECOUP(i,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+DP_decoup_ha
+Decoupled direct payments by member state average 06/07, in €/ha
+DP_decoup_ha(ccplus,dp_star)|
+<%/ITEM%>
+<%ITEM%>
+DP_EU_contrib_nms
+
+DP_EU_contrib_nms(ccplus,comm)|
+<%/ITEM%>
+<%ITEM%>
+DP_Nat_contrib_nms
+
+DP_Nat_contrib_nms(ccplus,comm)|
+<%/ITEM%>
+<%ITEM%>
+DP_Nat_Topup_nms
+
+DP_Nat_Topup_nms(ccplus,comm)|
+<%/ITEM%>
+<%ITEM%>
+DP_POLS
+Implementation of setaside policies in BASE
+DP_POLS(cc,POLS_ST_)|
+<%/ITEM%>
+<%ITEM%>
+dp_star
+
+dp_star|
+<%/ITEM%>
+<%ITEM%>
+dpchg_at
+Change in Dir Payments in Austria
+dpchg_at(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_be
+Change in Dir Payments in Belgium
+dpchg_be(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_dk
+Change in Dir Payments in Denmark
+dpchg_dk(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_es
+Change in Dir Payments in Spain
+dpchg_es(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_fi
+Change in Dir Payments in Finland
+dpchg_fi(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_fr
+Change in Dir Payments in France
+dpchg_fr(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_ge
+Change in Dir Payments in Germany
+dpchg_ge(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_gr
+Change in Dir Payments in Greece
+dpchg_gr(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_ie
+Change in Dir Payments in Ireland
+dpchg_ie(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_it
+Change in Dir Payments in Italy
+dpchg_it(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_nl
+Change in Dir Payments in the Netherlands
+dpchg_nl(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_pt
+Change in Dir Payments in Portugal
+dpchg_pt(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_si
+Change in Dir Payments in Slovenia
+dpchg_si(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_sw
+Change in Dir Payments in Sweden
+dpchg_sw(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+dpchg_uk
+Change in Dir Payments in the UK
+dpchg_uk(comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+EFAREA
+Area constraint by total area available and set aside
+EFAREA(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+EFAREA_GC
+Effective total area grandes cultures
+EFAREA_GC(cc)|
+<%/ITEM%>
+<%ITEM%>
+effdp_st_
+
+effdp_st_|
+<%/ITEM%>
+<%ITEM%>
+el_area0
+elast. area alloc. w.r. to land prices
+el_area0(cc,i,i)|
+<%/ITEM%>
+<%ITEM%>
+elast__bf_sup
+price elasticity of biofuel supply
+elast__bf_sup|
+<%/ITEM%>
+<%ITEM%>
+elast__os_cru
+price elasticity of oilseed crushing demand
+elast__os_cru|
+<%/ITEM%>
+<%ITEM%>
+elast_a_c
+elast. area alloc. w.r. to capital costs
+elast_a_c(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_a_i
+elast. area alloc. w.r. to intermediate costs
+elast_a_i(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_a_l
+elast. area alloc. w.r. to labor costs
+elast_a_l(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_en_inp
+elasticity of biofuel supply w.r. to composite input price index
+elast_en_inp(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+elast_landpr
+elast. of land supply
+elast_landpr(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_lv_c
+elast. lvstk supply w.r. to capital costs
+elast_lv_c(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_lv_f
+elast. lvstk supply w.r. to the feed cost index
+elast_lv_f(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_lv_i
+elast. lvstk supply w.r. to intermediate costs
+elast_lv_i(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_lv_l
+elast. lvstk supply w.r. to labor costs
+elast_lv_l(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_y_i
+elast. yield w.r. to intermediate costs
+elast_y_i(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elast_y_l
+elast. yield w.r. to labor costs
+elast_y_l(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elastcr
+oilseed crushing demand
+elastcr(cc,i,i)|
+<%/ITEM%>
+<%ITEM%>
+elastdm
+dairy processing
+elastdm(cc,comm,comm)|
+<%/ITEM%>
+<%ITEM%>
+elastdm_n
+dairy processing based on splitting fat and protein
+elastdm_n(cc,dairy_comp,comm,comm)|
+<%/ITEM%>
+<%ITEM%>
+elastfd
+elast. feed demand w.r. to feed prices
+elastfd(cc,i,i,livest)|
+<%/ITEM%>
+<%ITEM%>
+elasthd
+elast. human demand w.r. to price
+elasthd(cc,i,i)|
+<%/ITEM%>
+<%ITEM%>
+elasthd_c
+Compensated price elasticities of human demand
+elasthd_c(cc,i,i)|
+<%/ITEM%>
+<%ITEM%>
+elastin
+elast. humand demand w.r. to income
+elastin(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+elastsp
+elast. supply w.r. to producer price
+elastsp(cc,i,i)|
+<%/ITEM%>
+<%ITEM%>
+elastyd
+elast. yield w.r. to producer price
+elastyd(cc,i,i)|
+<%/ITEM%>
+<%ITEM%>
+en_crp
+Crops for energy use
+en_crp|
+<%/ITEM%>
+<%ITEM%>
+endog_sug
+of endogenous or fixed preferential sugar imports
+endog_sug|
+<%/ITEM%>
+<%ITEM%>
+energ
+produced energy products
+energ|
+<%/ITEM%>
+<%ITEM%>
+energ1
+Aliased with energ
+energ1|
+<%/ITEM%>
+<%ITEM%>
+energy
+relevant energy products (including crude oil)
+energy|
+<%/ITEM%>
+<%ITEM%>
+ENVELOP_Art_69_env
+Envelope for decoupling coupled livestock payments
+ENVELOP_Art_69_env(cc,livest)|
+<%/ITEM%>
+<%ITEM%>
+ENVELOP_Art_69_ha
+Envelope for decoupling coupled area payments, Art. 69 payments
+ENVELOP_Art_69_ha(EU15,crops)|
+<%/ITEM%>
+<%ITEM%>
+ENVELOP_coup_env
+
+ENVELOP_coup_env(cc,livest)|
+<%/ITEM%>
+<%ITEM%>
+ENVELOP_coup_ha
+Envelope for decoupling coupled area payments
+ENVELOP_coup_ha(EU15,crops)|
+<%/ITEM%>
+<%ITEM%>
+Envelop_crops_ha
+
+Envelop_crops_ha(*)|
+<%/ITEM%>
+<%ITEM%>
+Envelop_reduction
+
+Envelop_reduction(EU12)|
+<%/ITEM%>
+<%ITEM%>
+Envelop_total
+
+Envelop_total(*)|
+<%/ITEM%>
+<%ITEM%>
+Envelop_total_ha
+
+Envelop_total_ha(*)|
+<%/ITEM%>
+<%ITEM%>
+eth_pro
+products from energy crop processing to ethanol
+eth_pro|
+<%/ITEM%>
+<%ITEM%>
+ethanol_inputs
+Crops used for ethanol production
+ethanol_inputs|
+<%/ITEM%>
+<%ITEM%>
+eu_pols
+data on eu policies in base period
+eu_pols(i,res_pp)|
+<%/ITEM%>
+<%ITEM%>
+EU12
+
+EU12|
+<%/ITEM%>
+<%ITEM%>
+EU12_1
+Aliased with EU12
+EU12_1|
+<%/ITEM%>
+<%ITEM%>
+EU15
+
+EU15|
+<%/ITEM%>
+<%ITEM%>
+EU15_1
+Aliased with EU15
+EU15_1|
+<%/ITEM%>
+<%ITEM%>
+EU25
+
+EU25|
+<%/ITEM%>
+<%ITEM%>
+EU27
+
+EU27|
+<%/ITEM%>
+<%ITEM%>
+EURO_ZONE
+
+EURO_ZONE|
+<%/ITEM%>
+<%ITEM%>
+EURO1
+representative EUR area regions for EUR USD exchange rate
+EURO1|
+<%/ITEM%>
+<%ITEM%>
+europe
+European regions and countries in ESIM
+europe|
+<%/ITEM%>
+<%ITEM%>
+ex_rate
+Annual growth rates of exchange rates in different regions
+ex_rate(ccplus,sim1)|
+<%/ITEM%>
+<%ITEM%>
+exchrate
+Exchange rates in base period
+exchrate(ccplus,time)|
+<%/ITEM%>
+<%ITEM%>
+exp_share
+Exp. shares of single ESIM products in total exp. in base
+exp_share(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+exp_sub
+export subsidy
+exp_sub(*,*)|
+<%/ITEM%>
+<%ITEM%>
+exp_sub_0
+export subsidy in base period
+exp_sub_0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+expen
+
+expen(cc,*)|
+<%/ITEM%>
+<%ITEM%>
+expenditure
+Total consumption expenditure
+expenditure(cc)|
+<%/ITEM%>
+<%ITEM%>
+EXPSUB
+Products with export subsidies
+EXPSUB(cc,it)|
+<%/ITEM%>
+<%ITEM%>
+exrate
+exchange rate of domestic currency to USD
+exrate(ccplus)|
+<%/ITEM%>
+<%ITEM%>
+exrate_0
+exchange rate in base period
+exrate_0(*)|
+<%/ITEM%>
+<%ITEM%>
+exstab
+additional support element in EU price policies
+exstab(*,*)|
+<%/ITEM%>
+<%ITEM%>
+exstab_0
+additional support element in EU price policies in initial situation
+exstab_0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+fc_0
+Feed Cost base period
+fc_0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+FCI0
+Feed price index in the base
+FCI0(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+FD_MLK
+feed milk
+FD_MLK|
+<%/ITEM%>
+<%ITEM%>
+FDEM
+Feed demand
+FDEM(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+FDEM_MLK
+Feed demand MILK
+FDEM_MLK(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+fdem_shft
+Trends in feed demand
+fdem_shft(feed,cc)|
+<%/ITEM%>
+<%ITEM%>
+fdem_tr
+
+fdem_tr(*,*)|
+<%/ITEM%>
+<%ITEM%>
+fdem0
+base volume of feed demand
+fdem0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+fedrat
+feed rates
+fedrat(cc,feed,livest)|
+<%/ITEM%>
+<%ITEM%>
+FEDRES
+countries producing residual feeding stuff
+FEDRES(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+feed
+Feed products
+feed|
+<%/ITEM%>
+<%ITEM%>
+feed_exog
+base volume of exogenours (fixed) feed demand
+feed_exog(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+feed_milk
+Fresh milk consumed as feed per ton of produced milk
+feed_milk(*)|
+<%/ITEM%>
+<%ITEM%>
+feed1
+Aliased with feed
+feed1|
+<%/ITEM%>
+<%ITEM%>
+feedres
+Residual feed products
+feedres|
+<%/ITEM%>
+<%ITEM%>
+FLOOR
+Products with minimum (intervention) price plus tariff
+FLOOR|
+<%/ITEM%>
+<%ITEM%>
+frat_int
+intercept in individual feed rate function
+frat_int(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+FRATE
+Feed Rate for Animals
+FRATE(cc,feed,livest)|
+<%/ITEM%>
+<%ITEM%>
+frate_0
+feed rate in base period
+frate_0(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+frate_rev
+Adjusted feed-rates for the European countries
+frate_rev(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+frate_row
+Adjusted feed-rates for the USA and the RoW
+frate_row(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+frate_wb
+feed-rates for the Western Balkan countries
+frate_wb|
+<%/ITEM%>
+<%ITEM%>
+frate_wb0
+Initial feed-rates for the Western Balkan countries
+frate_wb0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+HD_CECBF
+Beef consumed by private households in CEECs
+HD_CECBF(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+HD_POTATO
+Potatoes consumed by private households in all countries
+HD_POTATO(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+HD_RAPEU
+Rape oil consumed by private households
+HD_RAPEU(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+HDEM
+Human demand
+HDEM(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+hdem_int
+intercept in human demand function
+hdem_int(*,*)|
+<%/ITEM%>
+<%ITEM%>
+hdem_shft
+Trends in human demand
+hdem_shft(comm,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+hdem_shft_bd
+Shifter in biodiesel demand
+hdem_shft_bd(sim1,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+hdem_shft_eth
+Shifter in ethanol demand
+hdem_shft_eth(sim1,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+hdem_tr
+trends in private consumption
+hdem_tr(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+hdem0
+base volume of human consumption
+hdem0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+hist
+Time period for historical data
+hist|
+<%/ITEM%>
+<%ITEM%>
+HIST_AREA
+
+HIST_AREA(one,crops,hist)|
+<%/ITEM%>
+<%ITEM%>
+i_biofuel
+
+i_biofuel(energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+i_diesel
+Input in Biodiesel production
+i_diesel|
+<%/ITEM%>
+<%ITEM%>
+i_diesel1
+Aliased with i_diesel
+i_diesel1|
+<%/ITEM%>
+<%ITEM%>
+i_ethanol
+Input in Bioethanol production
+i_ethanol|
+<%/ITEM%>
+<%ITEM%>
+i_ethanol_ns
+Input in Bioethanol production
+i_ethanol_ns|
+<%/ITEM%>
+<%ITEM%>
+i_ethanol_s
+Input in Bioethanol production
+i_ethanol_s|
+<%/ITEM%>
+<%ITEM%>
+i_ethanol1
+Aliased with i_ethanol
+i_ethanol1|
+<%/ITEM%>
+<%ITEM%>
+Implement_Art_68
+New implementation of Art 68 payments (envelop!) only in cases, where no Art 69 payments did exist before!
+Implement_Art_68(cc,comm,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+inc_gr
+income growth rate
+inc_gr(cc)|
+<%/ITEM%>
+<%ITEM%>
+income_growth
+Annual growth rates of GDP in different regions
+income_growth(cc,sim1)|
+<%/ITEM%>
+<%ITEM%>
+ind_exrate
+
+ind_exrate(*)|
+<%/ITEM%>
+<%ITEM%>
+indices
+Percentage changes in exogenous parameters
+indices(indices_st_,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+indices_st_
+
+indices_st_|
+<%/ITEM%>
+<%ITEM%>
+ini_quan
+Initial quantities in biofuel production after CES function calibration
+ini_quan(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+ini_shr
+Initial shares in biofuel production after CES function calibration
+ini_shr(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+input_biodiesel
+Input shares in biodiesel production in percent
+input_biodiesel(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+input_diesel
+input demand in ROW biodiesel production
+input_diesel(*)|
+<%/ITEM%>
+<%ITEM%>
+input_eth
+input demand in ROW ethanol production
+input_eth(*)|
+<%/ITEM%>
+<%ITEM%>
+input_ethanol
+Input shares in ethanol production in percent
+input_ethanol(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+int_ind
+Intermed Cost Index
+int_ind(cc)|
+<%/ITEM%>
+<%ITEM%>
+intpr
+intervention price level
+intpr(ccplus,comm)|
+<%/ITEM%>
+<%ITEM%>
+intpr0
+base value of intervention prices
+intpr0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+intro_trq
+Commodities with new introduced TRQ
+intro_trq(pot_trq_comm,chg_trq_st_)|
+<%/ITEM%>
+<%ITEM%>
+lab_ind
+Labor Cost Index
+lab_ind(cc)|
+<%/ITEM%>
+<%ITEM%>
+lag_period
+
+lag_period|
+<%/ITEM%>
+<%ITEM%>
+lag_weight
+weights in lagged price formation
+lag_weight(cc,ag,lag_period)|
+<%/ITEM%>
+<%ITEM%>
+land_data
+Data for calibration land supply function
+land_data(cc,land_st_)|
+<%/ITEM%>
+<%ITEM%>
+land_st_
+
+land_st_|
+<%/ITEM%>
+<%ITEM%>
+landprice0
+
+landprice0(cc)|
+<%/ITEM%>
+<%ITEM%>
+LANDPRICE1
+Price of land per hectare (for non setaside land)
+LANDPRICE1(cc)|
+<%/ITEM%>
+<%ITEM%>
+LANDSUPPLY1
+Total amount of UAA (for non setaside land)
+LANDSUPPLY1(cc)|
+<%/ITEM%>
+<%ITEM%>
+livest
+Livestock products
+livest|
+<%/ITEM%>
+<%ITEM%>
+livest1
+Aliased with livest
+livest1|
+<%/ITEM%>
+<%ITEM%>
+logit_scale
+scaling factor in LOGIT-function (default = 1.0)
+logit_scale(*,*)|
+<%/ITEM%>
+<%ITEM%>
+logitshift
+second scaling factor in LOGIT-function (default = 1.0)
+logitshift(*,*)|
+<%/ITEM%>
+<%ITEM%>
+map_encr
+mapping of conventional crops to energy crops on setaside
+map_encr(i,i)|
+<%/ITEM%>
+<%ITEM%>
+map_encr1
+mapping of conventional crops to energy crops on setaside
+map_encr1(i,i)|
+<%/ITEM%>
+<%ITEM%>
+marg_land
+share of marginal land in obligatory setaside
+marg_land(ccplus)|
+<%/ITEM%>
+<%ITEM%>
+margin0
+price margins between market and producer prices
+margin0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+meal
+Cake Products from oilseed processing
+meal|
+<%/ITEM%>
+<%ITEM%>
+MEMBER
+Index of EU member countries
+MEMBER|
+<%/ITEM%>
+<%ITEM%>
+membership
+Year of membership
+membership(cc,sim1)|
+<%/ITEM%>
+<%ITEM%>
+MILK_
+milk
+MILK_(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+MILK_CONT
+milk content: fat and protein
+MILK_CONT(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+MILKPROC
+milk processing activities
+MILKPROC(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+MILKPROC_exSMP
+processed milk products excl SMP
+MILKPROC_exSMP(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+mlkproc
+Outputs from the dairy industry
+mlkproc|
+<%/ITEM%>
+<%ITEM%>
+MPDEM
+Demand for raw milk for processing into dairy products
+MPDEM(cc,comm,comm)|
+<%/ITEM%>
+<%ITEM%>
+mrktpri0
+market prices in base period
+mrktpri0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+NETEXP
+Net exports as a residual of supply and domestic use
+NETEXP(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+netexp0
+base volume of net exports
+netexp0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+NetPD
+Net-prices for input in biofuel production
+NetPD(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+NetPD_0
+Net Price in biofuel production in Base period
+NetPD_0(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+newmember
+parameter indicating new EU member
+newmember(cc)|
+<%/ITEM%>
+<%ITEM%>
+NEXPSUB
+Products without export subsidies
+NEXPSUB(cc,it)|
+<%/ITEM%>
+<%ITEM%>
+nolag
+
+nolag(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+NOMEMBER
+Index of European countries which are no EU member
+NOMEMBER|
+<%/ITEM%>
+<%ITEM%>
+nonsug
+Arable crops other than sugar
+nonsug|
+<%/ITEM%>
+<%ITEM%>
+NPAST
+arable land but not pasture land
+NPAST(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+NQ_M
+Countries without milk quotas
+NQ_M|
+<%/ITEM%>
+<%ITEM%>
+NQ_S
+Countries without sugar quotas
+NQ_S|
+<%/ITEM%>
+<%ITEM%>
+nt_mlk
+Non tradable commodities without milk
+nt_mlk|
+<%/ITEM%>
+<%ITEM%>
+NX_EU
+Products which are traded in one countries of the EU
+NX_EU|
+<%/ITEM%>
+<%ITEM%>
+OBLSETAS
+Obligatory set aside
+OBLSETAS(cc)|
+<%/ITEM%>
+<%ITEM%>
+oil_st_
+oil price changes
+oil_st_|
+<%/ITEM%>
+<%ITEM%>
+oil_to_diesel
+coeff. veget. oil to diesel, (Source: KTBL(2008) Faustzahlen für Landwirtschaft)
+oil_to_diesel|
+<%/ITEM%>
+<%ITEM%>
+oilsd_c
+technical parameter oilseed processing
+oilsd_c(cc,i,i)|
+<%/ITEM%>
+<%ITEM%>
+oilseed
+Oilseeds
+oilseed|
+<%/ITEM%>
+<%ITEM%>
+OILSPROC
+oilseed processing activites
+OILSPROC(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+old_EU15
+
+old_EU15|
+<%/ITEM%>
+<%ITEM%>
+one1
+Aliased with one
+one1|
+<%/ITEM%>
+<%ITEM%>
+onelag
+
+onelag(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+ospro
+Products from oilseed processing
+ospro|
+<%/ITEM%>
+<%ITEM%>
+oth_ind
+Cost Index of other products in hdem
+oth_ind(cc)|
+<%/ITEM%>
+<%ITEM%>
+output_diesel
+Output ROW biodiesel production
+output_diesel(*)|
+<%/ITEM%>
+<%ITEM%>
+output_eth
+Output ROW ethanol production
+output_eth(*)|
+<%/ITEM%>
+<%ITEM%>
+p_crude_oil
+Price of crude oil in USD per barrel
+p_crude_oil(time,oil_st_)|
+<%/ITEM%>
+<%ITEM%>
+P_LO
+Lower Price bound in LOGIT-Function
+P_LO(cc,it)|
+<%/ITEM%>
+<%ITEM%>
+P_UP
+Upper Price bound in LOGIT-Function
+P_UP(cc,it)|
+<%/ITEM%>
+<%ITEM%>
+P_UP_2
+Upper Price bound in LOGIT-Function for subsidized exports quantities
+P_UP_2(cc,it)|
+<%/ITEM%>
+<%ITEM%>
+PAST
+pasture land
+PAST(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+pay_biof
+for biofuel premia
+pay_biof|
+<%/ITEM%>
+<%ITEM%>
+pctax
+sales taxes for consumption
+pctax(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+pd_0
+Domestic price in base period
+pd_0(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+pd_t_1
+market price in period t-1
+pd_t_1(cc,ag)|
+<%/ITEM%>
+<%ITEM%>
+pd_t_2
+market price in period t-2
+pd_t_2(cc,ag)|
+<%/ITEM%>
+<%ITEM%>
+pd_t1
+market price in functions with one period time lag
+pd_t1(cc,ag)|
+<%/ITEM%>
+<%ITEM%>
+pd_t2
+market price in functions with two periods time lag
+pd_t2(cc,ag)|
+<%/ITEM%>
+<%ITEM%>
+PD00
+Final prices (PD) after calib logistic function
+PD00(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+PDEM
+Processing demand
+PDEM(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+PDEM_BF
+Demand of inputs in biofuel production
+PDEM_BF(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+pdem_en0
+base volume of processing demand for biofuels
+pdem_en0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+pdem_shft_bd
+Shifter in biodiesel processing capacities
+pdem_shft_bd(sim1,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+pdem_shft_eth
+Shifter in ethanol processing capacities
+pdem_shft_eth(sim1,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+pdem_shft_os
+Shifter in oilseed crushing capacities
+pdem_shft_os(sim1,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+pdem_tr
+trends in processing capacities in biofuel production
+pdem_tr(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+pdem0
+Processing demand in base period
+pdem0(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+phase_in_eu
+Phasing in of EU direct payments
+phase_in_eu(sim1,cc)|
+<%/ITEM%>
+<%ITEM%>
+PINC00
+Final incentive prices (PP) after calib logistic function
+PINC00(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+pol_set
+Type of price formation
+pol_set(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+pol_set_floor
+Type of price formation FLOOR products
+pol_set_floor(comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+pol_set_tariff
+Type of price formation TARIFF products
+pol_set_tariff(comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+pol_set_thresh
+Type of price formation THRESHOLD products
+pol_set_thresh(comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+POLS_ST_
+
+POLS_ST_|
+<%/ITEM%>
+<%ITEM%>
+polsug
+
+polsug(*,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+pop_gr
+population growth rate
+pop_gr(cc)|
+<%/ITEM%>
+<%ITEM%>
+popul_grw
+Change in population in different regions between BASE and 2020 (relative to BASE)
+popul_grw(cc,time)|
+<%/ITEM%>
+<%ITEM%>
+Population_b
+Population in initial situation in Mill.
+Population_b(cc,time)|
+<%/ITEM%>
+<%ITEM%>
+Population_sim
+Population in Mill
+Population_sim(ccplus,sim1)|
+<%/ITEM%>
+<%ITEM%>
+pot_trq_comm
+Agricultural products with possibly new introduced TRQ
+pot_trq_comm|
+<%/ITEM%>
+<%ITEM%>
+pp_0
+Farm-gate price in base period
+pp_0(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+pp_results
+
+pp_results(i,cc,res_pp)|
+<%/ITEM%>
+<%ITEM%>
+PP00
+Final producer prices (PP) after calib logistic function
+PP00(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+PR_EU
+Products produced in the EU
+PR_EU|
+<%/ITEM%>
+<%ITEM%>
+preftrq
+trq for sugar - suspended after 2009
+preftrq|
+<%/ITEM%>
+<%ITEM%>
+premia_st_
+
+premia_st_|
+<%/ITEM%>
+<%ITEM%>
+PRICE_DEV
+price deviation for delayed market integration
+PRICE_DEV(i)|
+<%/ITEM%>
+<%ITEM%>
+PRICE_DEV0
+initial price deviation for delayed market integration
+PRICE_DEV0(i,devia)|
+<%/ITEM%>
+<%ITEM%>
+price_sug_0
+
+price_sug_0(cc)|
+<%/ITEM%>
+<%ITEM%>
+PROC
+Products which will be processed
+PROC(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+PROC_CER_S
+processing of corn wheat or sugar to ethanol
+PROC_CER_S(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+PROC_DAIRY
+Fat or protein demanded for milk processing
+PROC_DAIRY(cc,dairy_comp,comm)|
+<%/ITEM%>
+<%ITEM%>
+proc_int
+intercept in milk processing demand in Non-European countries
+proc_int(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+PROC_MLK
+countries which are processing milk
+PROC_MLK(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+PROC_OIL
+countries which are processing oilseeds
+PROC_OIL(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+PROC_OIL_D
+processing of oils to biodiesel
+PROC_OIL_D(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+procdem0
+base volume of processing demand
+procdem0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+prod_effdp
+Effectiveness of direct payments
+prod_effdp(comm,effdp_st_)|
+<%/ITEM%>
+<%ITEM%>
+prod0
+base volume of total production
+prod0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+proj_fuel
+Projected fuel consumption in million t oil equivalent
+proj_fuel(sim1,*)|
+<%/ITEM%>
+<%ITEM%>
+psh_0
+shadow price in the data base for quota products
+psh_0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+psh_mlk
+Shadow price for milk in the EU-15
+psh_mlk(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+pw_0
+world price level in base situation
+pw_0(*)|
+<%/ITEM%>
+<%ITEM%>
+Q_NEW1
+Asymptote in land function (for non setaside land)
+Q_NEW1(cc)|
+<%/ITEM%>
+<%ITEM%>
+QU_M
+Countries with milk quotas
+QU_M|
+<%/ITEM%>
+<%ITEM%>
+QU_NOSA
+
+QU_NOSA(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+QU_S
+Countries with sugar quotas
+QU_S|
+<%/ITEM%>
+<%ITEM%>
+QU_SUGAR
+Countries with sugar quotas
+QU_SUGAR(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+qual_ad
+quality markup
+qual_ad(*,*)|
+<%/ITEM%>
+<%ITEM%>
+qual_ad_0
+quality markup in base period
+qual_ad_0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+qualquant
+high quality quantities
+qualquant(*)|
+<%/ITEM%>
+<%ITEM%>
+QUALSHR
+Share of high quality export quantities in total domestic use in EU
+QUALSHR(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+QUALSHR_EU
+
+QUALSHR_EU(comm)|
+<%/ITEM%>
+<%ITEM%>
+QUANCES
+Input quantities (unscaled) in biofuel production
+QUANCES(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+QUANCES0
+input shares in biofuel production in initial situation
+QUANCES0(cc,energ,comm)|
+<%/ITEM%>
+<%ITEM%>
+quota
+quota volume
+quota(*,*)|
+<%/ITEM%>
+<%ITEM%>
+r_calib_bd
+
+r_calib_bd(*)|
+<%/ITEM%>
+<%ITEM%>
+r_calib_eth
+
+r_calib_eth(*)|
+<%/ITEM%>
+<%ITEM%>
+r_calib_pw
+
+r_calib_pw(*)|
+<%/ITEM%>
+<%ITEM%>
+r_cc
+Parameter for solving all results which are not comm. specific
+r_cc(ccplus,sim1,res_cc)|
+<%/ITEM%>
+<%ITEM%>
+r_comm
+Parameter for solving all results which are commodity specific
+r_comm(ccplus,sim1,comm,res_comm)|
+<%/ITEM%>
+<%ITEM%>
+r_core_res
+Parameter for storing core results
+r_core_res(ccplus,res_core,comm,sim1)|
+<%/ITEM%>
+<%ITEM%>
+r_er
+Exchange rates
+r_er(cc,sim1)|
+<%/ITEM%>
+<%ITEM%>
+R_INT
+Yes if product is an intervention product in the resp. year
+R_INT(sim1,it)|
+<%/ITEM%>
+<%ITEM%>
+R_MEMBER
+Yes if country is member
+R_MEMBER(cc,sim1)|
+<%/ITEM%>
+<%ITEM%>
+r_pw
+World market price
+r_pw(sim1,it)|
+<%/ITEM%>
+<%ITEM%>
+r_st_type
+Type of result: deterministic - expected value - variance - standard deviation
+r_st_type|
+<%/ITEM%>
+<%ITEM%>
+R_TAR
+Yes if the product is a tariff product in the resp. year
+R_TAR(sim1,it)|
+<%/ITEM%>
+<%ITEM%>
+R_THR
+Yes if product is a thresh product in the respective year
+R_THR(sim1,it)|
+<%/ITEM%>
+<%ITEM%>
+recurs_st_
+
+recurs_st_|
+<%/ITEM%>
+<%ITEM%>
+reduction
+on biofuel relative to tax on mineral oil in %
+reduction|
+<%/ITEM%>
+<%ITEM%>
+reduction_ha
+
+reduction_ha(EU12)|
+<%/ITEM%>
+<%ITEM%>
+res_agg
+Results which are commodity specific and aggregated over country groups
+res_agg|
+<%/ITEM%>
+<%ITEM%>
+res_agg_cc
+Non commodity specific results aggregated over countries
+res_agg_cc|
+<%/ITEM%>
+<%ITEM%>
+res_bal
+Commodity balances
+res_bal|
+<%/ITEM%>
+<%ITEM%>
+res_cc
+Non commodity specific results
+res_cc|
+<%/ITEM%>
+<%ITEM%>
+res_comm
+Commodity specific results
+res_comm|
+<%/ITEM%>
+<%ITEM%>
+res_core
+Core model results
+res_core|
+<%/ITEM%>
+<%ITEM%>
+res_def
+Results which are commodity specific and defined per country group as identical to EU 15
+res_def|
+<%/ITEM%>
+<%ITEM%>
+res_def_cc
+Non commodity specific results defined as identical to EU 15
+res_def_cc|
+<%/ITEM%>
+<%ITEM%>
+res_pp
+
+res_pp|
+<%/ITEM%>
+<%ITEM%>
+res_price
+Price results
+res_price|
+<%/ITEM%>
+<%ITEM%>
+res_quan
+Quantity results
+res_quan|
+<%/ITEM%>
+<%ITEM%>
+rest
+
+rest|
+<%/ITEM%>
+<%ITEM%>
+results
+
+results(cc,*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+rR_INT
+Yes if product is an intervention product in the resp. year
+rR_INT(sim_base,it)|
+<%/ITEM%>
+<%ITEM%>
+rR_MEMBER
+Yes if country is member
+rR_MEMBER(cc,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+rR_TAR
+Yes if the product is a tariff product in the resp. year
+rR_TAR(sim_base,it)|
+<%/ITEM%>
+<%ITEM%>
+rR_THR
+Yes if product is a thresh product in the respective year
+rR_THR(sim_base,it)|
+<%/ITEM%>
+<%ITEM%>
+SameAs
+Set Element Comparison Without Checking
+SameAs(*,*)|
+<%/ITEM%>
+<%ITEM%>
+save_supply
+
+save_supply(*,*)|
+<%/ITEM%>
+<%ITEM%>
+scaler
+
+scaler|
+<%/ITEM%>
+<%ITEM%>
+SDEM
+Seed demand
+SDEM(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+sdem0
+base volume of seed demand
+sdem0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+SEED
+Arable products with seed demand
+SEED(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+seed_c
+seed parameter seed per hectare or per tonne of cereal
+seed_c(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+SETAS_CRP
+Countries with crops produced on setaside land in base situation
+SETAS_CRP|
+<%/ITEM%>
+<%ITEM%>
+SETAS_CRP1
+Crops produced on setaside land
+SETAS_CRP1(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+setas_eu12
+setaside area in EU12 after accession
+setas_eu12(ccplus)|
+<%/ITEM%>
+<%ITEM%>
+setas_eu15
+setaside area in EU15 after 2004
+setas_eu15(ccplus)|
+<%/ITEM%>
+<%ITEM%>
+setastest
+
+setastest|
+<%/ITEM%>
+<%ITEM%>
+SFP__REG
+Regions applying SFP
+SFP__REG|
+<%/ITEM%>
+<%ITEM%>
+shft_bioenergy
+shifter in biofuel demand
+shft_bioenergy(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+shift
+
+shift|
+<%/ITEM%>
+<%ITEM%>
+shift_ld
+2nd parameter in land supply function determ. shift of the supply curve
+shift_ld(cc)|
+<%/ITEM%>
+<%ITEM%>
+show_data
+Consolidated data base, in 1000 t
+show_data(i,data_base,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+sim_base
+Time horizon of the model runs in BASELINE
+sim_base|
+<%/ITEM%>
+<%ITEM%>
+sim_base1
+Aliased with sim_base
+sim_base1|
+<%/ITEM%>
+<%ITEM%>
+sim_trial
+Time horizon of the model runs in BASELINE
+sim_trial|
+<%/ITEM%>
+<%ITEM%>
+sim1
+Time horizon of the model runs
+sim1|
+<%/ITEM%>
+<%ITEM%>
+sp_d
+specific duty
+sp_d(*,*)|
+<%/ITEM%>
+<%ITEM%>
+sp_d_0
+specific duty in base period
+sp_d_0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+sp_d_n
+nominal specific duty
+sp_d_n(*,*)|
+<%/ITEM%>
+<%ITEM%>
+st_cc
+Parameter for saving stochastic results for all runs which are not comm. specific
+st_cc(ccplus,strun,res_cc)|
+<%/ITEM%>
+<%ITEM%>
+st_comm
+Parameter for saving stochastic results for all runs which are commodity specific
+st_comm(ccplus,strun,comm,res_comm)|
+<%/ITEM%>
+<%ITEM%>
+stoch
+Stochastic term in model equation
+stoch(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+stoch_d
+Stochastic terms for each run
+stoch_d(cc,comm,strun)|
+<%/ITEM%>
+<%ITEM%>
+stoch_d_barley
+
+stoch_d_barley(strun,cc)|
+<%/ITEM%>
+<%ITEM%>
+stoch_d_cwheat
+
+stoch_d_cwheat(strun,cc)|
+<%/ITEM%>
+<%ITEM%>
+stoch_d_rapseed
+
+stoch_d_rapseed(strun,cc)|
+<%/ITEM%>
+<%ITEM%>
+stochastics
+for stochastic version of ESIM
+stochastics|
+<%/ITEM%>
+<%ITEM%>
+strun
+Number of runs for the stochastic simulation in 2015
+strun|
+<%/ITEM%>
+<%ITEM%>
+subs_ad
+ad valorem export subsidy in base period in candidate countries
+subs_ad(*,*)|
+<%/ITEM%>
+<%ITEM%>
+subs_ad_0
+ad valorem export subsidy in base period in candidate countries
+subs_ad_0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+subs_milk
+Subsistence milk production in new member states
+subs_milk(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_milk_d
+Subsistence milk consumption in new member states
+subs_milk_d(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_milk_d_1
+Subsistence milk consumption in new member states in previous period
+subs_milk_d_1(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_milk_d0
+Subsistence milk consumption in new member states in base period
+subs_milk_d0(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_milk_s
+Subsistence milk production in new member states
+subs_milk_s(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_milk_s_1
+Subsistence milk production in new member states in previous period
+subs_milk_s_1(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_milk_s0
+Subsistence milk production in new member states in base period
+subs_milk_s0(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_milk0
+Subsistence milk production in new member states in base period
+subs_milk0(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_shift
+Shifter on Demand Side (auxiliary parameter)
+subs_shift(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_shift_s
+Shifter on Supply Side (auxiliary parameter)
+subs_shift_s(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+subs_shr
+Share of subsistence milk production in total milk production in NMS
+subs_shr(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+SUBSHR
+Share of subsidized export quantities in total domestic use in EU
+SUBSHR(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+SUBSHR_EU
+
+SUBSHR_EU(comm)|
+<%/ITEM%>
+<%ITEM%>
+subsquant
+quantity commitments in export subsidies for 2000
+subsquant(*)|
+<%/ITEM%>
+<%ITEM%>
+subsquant_0
+quantity commitments in export subsidies for 2000
+subsquant_0(*)|
+<%/ITEM%>
+<%ITEM%>
+sug_imp_exog
+exogenously pe-fixed sugar imports
+sug_imp_exog(*)|
+<%/ITEM%>
+<%ITEM%>
+sug_q_st_
+
+sug_q_st_|
+<%/ITEM%>
+<%ITEM%>
+sugar_compensation
+
+sugar_compensation(*,*)|
+<%/ITEM%>
+<%ITEM%>
+sugar_envelop
+Direct payments sugar: acumulated values
+sugar_envelop(cc,sim_base)|
+<%/ITEM%>
+<%ITEM%>
+sugar_parameters
+
+sugar_parameters(cc,*)|
+<%/ITEM%>
+<%ITEM%>
+sugar_payment
+
+sugar_payment(*)|
+<%/ITEM%>
+<%ITEM%>
+SUGIMP_EU
+Preferential sugar imports (either endogenous or exogenously fixed
+SUGIMP_EU(comm)|
+<%/ITEM%>
+<%ITEM%>
+sup_int
+intercept in supply function (US and RoW)
+sup_int(*,*)|
+<%/ITEM%>
+<%ITEM%>
+SUPPLY
+Supply
+SUPPLY(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+switch_comm
+Products which might change the set in price formation mechanism
+switch_comm|
+<%/ITEM%>
+<%ITEM%>
+t_oil
+tax on (raw) oil demand in EUR per litre
+t_oil|
+<%/ITEM%>
+<%ITEM%>
+tar_ad
+ad valorem tariff
+tar_ad(*,*)|
+<%/ITEM%>
+<%ITEM%>
+tar_ad_0
+ad valorem tariff in base period
+tar_ad_0(*,*)|
+<%/ITEM%>
+<%ITEM%>
+tar_st_
+
+tar_st_|
+<%/ITEM%>
+<%ITEM%>
+target
+
+target|
+<%/ITEM%>
+<%ITEM%>
+tech_progr
+Rates of technical progress for different groups of agricultural products and regions
+tech_progr(ag,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+tech_progr_fr
+Rates of technical progress in feed use
+tech_progr_fr(livest,ccplus)|
+<%/ITEM%>
+<%ITEM%>
+test_chg
+Deviation of the feed demand calculated by frates and feed demand of the data base
+test_chg(*,*,*)|
+<%/ITEM%>
+<%ITEM%>
+test_fr
+1st check of the consistency of feed rates
+test_fr(*,*)|
+<%/ITEM%>
+<%ITEM%>
+test1
+
+test1(*,*)|
+<%/ITEM%>
+<%ITEM%>
+testx
+
+testx(*)|
+<%/ITEM%>
+<%ITEM%>
+testxx
+
+testxx(*)|
+<%/ITEM%>
+<%ITEM%>
+texp_share
+Exp. share of total ESIM products in total exp. in base
+texp_share(cc)|
+<%/ITEM%>
+<%ITEM%>
+THRESH
+Products with minimum (intervention) price plus threshold price
+THRESH|
+<%/ITEM%>
+<%ITEM%>
+thresh_n
+Changes in threshold prices
+thresh_n(comm,CHG_ST_)|
+<%/ITEM%>
+<%ITEM%>
+thrpr
+threshold price level
+thrpr(ccplus,comm)|
+<%/ITEM%>
+<%ITEM%>
+thrpr0
+threshold price level in base
+thrpr0(ccplus,comm)|
+<%/ITEM%>
+<%ITEM%>
+time
+
+time|
+<%/ITEM%>
+<%ITEM%>
+top_up_reduction
+Reduction of national top up payments in NMS
+top_up_reduction(sim1,cc)|
+<%/ITEM%>
+<%ITEM%>
+tp_fr
+technical progress in feed use
+tp_fr(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+tp_gr
+technical progress in supply
+tp_gr(cc,i)|
+<%/ITEM%>
+<%ITEM%>
+TRADESHR
+Share of net-exports in total use or supply
+TRADESHR(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+TRADESHR_D
+Trade share for Commodities which are excluded from full integration into Single Market
+TRADESHR_D(comm)|
+<%/ITEM%>
+<%ITEM%>
+TRADESHR_EU
+Share of net-exports in total use in aggregated EU-15 member states
+TRADESHR_EU(comm)|
+<%/ITEM%>
+<%ITEM%>
+transp_fuel
+Projected consumption of transportation fuel in the EU27 (in million TOE)
+transp_fuel(sim1)|
+<%/ITEM%>
+<%ITEM%>
+trq_comm
+Agricultural products with TRQ in the base period
+trq_comm|
+<%/ITEM%>
+<%ITEM%>
+trq_elast
+of supply for variable preferential imports of sugar
+trq_elast|
+<%/ITEM%>
+<%ITEM%>
+trq_int
+for variable preferential imports of sugar
+trq_int|
+<%/ITEM%>
+<%ITEM%>
+trq_p
+parameter for variable preferential imports of sugar in the EU
+trq_p|
+<%/ITEM%>
+<%ITEM%>
+trq_para
+Variable preferential imports of sugar in the EU
+trq_para(sim1,trq_p)|
+<%/ITEM%>
+<%ITEM%>
+trq_para1
+Intercept and elasticity parameter for variable preferential imports of sugar in the EU
+trq_para1(trq_pp,sug_q_st_)|
+<%/ITEM%>
+<%ITEM%>
+trq_pp
+additional parameters for variable preferential imports of sugar in the EU
+trq_pp|
+<%/ITEM%>
+<%ITEM%>
+trq_tc
+parameter for preferential imports including transport cost differential transaction costs and cost of import-export swapping
+trq_tc|
+<%/ITEM%>
+<%ITEM%>
+trq0
+tariff rate quotas in base period
+trq0(*)|
+<%/ITEM%>
+<%ITEM%>
+TRQSHR
+Share of TRQ in total domestic use in EU
+TRQSHR(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+TRQSHR_EU
+
+TRQSHR_EU(comm)|
+<%/ITEM%>
+<%ITEM%>
+TUSE
+Total domestic use
+TUSE(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+tuse0
+base volume of total demand
+tuse0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+twolag
+
+twolag(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+VOLSA
+Voluntary setaside
+VOLSA(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+VOLSAQ
+Voluntary setaside as quota in Agenda 2000 regions
+VOLSAQ(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+weight
+weiht parameter in (artificial) objetive function
+weight(*,*)|
+<%/ITEM%>
+<%ITEM%>
+YIELD
+Yield in arable crop production
+YIELD(cc,comm)|
+<%/ITEM%>
+<%ITEM%>
+yield_b
+base yield oilseeds EU
+yield_b(*,*)|
+<%/ITEM%>
+<%ITEM%>
+yield0
+yield in base period
+yield0(ccplus,i)|
+<%/ITEM%>
+<%ITEM%>
+yild_int
+intercept in yield function (European countries)
+yild_int(*,*)|
+<%/ITEM%>
+<%ITEM%>
+GSEACTION
+$Setglobal
+GSEACTION|
+<%/ITEM%>

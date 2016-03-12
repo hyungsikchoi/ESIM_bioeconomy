@@ -1,0 +1,1 @@
+display "%gams.user1%";
